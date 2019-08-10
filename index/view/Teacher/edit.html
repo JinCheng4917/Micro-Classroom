@@ -1,0 +1,23 @@
+{extend name="edit"} 
+{block name="title"}
+{eq name="Teacher->id" value=""}添加教师{else /}编辑教师{/eq}
+{/block}
+{block name="content"}
+{php}$action = request()->action() === 'add' ? 'save' : 'update';{/php}
+<form action="{:url($action)}" method="post">
+    <label>姓名:</label>
+    <input type="hidden" name="id" value="{$Teacher->id}" />
+    <input type="text" name="name" value="{$Teacher->name}" />
+    <label>用户名:</label>
+    {eq name="Teacher->username" value=""}
+    <input type="text" name="username" value="{$Teacher->username}" /> {else /} {$Teacher->username} {/eq}
+    <label>性别:</label>
+    <select name="sex">
+        <option value="0">男</option>
+        <option value="1" {eq name="Teacher->sex" value="1" }selected="selected" {/eq}>女</option>
+    </select>
+    <label>邮箱:</label>
+    <input type="email" name="email" value="{$Teacher->email}" />
+    <button type="submit">保存</button>
+</form>
+{/block}
