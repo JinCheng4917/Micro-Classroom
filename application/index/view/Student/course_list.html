@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+ <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/landing-page.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+<head>
+    <title>在线留言</title>
+</head>
+<style type="text/css">
+   .images
+   {
+    margin-top: 10%;
+    margin-left: 37%;
+   } 
+    
+</style>
+<body style="background-image: url(img/intro-bg.jpg)">
+    
+               <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">微课堂</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="#">微课堂</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                   <li>
+                            <a href="{:url('Student/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+                        </li>
+                    <li>
+                        <a href="{:url('Student/courseList')}"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+                    </li>
+                    <li>
+                    <!--两个注销--TeacherLogout--StudentLogout-->
+                        <a href="{:url('Student/index')}"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+   <table class="table table-bordered table-hover" style="margin-top:30px;">
+        <caption>
+            <h2 style="margin-top:40px; color:white;" align="center">今日课程</h2>
+        </caption>
+        <thead>
+            <tr class="info">
+                <td align="center" valign="middle">TIME</td>
+                <td colspan="4" align="center" valign="middle">上午</td>
+                <td colspan="4" align="center" valign="middle">下午</td>
+                <td colspan="3" align="center" valign="middle">晚上</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="success">
+                <td align="center" valign="middle">节次</td>
+                <td align="center" valign="middle">第一节</td>
+                <td align="center" valign="middle">第二节</td>
+                <td align="center" valign="middle">第三节</td>
+                <td align="center" valign="middle">第四节</td>
+                <td align="center" valign="middle">第五节</td>
+                <td align="center" valign="middle">第六节</td>
+                <td align="center" valign="middle">第七节</td>
+                <td align="center" valign="middle">第八节</td>
+                <td align="center" valign="middle">第九节</td>
+                <td align="center" valign="middle">第十节</td>
+                <td align="center" valign="middle">第十一节</td>
+            </tr>
+            <tr class="success">
+                <td rowspan="1" align="center" valign="middle">科目</td>
+                <td align="center" valign="middle">数学</td>
+                <td align="center" valign="middle">数学</td>
+                 <td align="center" valign="middle"></td>
+                  <td align="center" valign="middle"></td>
+                <td align="center" valign="middle">英语</td>
+                <td align="center" valign="middle">英语</td>
+                <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+                 <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+               </tr>
+            <tr class="success">
+                  <td rowspan="1" align="center" valign="middle">教室</td>
+                  <td align="center" valign="middle">A201</td>
+                <td align="center" valign="middle">A201</td>
+                 <td align="center" valign="middle"></td>
+                  <td align="center" valign="middle"></td>
+                <td align="center" valign="middle">B236</td>
+                <td align="center" valign="middle">B236</td>
+                <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+                 <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+            </tr>
+            <tr class="success">
+                  <td rowspan="1" align="center" valign="middle">教师</td>
+                  <td align="center" valign="middle">张三</td>
+                <td align="center" valign="middle">张三</td>
+                 <td align="center" valign="middle"></td>
+                  <td align="center" valign="middle"></td>
+                <td align="center" valign="middle">李四</td>
+                <td align="center" valign="middle">李四</td>
+                <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+                 <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+            </tr>
+            <tr class="success">
+                  <td rowspan="1" align="center" valign="middle">时间</td>
+                   <td align="center" valign="middle">8:30-9:15</td>
+                <td align="center" valign="middle">9:20-10:05</td>
+                 <td align="center" valign="middle"></td>
+                  <td align="center" valign="middle"></td>
+                <td align="center" valign="middle">2:00-2:45</td>
+                <td align="center" valign="middle">2:50-3:25</td>
+                <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+                 <td align="center" valign="middle"></td>
+                <td align="center" valign="middle"></td>
+            </tr>
+          
+        </tbody>
+    </table>
+
+<!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
