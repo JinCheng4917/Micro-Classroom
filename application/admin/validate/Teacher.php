@@ -1,5 +1,5 @@
 <?php
-namespace app\common\validate;
+namespace app\admin\validate;
 use think\Validate;     // 内置验证类
 
 class Teacher extends Validate
