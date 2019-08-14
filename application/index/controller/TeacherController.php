@@ -113,4 +113,24 @@ class TeacherController extends IndexController
     $htmls = $this->fetch();
         return $htmls;    
     }
+
+    // change password
+    public function alter_password()
+    {
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+    // forget password
+    public function forget_password()
+    {
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+
+    public function register()
+    {
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+
 }

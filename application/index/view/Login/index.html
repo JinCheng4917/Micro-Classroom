@@ -127,7 +127,8 @@
                                             <form action="{:url('login')}" method="post">
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
-                                                        <label for="username">帐1号</label>
+                                                        <label for="username">帐号（教师）</label>
+                                                        <!-- 括号内后期删除 -->
                                                         <input type="text" class="form-control" id="username" name="username">
                                                     </div>
                                                 </div>
@@ -137,15 +138,24 @@
                                                         <input type="password" class="form-control" id="password" name="password">
                                                     </div>
                                                 </div>
-                                                  <div class="row form-group">
-                                                    <div class="col-md-12">
-                                                        <div class="">
-                                                            <button type="" class="btn btn-default">忘记密码</button>
-                                                            <button type="" class="btn btn-default">修改密码</button>
+
+                                                <div class="">
+                                                        <a href="{:url('')}">    
+                                                            <button type="button" class="btn btn-default">忘记密码</button>
+                                                        </a>
+                                                        <a href="{:url('teacher/alter_password')}">
+                                                            <button type="button" class="btn btn-default">修改密码</button>
+                                                        </a>    
                                                         </div>
                                                         <div>
-                                                            <button type="" class="btn btn-default col-md-12">注册</button>
-                                                        </div>                                                       
+                                                        <a href="{:url('')}">
+                                                            <button type="button" class="btn btn-default col-md-12">注册</button>
+                                                        </a>    
+                                                            
+                                                        </div>
+                                                <div class="row form-group">
+                                                    <div class="col-md-12">
+                                                                                                               
                                                         <button type="submit" class="btn btn-primary" style="width: 100%">登录</button>
                                                     </div>
                                                 </div>
@@ -170,11 +180,20 @@
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
                                                         <div class="">
-                                                            <button type="" class="btn btn-default ">忘记密码</button>
-                                                            <button type="" class="btn btn-default ">修改密码</button>                                                           
+                                                        <a href="{:url('')}">
+                                                            <button type="button" class="btn btn-default ">忘记密码</button>
+                                                        </a>
+                                                            
+                                                        <a href="{:url('Student/alter_password')}">
+                                                            <button type="button" class="btn btn-default ">修改密码</button>     
+                                                        </a>
+                                                                                                                  
                                                         </div>
                                                         <div>
-                                                            <button type="" class="btn btn-default col-md-12">注册</button>
+                                                        <a href="{:url('')}">
+                                                            <button type="button" class="btn btn-default col-md-12">注册</button>
+                                                        </a>
+                                                            
                                                         </div>
                                                         <button type="submit" class="btn btn-primary" style="width: 100%">登录</button>
 

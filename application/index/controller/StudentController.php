@@ -16,4 +16,22 @@ class StudentController extends IndexController
         // 将数据返回给用户
         return $htmls;
 	}
+
+    // change password
+    public function alter_password()
+    {
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+    public function forget_password()
+    {
+    	$htmls = $this->fetch();
+    	return $htmls;
+    }
+
+    public function register()
+    {
+    	$htmls = $this->fetch();
+    	return $htmls;
+    }
 }
