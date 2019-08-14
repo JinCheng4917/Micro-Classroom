@@ -60,7 +60,6 @@
     <!-- Modernizr JS -->
     <script src="js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
-
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
     <![endif]-->
@@ -125,10 +124,10 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-content-inner active" data-content="signup">
-                                            <form action="{:url('Login/teacherLogin')}" method="post">
+                                            <form action="{:url('login')}" method="post">
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
-                                                        <label for="username">帐号</label>
+                                                        <label for="username">帐1号</label>
                                                         <input type="text" class="form-control" id="username" name="username">
                                                     </div>
                                                 </div>
@@ -140,6 +139,13 @@
                                                 </div>
                                                   <div class="row form-group">
                                                     <div class="col-md-12">
+                                                        <div class="">
+                                                            <button type="" class="btn btn-default">忘记密码</button>
+                                                            <button type="" class="btn btn-default">修改密码</button>
+                                                        </div>
+                                                        <div>
+                                                            <button type="" class="btn btn-default col-md-12">注册</button>
+                                                        </div>                                                       
                                                         <button type="submit" class="btn btn-primary" style="width: 100%">登录</button>
                                                     </div>
                                                 </div>
@@ -147,11 +153,11 @@
                                         </div>
 
                                         <div class="tab-content-inner" data-content="login">
-                                            <form action="{:url('Login/studentLogin')}" method="post">
+                                            <form action="#">
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
-                                                        <label for="num">帐号</label>
-                                                        <input type="text" class="form-control" id="num" name="num">
+                                                        <label for="username">帐号</label>
+                                                        <input type="text" class="form-control" id="username" name="name">
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
@@ -163,7 +169,15 @@
 
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
+                                                        <div class="">
+                                                            <button type="" class="btn btn-default ">忘记密码</button>
+                                                            <button type="" class="btn btn-default ">修改密码</button>                                                           
+                                                        </div>
+                                                        <div>
+                                                            <button type="" class="btn btn-default col-md-12">注册</button>
+                                                        </div>
                                                         <button type="submit" class="btn btn-primary" style="width: 100%">登录</button>
+
                                                     </div>
                                                 </div>
                                             </form> 

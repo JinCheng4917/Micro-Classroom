@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+<!-- 查看学生当堂课的签到信息 -->
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-        <title>Animated 3D Bar Chart with CSS3</title>
+        <title>查看当堂签到信息</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <meta name="description" content="Animated 3D Bar Chart with CSS3" />
         <meta name="keywords" content="css3, bar chart, animation, 3d" />
@@ -53,7 +54,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#">微课堂</a>
+                <a class="navbar-brand topnav" href="#">微课堂1</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -101,22 +102,28 @@
                 <input type="radio" name="fill-graph" id="f-product2" /><label for="f-product2">Product 2</label>
                 <input type="radio" name="fill-graph" id="f-product3" /><label for="f-product3">Product 3</label>
 
+           
+
+
                 <ul class="graph-container">
-                    {volist name="KlassSignIns" id="_SignIn" key="key"}
+                    {volist name="$KlassSignIns" id="_SignIn" key="key"}
                     <li>
                         <span>{$_SignIn->getData('klass_name')}</span>
                         <div class="bar-wrapper">
                             <div class="bar-container">
                                 <div class="bar-background"></div>
-                                <div class="bar-inner" style="height: {$_SignIn->getProportion()}"></div>
+                                <div class="bar-inner" style="height: {$_SignIn->getProportion()}" ></div>
                                 <div class="bar-foreground"></div>
                             </div>
                         </div>
                     </li>
+
                     {/volist}
 
-                    <li>
+     
+
                         <ul class="graph-marker-container">
+
                             <li style="bottom:25%;"><span>25%</span></li>
                             <li style="bottom:50%;"><span>50%</span></li>
                             <li style="bottom:75%;"><span>75%</span></li>

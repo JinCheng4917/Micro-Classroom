@@ -56,10 +56,10 @@
                             <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
                         </li>
                     <li>
-                        <a href="{:url('Teacher/seeStudents')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+                        <a href="{:url('Student/seeStudents')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
                     </li>
                     <li>
-                    <!--两个注销--TeacherLogout--StudentLogout-->
+                    <!--两个注销--StudentLogout--StudentLogout-->
                         <a href="{:url('Teacher/index')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
                     </li>
                 </ul>
@@ -82,57 +82,23 @@
                     <th class="font">电话号码</th>
                 </tr>
                 
+                {volist name="Students" id="_Student" key="key"}
                 <tr>
                   
-                    <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
+                    <td class="list">{$_Student->getData('name')}</td>
+                    <td class="list">{eq name="_Student->getData('sex')" value='0'}男{else /}女{/eq}</td>
+                    
+                    <td class="list">{$_Student->getData('klass_id')}</td>
+                    <td class="list">{$_Student->getData('num')}</td>
+                    <td class="list">{$_Student->getData('email')}</td>
+
+                    <td>
+                    
+                    </td>
+                    
+                                  
                 </tr>
-                <tr>
-                  <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-                <tr>
-                  
-                  <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-                <tr>
-                  
-                 <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-                <tr>
-                  <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-                <tr>
-                  <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
+                {/volist}
             </table>
 
 
