@@ -1,0 +1,25 @@
+{extend name="edit"/}
+{block name="title"}
+{eq name="Student->id" value=""}添加学生{else/}编辑学生{/eq}
+{/block}
+{block name="content"}
+{php}$action=request()->action()==='add'?'save':'update';{/php}
+<form action="{:url($action)}" method="post">
+    <label>姓名:</label>
+    <input type="hidden" name="id" value="{$Student->getData('id')}" />
+    <input type="text" name="name" value="{$Student->getData('name')}" />
+    <label>学号:</label>
+    {eq name="Student->num" value=""}
+    <input type="text" name="num" value="{$Student->num}" />
+    {else/}{$Student->num}{/eq}
+    <label>性别:</label>
+    <input type="radio" name="sex" value="0" id="sex0" {eq name="$Student->getData('sex')" value="0" }checked="checked" {/eq}/> <label for="sex0">男</label>
+    <input type="radio" name="sex" value="1" id="sex1" {eq name="$Student->getData('sex')" value="1" }checked="checked" {/eq}/> <label for="sex1">女</label>
+    <label>班级</label>
+    <select name="klass_id">
+        {volist name="klasses" id="klass"}
+        <option value="{$klass->id}" {eq name="klass->id" value="$Student->klass_id" }selected="selected" {/eq}>{$klass->name} </option> {/volist} </select> <label>邮箱:</label>
+            <input type="email" name="email" value="{$Student->getData('email')}" />
+            <button type="submit">保存</button>
+</form>
+{/block}
