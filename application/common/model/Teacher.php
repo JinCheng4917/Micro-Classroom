@@ -7,6 +7,10 @@ use think\Model;    // 使用前进行声明
 class Teacher extends Model
 {
     protected $auto = ['name', 'username', 'ip', 'email'];
+
+    // 直接使用配置参数名
+    // protected $connection = 'yunzhi_student';
+    // protected $connection = 'yunzhi_signin';
     
     /**
      * 用户登录
