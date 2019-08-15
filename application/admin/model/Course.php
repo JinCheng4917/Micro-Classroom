@@ -49,4 +49,12 @@ class Course extends Model
             return true;
         }
     }
+      public function Klass()
+    {
+        return $this->belongsTo('klass');
+    }
+    public function Teacher()
+    {
+        return $this->belongsTo('teacher');
+    }
 }

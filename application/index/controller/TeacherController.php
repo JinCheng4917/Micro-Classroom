@@ -1,11 +1,10 @@
 <?php
 namespace app\index\controller;
-use app\common\model\Teacher;  // 教师模型
-use app\common\model\Student;  // 学生模型
-use app\common\model\KlassSignIn;
+use app\common\model\Teacher;// 教师模型
+use app\common\model\Student;//学生模型  
+use app\common\model\Klass;
 use think\facade\Request;   
 use think\Controller;   // 请求
-use think\Db;
 /**
  * 教师管理，继承think\Controller后，就可以利用V层对数据进行打包了。
  */
@@ -15,7 +14,6 @@ class TeacherController extends IndexController
    //教师端主界面
     public function index()
     {
-
        $htmls = $this->fetch();
        return $htmls;
     }
@@ -42,15 +40,30 @@ class TeacherController extends IndexController
     //查看签到信息
     public function seeSignin()
     {
-        Db::connect('yunzhi_teacher')->table('yunzhi_klass_signin')->find();        
-
-        $KlassSignIn = new KlassSignIn;
-        $KlassSignIns = $KlassSignIn->select();
-        $this->assign('KlassSignIns',$KlassSignIns);
-
-        $htmls = $this->fetch();
+      $htmls = $this->fetch();
         return $htmls; 
+    }
+    public function usualScore() {
+        
+       $data = Request::instance()->post();
+       $id = $data['id'];
+       $value = $data['value'];
 
+       $Student = Student::get($id);
+       $Student->usual_score = $value;
+       $Student->save();
+       
+    }
+    public function examScore() {
+        
+       $data = Request::instance()->post();
+       $id = $data['id'];
+       $value = $data['value'];
+
+       $Student = Student::get($id);
+       $Student->exam_score = $value;
+       $Student->save();
+       
     }
     //查看学期末签到情况
      public function getSigninAll()
@@ -73,27 +86,14 @@ class TeacherController extends IndexController
     //查看本学期学生信息
     public function seeStudents()
     {
-        // 这是我使用的2个对接数据库的方法之一，但是我不知道哪个正确，
-        // 还是说都正确？
-        Db::connect('yunzhi_teacher')->table('yunzhi_student')->find();
-        // 实例化Teacher        
-        $Student = new Student();
-
-        $Students = $Student->select();
-
-        // 向V层传数据
-        $this->assign('Students',$Students);
-
-        // 取回打包后的数据
-        $htmls = $this->fetch();
-
-        // 将数据返回给用户
+     $htmls = $this->fetch();
         return $htmls;  
-        
     }
     //录入成绩总体表单
     public function putScore()
     {
+        $students = Student::all();
+        $this->assign('students',$students);
      $htmls = $this->fetch();
         return $htmls;  
     }
@@ -109,6 +109,7 @@ class TeacherController extends IndexController
     $htmls = $this->fetch();
         return $htmls;    
     }
+
 
     // change password
     public function alter_password()
