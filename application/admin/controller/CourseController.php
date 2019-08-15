@@ -1,7 +1,8 @@
 <?php
 namespace app\admin\controller;
 use app\admin\model\Course;            // 课程
-use app\admin\model\Klass;             // 班级
+use app\admin\model\Klass;
+use app\admin\model\Teacher;             // 班级
 use app\admin\model\KlassCourse;
 use think\Controller;       // 班级课程
 use think\facade\Request;
@@ -11,10 +12,15 @@ use think\facade\Request;
 class CourseController extends Controller
 {
     public function index()
-    {
+    { 
+        $klasses = Klass::all();
+         $this->assign('klasses',$klasses);
+         $teachers = Teacher::all();
+         $this->assign('teachers',$teachers);
         $courses = Course::paginate(5);
         $this->assign('courses', $courses);
         return $this->fetch();
+
     }
 
     public function add()
@@ -23,6 +29,7 @@ class CourseController extends Controller
        //实例化
         $course = new Course;
         //设置默认值
+        
          $course->id = 0;
          $course->name = '';
         $this->assign('course', $course);
