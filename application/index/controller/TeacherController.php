@@ -5,6 +5,7 @@ use app\common\model\Student;//学生模型
 use app\common\model\Klass;
 use think\facade\Request;   
 use think\Controller;   // 请求
+use think\Db;
 /**
  * 教师管理，继承think\Controller后，就可以利用V层对数据进行打包了。
  */
