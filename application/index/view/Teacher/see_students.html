@@ -22,7 +22,7 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 <head>
-    <title>显示未签到学生信息</title>
+    <title>查看学生信息</title>
 </head>
 <style type="text/css">
     .font
@@ -73,71 +73,27 @@
                 <tr class="info">
                    
                     <th class="font">姓名</th>
-            
-                   
                     <th class="font">性别</th>
+                    <th class="font">学院</th>
+                    <th class="font">专业</th>
                     <th class="font">班级</th>
                     <th class="font">学号</th>
                     <th class="font">邮箱</th>
                     <th class="font">电话号码</th>
                 </tr>
-                
-                <tr>
-                  
-                    <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-                <tr>
-                  <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-                <tr>
-                  
-                  <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-                <tr>
-                  
-                 <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-                <tr>
-                  <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-                <tr>
-                  <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-                     <td class="list">185790@qq.com</td>
-                    <td class="list">13274028963</td>
-                </tr>
-            </table>
-
-
-
-
+                {volist name="students" id="student"}
+            <tr>
+                <td class="list">{$student->name}</td>
+                <td class="list">{eq name="$student->sex" value='0'}男{else /}女{/eq}</td>
+                <td class="list">{$student->college}</td>
+                <td class="list">{$student->major}</td>
+                <td class="list">{$student->Klass->name}</td>
+                <td class="list">{$student->num}</td>
+                <td class="list">{$student->email}</td>
+                <td class="list">{$student->phone}</td>
+               </tr>
+               {/volist}
+           </table>
     <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
