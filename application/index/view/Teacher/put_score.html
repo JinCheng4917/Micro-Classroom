@@ -74,6 +74,7 @@
                 <th class="font">姓名</th>
                 <th class="font">性别</th>
                 <th class="font">学院</th>
+                <th class="font">专业</th>
                 <th class="font">班级</th>
                 <th class="font">学号</th>
                 <th class="font" style="width: 10%;">未签到次数</th>
@@ -85,6 +86,7 @@
                 <td class="list">{$student->name}</td>
                 <td class="list">{eq name="$student->sex" value='0'}男{else /}女{/eq}</td>
                 <td class="list">{$student->college}</td>
+                <td class="list">{$student->major}</td>
                 <td class="list">{$student->Klass->name}</td>
                 <td class="list">{$student->num}</td>
                 <td class="list">{$student->unsign_count}</td>
