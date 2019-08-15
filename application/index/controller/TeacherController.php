@@ -5,6 +5,9 @@ use app\common\model\Student;//学生模型
 use app\common\model\Klass;
 use think\facade\Request;   
 use think\Controller;   // 请求
+use think\Db;
+use app\common\model\KlassSignIn;
+
 /**
  * 教师管理，继承think\Controller后，就可以利用V层对数据进行打包了。
  */
@@ -40,8 +43,15 @@ class TeacherController extends IndexController
     //查看签到信息
     public function seeSignin()
     {
-      $htmls = $this->fetch();
+        Db::connect('yunzhi_teacher')->table('yunzhi_klass_signin')->find();        
+
+        $KlassSignIn = new KlassSignIn;
+        $KlassSignIns = $KlassSignIn->select();
+        $this->assign('KlassSignIns',$KlassSignIns);
+
+        $htmls = $this->fetch();
         return $htmls; 
+
     }
     public function usualScore() {
         
