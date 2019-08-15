@@ -35,12 +35,8 @@ class TeacherController extends IndexController
       $htmls = $this->fetch();
         return $htmls;
     }
-    //显示随机提问时的学生信息
-    public function show()
-    {
-       $htmls = $this->fetch();
-        return $htmls;
-    }
+
+
     //查看签到信息
     public function seeSignin()
     {
@@ -113,4 +109,60 @@ class TeacherController extends IndexController
     $htmls = $this->fetch();
         return $htmls;    
     }
+
+
+    // change password
+    public function alter_password()
+    {
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+    // forget password
+    public function forget_password()
+    {
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+
+    public function register()
+    {
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+
+    // 随机签到-显示随机提问时的学生信息
+    public function show()
+    {
+        // 连接2个数据库
+        Db::connect('yunzhi_teacher')->table('yunzhi_student')->find();
+
+        // 从数据库获取全体学生姓名，学号，放入array
+        $Student = new Student;
+
+        $Students = $Student->select();
+
+        // 获取所有的id，并且放进一个数组$studentIds
+        $studentIds = Db::table('yunzhi_student')->where('id','>',0)->column('id');
+ 
+        // 计算yunzhi_teacher表中用户总数，$number为一个整数
+        // $number = Db::table('yunzhi_student')->count();
+        
+        // 打乱这个id数组的顺序
+        shuffle($studentIds);
+
+        // 幸运id为打乱顺序的数组的第一个
+        $LuckyNumber = $studentIds[0];
+
+        // 通过id找出其对应的学生姓名
+        $LuckyName = Db::table('yunzhi_student')->where('id',$LuckyNumber)->value('name');
+
+        // 通过id找出其对应学生学号
+        $LuckyNumber = Db::table('yunzhi_student')->where('id',$LuckyNumber)->value('num');
+        $this->assign('LuckyName',$LuckyName);
+        $this->assign('LuckyNumber',$LuckyNumber);
+        
+        return $this->fetch('show');
+        
+    }
+
 }
