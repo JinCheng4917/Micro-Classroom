@@ -174,9 +174,24 @@ class TeacherController extends IndexController
         $LuckyNumber = Db::table('yunzhi_student')->where('id',$LuckyNumber)->value('num');
         $this->assign('LuckyName',$LuckyName);
         $this->assign('LuckyNumber',$LuckyNumber);
-        
+
         return $this->fetch('show');
-        
     }
 
-}
+    public function submitSign()
+    {
+        // 获取当前登录用户信息
+
+        // 从表单接收数据
+
+        // 实例化Student学生空对象
+
+        // 为对象赋值
+
+        // 新增对象至数据表
+
+        // 反馈结果
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+}        
