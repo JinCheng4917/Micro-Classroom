@@ -77,6 +77,6 @@ class Student extends Model
     }
      public function Klass()
     {
-        return $this->belongsTo('Klass');
+        return $this->belongsTo('klass');
     }
 }

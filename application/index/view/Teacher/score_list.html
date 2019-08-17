@@ -22,7 +22,7 @@
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 <head>
-    <title>显示未签到学生信息</title>
+    <title>成绩录入</title>
 </head>
 <style type="text/css">
     .font
@@ -53,10 +53,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                            <a href="{:url('Teacher/seeSignin')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+                            <a href="{:url('Teacher/putScore')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
                         </li>
                     <li>
-                        <a href="{:url('Teacher/getThis')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+                        <a href="{:url('Teacher/scoreList')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
                     </li>
                     <li>
                     <!--两个注销--TeacherLogout--StudentLogout-->
@@ -68,75 +68,60 @@
         </div>
         <!-- /.container -->
     </nav>
+      <div class="small-text-center">
+  <h1 style="color: white; margin-top: 5%;">微课堂成绩录入系统</h1>
+  </div>
+  <table class="table table-hover table-bordered" style="margin-top: 3%; background-color: white;">
+               
   
-  <table class="table table-hover table-bordered" style="margin-top: 10%; background-color: white;">
-                <tr class="info">
-                   
-                    <th class="font">姓名</th>
-            
-                   
-                    <th class="font">性别</th>
-                    <th class="font">班级</th>
-                    <th class="font">学号</th>
-                    <th class="font">未签到次数</th>
-                </tr>
-                
-                <tr>
-                  
-                    <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-
-                    <td class="list">2</td>
-                </tr>
-                <tr>
-                  
-                    <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-
-                    <td class="list">2</td>
-                </tr>
-                <tr>
-                  
-                    <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-
-                    <td class="list">2</td>
-                </tr>
-                <tr>
-                  
-                    <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-
-                    <td class="list">2</td>
-                </tr>
-                <tr>
-                  
-                    <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-
-                    <td class="list">2</td>
-                </tr>
-                <tr>
-                  
-                    <td class="list">张三</td>
-                    <td class="list">男</td>
-                    <td class="list">计1819</td>
-                    <td class="list">185790</td>
-
-                    <td class="list">2</td>
-                </tr>
-            </table>
-
+   <table width="1000" border="1" align="center" cellpadding="10" cellspacing="0" style="background-color: white;">
+        <caption><h3 style="color: white;">成绩录入</h3></caption>
+        
+        <tr >
+            <td class="font">姓 名：张三</td>
+            <td class="font">性 别：男</td>
+           
+        </tr>
+        <tr>
+            <td class="font">学号：185903</td>
+            <td class="font">学院：人工智能与数据科学学院</td>
+        </tr>
+        <tr>
+            <td class="font">专业：计算机</td>
+            <td class="font">班级：计1892</td>
+        </tr>
+        <tr>
+            <td class="font">年级：大一</td>
+            <td class="font">邮箱：330056@qq.com</td>
+        </tr>
+        <tr>
+            <td class="font">电话：13252689456</td>
+            <td class="font">QQ:3300526971</td>
+        </tr>
+        <tr>
+          <td>
+             <div class="form-group">
+    <label for="exampleInputName2" class="font">平时成绩</label>
+    <input type="text" class="form-control" id="exampleInputName2" >
+  </div>
+</td>
+<td>
+  <div class="form-group">
+    <label for="exampleInputEmail2" class="font">考试成绩</label>
+    <input type="email" class="form-control" id="exampleInputEmail2" >
+  </div>
+  
+          </td>
+        </tr>
+<tr>
+  <td class="font">
+    总成绩：0
+  </td>
+  <td>
+    <button class="btn btn-danger" style="width: 100%;">提交</button>
+  </td>
+</tr>
+    </table>
 
 
 
