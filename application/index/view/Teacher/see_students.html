@@ -71,7 +71,10 @@
   
   <table class="table table-hover table-bordered" style="margin-top: 10%; background-color: white;">
                 <tr class="info">
-                   
+
+                    <th class="font">学期</th>
+                    <th class="font">科目</th>
+
                     <th class="font">姓名</th>
                     <th class="font">性别</th>
                     <th class="font">学院</th>
@@ -83,14 +86,18 @@
                 </tr>
                 {volist name="students" id="student"}
             <tr>
-                <td class="list">{$student->name}</td>
-                <td class="list">{eq name="$student->sex" value='0'}男{else /}女{/eq}</td>
-                <td class="list">{$student->college}</td>
-                <td class="list">{$student->major}</td>
-                <td class="list">{$student->Klass->name}</td>
-                <td class="list">{$student->num}</td>
-                <td class="list">{$student->email}</td>
-                <td class="list">{$student->phone}</td>
+
+                <td class="list">{$Courseid->Term->name}</td>
+                <td class="list">{$Courseid->Course->name}</td>
+                <td class="list">{$Courseid->Student->name}</td>
+                <td class="list">{eq name="$Courseid->Student->sex" value='0'}男{else /}女{/eq}</td>
+                <td class="list">{$Courseid->Student->college}</td>
+                <td class="list">{$Courseid->Student->major}</td>
+                <td class="list">{$Courseid->Student->Klass->name}</td>
+                <td class="list">{$Courseid->Student->num}</td>
+                <td class="list">{$Courseid->Student->email}</td>
+                <td class="list">{$Courseid->Student->phone}</td>
+
                </tr>
                {/volist}
            </table>
