@@ -5,6 +5,7 @@ use app\common\model\Student;//学生模型
 use app\common\model\Klass;
 use app\common\model\Score;
 use app\common\model\Course;
+use app\common\model\Term;
 use think\facade\Request;   
 use think\Controller;   // 请求
 use think\Db;
@@ -89,43 +90,57 @@ class TeacherController extends IndexController
     //选择要查看学生信息的课程
     public function studentSelect()
     {
-      //获取当前登陆教师的id
+       //获取当前登陆教师的id
         $id = session('teacherId'); 
         //获取score表里的全部信息
         $score = Score::all();
         //获取与当前教师id相同的id的教师的全部信息，筛选出course_id字段
         $Teacherid = Score::where('teacher_id',$id)->column('course_id');
+        //获取与当前教师id相同的id的教师的全部信息，筛选出term_id字段
+        $Termsid = Score::where('teacher_id',$id)->column('term_id');
         //对course_id这个字段进行筛选
         $Courseid = array_unique($Teacherid);
+        //对term_id这个字段进行筛选
+        $TermId = array_unique($Termsid);
         //根据course_id这个字段进行逐个循环，根据id获取Course这个对象，以便得到course的name
-      
-   foreach ($Courseid as $key => $value)
+        foreach ($Courseid as $key => $value)
            {
-             // $value即为course的id  用map这个数组承接
-             $map['id'] = $value;
-             //用键值$key区分course对象  用get()方法获得id，从而获得course对象
-             $temp[$key] = Course::get($map);
+         // $value即为course的id  用map这个数组承接
+                $map['id'] = $value;
+         //用键值$key区分course对象  用get()方法获得id，从而获得course对象
+                $temp[$key] = Course::get($map);
             }
-        //将获得的对象数组传到v层             
-        $this->assign('temp',$temp);
-        $htmls = $this->fetch();
-        return $htmls;    
+         //根据term_id这个字段进行逐个循环，根据id获取Term这个对象，以便得到term的name
+        foreach ($TermId as $key => $value)
+           {
+         // $value即为term的id  用map这个数组承接
+                $map['id'] = $value;
+         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
+                $term[$key] = Term::get($map);
+            } 
+           //将获得的对象数组传到v层             
+                $this->assign('temp',$temp);
+                $this->assign('term',$term);
+                $htmls = $this->fetch();
+                 return $htmls; 
     }
         //查看本学期学生信息
     public function seeStudents()
     {
         //从上一个V层获取用户所选择的课程的id，以便获取该课程的学生的信息
-        $courseid = Request::instance()->post('id');   
-        //获取当前登陆教师的id
-        $id = session('teacherId');  
-        //获取score表里的全部信息 
-        $score = Score::all();
-        //获取与当前课程id相同的id的课程的全部信息
-        $Courseid = Score::where('teacher_id',$id)->where('course_id',$courseid)->select();
-        //把课程的id传到V层，从而获取相关的学生信息以及课程名称
-        $this->assign('Courseids',$Courseid);
-        $htmls = $this->fetch();
-        return $htmls;  
+         $courseid = Request::instance()->post('course');  
+         //从上一个V层获取用户所选择的学期的id，以便获取该课程的学生的信息
+         $termid = Request::instance()->post('term');   
+         //获取当前登陆教师的id
+         $id = session('teacherId');  
+         //获取score表里的全部信息 
+         $score = Score::all();
+         //获取与当前课程id相同的id的课程的全部信息
+         $Courseid = Score::where('teacher_id',$id)->where('term_id',$termid)->where('course_id',$courseid)->select();
+         //把课程的id传到V层，从而获取相关的学生信息
+         $this->assign('Courseids',$Courseid);
+         $htmls = $this->fetch();
+         return $htmls;  
     }
     //进入录入成绩后选择科目
     public function selectCourse()
@@ -136,20 +151,31 @@ class TeacherController extends IndexController
         $score = Score::all();
         //获取与当前教师id相同的id的教师的全部信息，筛选出course_id字段
         $Teacherid = Score::where('teacher_id',$id)->column('course_id');
+        //获取与当前教师id相同的id的教师的全部信息，筛选出term_id字段
+        $Termsid = Score::where('teacher_id',$id)->column('term_id');
         //对course_id这个字段进行筛选
         $Courseid = array_unique($Teacherid);
+        //对term_id这个字段进行筛选
+        $TermId = array_unique($Termsid);
         //根据course_id这个字段进行逐个循环，根据id获取Course这个对象，以便得到course的name
-      
-         
-   foreach ($Courseid as $key => $value)
+        foreach ($Courseid as $key => $value)
            {
          // $value即为course的id  用map这个数组承接
                 $map['id'] = $value;
          //用键值$key区分course对象  用get()方法获得id，从而获得course对象
                 $temp[$key] = Course::get($map);
             }
+         //根据term_id这个字段进行逐个循环，根据id获取Term这个对象，以便得到term的name
+        foreach ($TermId as $key => $value)
+           {
+         // $value即为term的id  用map这个数组承接
+                $map['id'] = $value;
+         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
+                $term[$key] = Term::get($map);
+            } 
            //将获得的对象数组传到v层             
                 $this->assign('temp',$temp);
+                $this->assign('term',$term);
                 $htmls = $this->fetch();
                  return $htmls; 
     }
@@ -158,13 +184,15 @@ class TeacherController extends IndexController
     public function putScore()
    {  
          //从上一个V层获取用户所选择的课程的id，以便获取该课程的学生的信息
-         $courseid = Request::instance()->post('id');   
+         $courseid = Request::instance()->post('course');  
+         //从上一个V层获取用户所选择的学期的id，以便获取该课程的学生的信息
+         $termid = Request::instance()->post('term');   
          //获取当前登陆教师的id
          $id = session('teacherId');  
          //获取score表里的全部信息 
          $score = Score::all();
          //获取与当前课程id相同的id的课程的全部信息
-         $Courseid = Score::where('teacher_id',$id)->where('course_id',$courseid)->select();
+         $Courseid = Score::where('teacher_id',$id)->where('term_id',$termid)->where('course_id',$courseid)->select();
          //把课程的id传到V层，从而获取相关的学生信息
          $this->assign('Courseids',$Courseid);
          $htmls = $this->fetch();
@@ -227,24 +255,9 @@ class TeacherController extends IndexController
         $LuckyNumber = Db::table('yunzhi_student')->where('id',$LuckyNumber)->value('num');
         $this->assign('LuckyName',$LuckyName);
         $this->assign('LuckyNumber',$LuckyNumber);
-
+        
         return $this->fetch('show');
+        
     }
 
-    public function submitSign()
-    {
-        // 获取当前登录用户信息
-
-        // 从表单接收数据
-
-        // 实例化Student学生空对象
-
-        // 为对象赋值
-
-        // 新增对象至数据表
-
-        // 反馈结果
-        $htmls = $this->fetch();
-        return $htmls;
-    }
-}        
+}

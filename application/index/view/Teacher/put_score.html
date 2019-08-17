@@ -71,6 +71,8 @@
         </div>
         <table class="table table-hover table-bordered" style="margin-top: 3%; background-color: white;">
             <tr class="info">
+                <th class="font">学期</th>
+                <th class="font">科目</th>
                 <th class="font">姓名</th>
                 <th class="font">性别</th>
                 <th class="font">学院</th>
@@ -84,6 +86,8 @@
             {volist name="$Courseids" id="Courseid"}
 
             <tr>
+                 <td class="list">{$Courseid->Term->name}</td>
+                <td class="list">{$Courseid->Course->name}</td>
                 <td class="list">{$Courseid->Student->name}</td>
                 <td class="list">{eq name="Courseid->Student->sex" value='0'}男{else /}女{/eq}</td>
                 <td class="list">{$Courseid->Student->college}</td>
