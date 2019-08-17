@@ -3,12 +3,15 @@ namespace app\index\controller;
 use app\common\model\Teacher;// 教师模型
 use app\common\model\Student;//学生模型  
 use app\common\model\Klass;
+
 use app\common\model\Score;
 use app\common\model\Course;
 use app\common\model\Term;
+
 use think\facade\Request;   
 use think\Controller;   // 请求
 use think\Db;
+use app\common\model\KlassSignIn;
 /**
  * 教师管理，继承think\Controller后，就可以利用V层对数据进行打包了。
  */
@@ -44,29 +47,37 @@ class TeacherController extends IndexController
     //查看签到信息
     public function seeSignin()
     {
-      $htmls = $this->fetch();
+
+        $KlassSignIn = new KlassSignIn;
+
+        $KlassSignIns = KlassSignIn::all();
+
+        $this->assign('KlassSignIns',$KlassSignIns);
+
+        $htmls = $this->fetch();
         return $htmls; 
+
     }
-    //获取前台传过来的平时成绩数据并保存到数据表中
     public function usualScore() {
         
        $data = Request::instance()->post();
        $id = $data['id'];
        $value = $data['value'];
-       $Score = Score::get($id);
-       $Score->usual_score = $value;
-       $Score->save();
+
+       $Student = Student::get($id);
+       $Student->usual_score = $value;
+       $Student->save();
        
     }
-     //获取前台传过来的考试成绩数据并保存到数据表中
     public function examScore() {
         
        $data = Request::instance()->post();
        $id = $data['id'];
        $value = $data['value'];
-       $Score = Score::get($id);
-       $Score->exam_score = $value;
-       $Score->save();
+
+       $Student = Student::get($id);
+       $Student->exam_score = $value;
+       $Student->save();
        
     }
     //查看学期末签到情况
@@ -87,6 +98,7 @@ class TeacherController extends IndexController
    $htmls = $this->fetch();
         return $htmls; 
     }
+
     //选择要查看学生信息的课程
     public function studentSelect()
     {
@@ -179,9 +191,10 @@ class TeacherController extends IndexController
                 $htmls = $this->fetch();
                  return $htmls; 
     }
-    //录入成绩总体表单
 
+    //录入成绩总体表单
     public function putScore()
+
    {  
          //从上一个V层获取用户所选择的课程的id，以便获取该课程的学生的信息
          $courseid = Request::instance()->post('course');  
@@ -197,6 +210,7 @@ class TeacherController extends IndexController
          $this->assign('Courseids',$Courseid);
          $htmls = $this->fetch();
          return $htmls;  
+
     }
     //查看留言
     public function message()
@@ -228,8 +242,7 @@ class TeacherController extends IndexController
     // 随机签到-显示随机提问时的学生信息
     public function show()
     {
-        // 连接2个数据库
-        Db::connect('yunzhi_teacher')->table('yunzhi_student')->find();
+        
 
         // 从数据库获取全体学生姓名，学号，放入array
         $Student = new Student;
