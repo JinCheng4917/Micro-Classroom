@@ -84,7 +84,7 @@
                     <th class="font">邮箱</th>
                     <th class="font">电话号码</th>
                 </tr>
-                {volist name="students" id="student"}
+            {volist name="$Courseids" id="Courseid"}
             <tr>
 
                 <td class="list">{$Courseid->Term->name}</td>
@@ -99,7 +99,7 @@
                 <td class="list">{$Courseid->Student->phone}</td>
 
                </tr>
-               {/volist}
+            {/volist}
            </table>
     <script src="js/jquery.js"></script>
 
