@@ -51,7 +51,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="{:url('Teacher/selectCourse')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+                            <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
                         </li>
                         <li>
                             <a href="{:url('Teacher/putScore')}" style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
@@ -80,19 +80,18 @@
                 <th class="font" style="width: 10%;">未签到次数</th>
                 <th class="font" style="width: 12%;">平时成绩</th>
                 <th class="font" style="width: 12%;">考试成绩</th>
-            </tr> 
-            {volist name="$Courseids" id="Courseid"}
-
+            </tr>
+            {volist name="students" id="student"}
             <tr>
-                <td class="list">{$Courseid->Student->name}</td>
-                <td class="list">{eq name="Courseid->Student->sex" value='0'}男{else /}女{/eq}</td>
-                <td class="list">{$Courseid->Student->college}</td>
-                <td class="list">{$Courseid->Student->major}</td>
-                <td class="list">{$Courseid->Student->Klass->name}</td>
-                <td class="list">{$Courseid->Student->num}</td>
-                <td class="list">{$Courseid->Student->unsign_count}</td>
-                <td class="list" contenteditable="true" onblur="autoSave(event)" id="{$Courseid-> id}">{$Courseid->usual_score}</td>
-                <td class="list" contenteditable="true" onblur="finalSave(event)" id="{$Courseid-> id}">{$Courseid->exam_score}</td>
+                <td class="list">{$student->name}</td>
+                <td class="list">{eq name="$student->sex" value='0'}男{else /}女{/eq}</td>
+                <td class="list">{$student->college}</td>
+                <td class="list">{$student->major}</td>
+                <td class="list">{$student->Klass->name}</td>
+                <td class="list">{$student->num}</td>
+                <td class="list">{$student->unsign_count}</td>
+                <td class="list" contenteditable="true" onblur="autoSave(event)" id="{$student-> id}">{$student->getData('usual_score')}</td>
+                <td class="list" contenteditable="true" onblur="finalSave(event)" id="{$student-> id}"> {$student->getData('exam_score')}</td>
 
             </tr>
             {/volist}

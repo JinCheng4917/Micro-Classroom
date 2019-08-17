@@ -77,14 +77,6 @@ class Teacher extends Model
     }
     public function Klass()
     {
-        return $this->belongsTo('Klass');
-    }
-     public function Course()
-    {
-        return $this->hasMany('Course');
-    }
-     public function Student()
-    {
-        return $this->belongsTo('Student');
+        return $this->belongsTo('klass');
     }
 }
