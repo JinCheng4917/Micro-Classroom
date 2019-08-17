@@ -53,19 +53,4 @@ class StudentController extends IndexController
         return $htmls;
 	}
 
-	public function forget_password()
-	{
-		return $this->fetch();
-	}
-
-
-	public function alter_password()
-	{
-		return $this->fetch();
-	}
-
-	public function register()
-	{
-		return $this->fetch();
-	}
 }

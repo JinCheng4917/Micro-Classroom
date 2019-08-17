@@ -22,4 +22,8 @@ public function index()
     {
     	return $this->belongsTo('Course');
     }
+    public function Term()
+    {
+        return $this->belongsTo('Term');
+    }
 }
