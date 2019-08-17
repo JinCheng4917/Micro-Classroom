@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+mk,<!DOCTYPE html>
 <html>
   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,7 +53,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                            <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+                            <a href="{:url('Teacher/studentSelect')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
                         </li>
                     <li>
                         <a href="{:url('Teacher/seeStudents')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
@@ -71,7 +71,7 @@
   
   <table class="table table-hover table-bordered" style="margin-top: 10%; background-color: white;">
                 <tr class="info">
-                   
+                    <th class="font">科目</th>
                     <th class="font">姓名</th>
                     <th class="font">性别</th>
                     <th class="font">学院</th>
@@ -81,16 +81,17 @@
                     <th class="font">邮箱</th>
                     <th class="font">电话号码</th>
                 </tr>
-                {volist name="students" id="student"}
+               {volist name="$Courseids" id="Courseid"}
             <tr>
-                <td class="list">{$student->name}</td>
-                <td class="list">{eq name="$student->sex" value='0'}男{else /}女{/eq}</td>
-                <td class="list">{$student->college}</td>
-                <td class="list">{$student->major}</td>
-                <td class="list">{$student->Klass->name}</td>
-                <td class="list">{$student->num}</td>
-                <td class="list">{$student->email}</td>
-                <td class="list">{$student->phone}</td>
+                <td class="list">{$Courseid->Course->name}</td>
+                <td class="list">{$Courseid->Student->name}</td>
+                <td class="list">{eq name="$Courseid->Student->sex" value='0'}男{else /}女{/eq}</td>
+                <td class="list">{$Courseid->Student->college}</td>
+                <td class="list">{$Courseid->Student->major}</td>
+                <td class="list">{$Courseid->Student->Klass->name}</td>
+                <td class="list">{$Courseid->Student->num}</td>
+                <td class="list">{$Courseid->Student->email}</td>
+                <td class="list">{$Courseid->Student->phone}</td>
                </tr>
                {/volist}
            </table>
