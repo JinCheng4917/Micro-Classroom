@@ -3,10 +3,11 @@ namespace app\index\controller;
 use app\common\model\Teacher;// 教师模型
 use app\common\model\Student;//学生模型  
 use app\common\model\Klass;
+use app\common\model\Score;
+use app\common\model\Course;
 use think\facade\Request;   
 use think\Controller;   // 请求
 use think\Db;
-use app\common\model\KlassSignIn;
 /**
  * 教师管理，继承think\Controller后，就可以利用V层对数据进行打包了。
  */
@@ -42,37 +43,29 @@ class TeacherController extends IndexController
     //查看签到信息
     public function seeSignin()
     {
-
-        $KlassSignIn = new KlassSignIn;
-
-        $KlassSignIns = KlassSignIn::all();
-
-        $this->assign('KlassSignIns',$KlassSignIns);
-
-        $htmls = $this->fetch();
+      $htmls = $this->fetch();
         return $htmls; 
-
     }
+    //获取前台传过来的平时成绩数据并保存到数据表中
     public function usualScore() {
         
        $data = Request::instance()->post();
        $id = $data['id'];
        $value = $data['value'];
-
-       $Student = Student::get($id);
-       $Student->usual_score = $value;
-       $Student->save();
+       $Score = Score::get($id);
+       $Score->usual_score = $value;
+       $Score->save();
        
     }
+     //获取前台传过来的考试成绩数据并保存到数据表中
     public function examScore() {
         
        $data = Request::instance()->post();
        $id = $data['id'];
        $value = $data['value'];
-
-       $Student = Student::get($id);
-       $Student->exam_score = $value;
-       $Student->save();
+       $Score = Score::get($id);
+       $Score->exam_score = $value;
+       $Score->save();
        
     }
     //查看学期末签到情况
@@ -103,19 +96,46 @@ class TeacherController extends IndexController
      $htmls = $this->fetch();
         return $htmls;  
     }
-    //录入成绩总体表单
-    public function putScore()
-    { //获取全部学生的信息
-        $students = Student::all();
-        //传到V层
-        $this->assign('students',$students);
-     $htmls = $this->fetch();
-        return $htmls;  
+    //进入录入成绩后选择科目
+    public function selectCourse()
+    {    
+        //获取当前登陆教师的id
+        $id = session('teacherId'); 
+        //获取score表里的全部信息
+        $score = Score::all();
+        //获取与当前教师id相同的id的教师的全部信息，筛选出course_id字段
+        $Teacherid = Score::where('teacher_id',$id)->column('course_id');
+        //对course_id这个字段进行筛选
+        $Courseid = array_unique($Teacherid);
+        //根据course_id这个字段进行逐个循环，根据id获取Course这个对象，以便得到course的name
+      
+         
+            foreach ($Courseid as $key => $value) {
+                // $value即为course的id  用map这个数组承接
+                $map['id'] = $value;
+       //用键值$key区分course对象  用get()方法获得id，从而获得course对象
+             $temp[$key] = Course::get($map);
+            }
+           //将获得的对象数组传到v层             
+         $this->assign('temp',$temp);
+        $htmls = $this->fetch();
+        return $htmls; 
     }
-    //录入成绩个人表单
-    public function scoreList()
-    {
-      $htmls = $this->fetch();
+    //录入成绩总体表单
+
+    public function putScore()
+   {  
+      //从上一个V层获取用户所选择的课程的id，以便获取该课程的学生的信息
+      $courseid = Request::instance()->post('id');   
+        //获取当前登陆教师的id
+        $id = session('teacherId');  
+         //获取score表里的全部信息 
+       $score = Score::all();
+           //获取与当前课程id相同的id的课程的全部信息
+        $Courseid = Score::where('teacher_id',$id)->where('course_id',$courseid)->select();
+        //把课程的id传到V层，从而获取相关的学生信息
+        $this->assign('Courseids',$Courseid);
+     $htmls = $this->fetch();
         return $htmls;  
     }
     //查看留言
@@ -148,7 +168,8 @@ class TeacherController extends IndexController
     // 随机签到-显示随机提问时的学生信息
     public function show()
     {
-        
+        // 连接2个数据库
+        Db::connect('yunzhi_teacher')->table('yunzhi_student')->find();
 
         // 从数据库获取全体学生姓名，学号，放入array
         $Student = new Student;
