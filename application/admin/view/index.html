@@ -28,11 +28,9 @@
                             <li><a href="{:url('Student/index')}">学生管理</a></li>
                             <li><a href="{:url('Klass/index')}">班级管理</a></li>
                             <li><a href="{:url('Course/index')}">课程管理</a></li>
+                            <li><a href="{:url('Term/index')}">学期管理</a></li>
                         </ul>
                         {/block}
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{:url('Login/logout')}"><i class="glyphicon glyphicon-off"></i>&nbsp;注销</a></li>
-                        </ul>
                     </div>
                 </div>
                 </nav>
@@ -47,7 +45,7 @@
                         <form class="form-inline">
                             <div class="form-group">
                                 <lable class="sr-only" for="name">姓名</lable>
-                                <input type="text" name="name" class="form-control" placeholder="姓名..." value="{:input('get.name')}">
+                                <input type="text" name="name" class="form-control" placeholder="" value="{:input('get.name')}">
                             </div>
                             <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>&nbsp;查询</button>
                         </form>

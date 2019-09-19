@@ -75,8 +75,43 @@ class Student extends Model
             return false;
         }
     }
+
+    protected $dateFormat = 'Y年m月d日';    // 日期格式
+
+    /**
+     * 输出性别的属性
+     
+     */
+    public function getSexAttr($value)
+    {
+        $status = array('0'=>'男','1'=>'女');
+        $sex = $status[$value];
+        if (isset($sex))
+        {
+            return $sex;
+        } else {
+            return $status[0];
+        }
+    } 
+     public function getCreateTimeAttr($value)
+    {
+        return date('Y-m-d', $value);
+    }
+
      public function Klass()
     {
-        return $this->belongsTo('klass');
+        return $this->belongsTo('Klass');
+    }
+    public function Course()
+    {
+        return $this->belongsTo('Course');
+    }
+    public function College()
+    {
+        return $this->belongsTo('College');
+    }
+      public function Term()
+    {
+        return $this->belongsTo('Term');
     }
 }
