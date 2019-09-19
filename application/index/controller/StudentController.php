@@ -11,11 +11,28 @@ use app\common\model\Chat;
 use think\Controller;   // 请求
 
 class StudentController extends StudentIndexController
+
 {
 	protected $batchValidate = true;
+
+	public function __construct()
+    {
+	   	//调用父类构造函数
+	   	parent::__construct();
+	   	//验证用户是否登录
+
+	   	if (!User::isLogin()){
+	    
+	   		return $this->error('请登录后再进行操作',url('Login/index'));
+     	} 
+
+
+
+ 		
+ 	}
 	public function index()
 	{
-		 // 取回打包后的数据
+		// 取回打包后的数据
         $htmls = $this->fetch();
 
         // 将数据返回给用户
@@ -174,55 +191,55 @@ class StudentController extends StudentIndexController
 
         // 将数据返回给用户
     return $htmls;
-}
-public function getName() {
-    $CourseId = Request::instance()->param('course/d');
-    $id = session('studentId'); 
-    $Teacher = Score::where('student_id',$id)->where('course_id',$CourseId)->column('teacher_id');
-    $Teacherid = array_unique($Teacher);
-    foreach ($Teacherid as $key => $value)
-    {
-         // $value即为term的id  用map这个数组承接
-        $map['id'] = $value;
-         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
-        $teachers[$key] = Teacher::get($map);
-    } 
-    return $teachers;
-}
-public function sentMessage()
-{
-    $id = session('studentId');
-    $chats = Chat::where('student_id',$id)->select();
-    $this->assign('id',$id);
-    $this->assign('chats',$chats);
-   
-    $teacherId = Request::instance()->param('teacher_id');
-    $this->assign('teacherId',$teacherId);
-    dump($teacherId);
- // 取回打包后的数据\
-    $htmls = $this->fetch();
- // 将数据返回给用户
-    return $htmls;
-}
-public function saveMessage()
-{
-    $studentId = session('studentId'); 
-    $teacherId = Request::instance()->param('teacher_id');
-    dump($teacherId);
-    $studentChat = Request::instance()->param('student_chat');
-    $chat = new Chat;
-    if (!is_null($studentId)&& !is_null($teacherId))
-    {
-    $chat->student_id = $studentId;
-    $chat->teacher_id = $teacherId;
-    $chat->student_chat = base64_encode($studentChat);
-    $chat->save();
-    return $this->success('发送成功',url('sentMessage') . '?teacher_id=' . $teacherId);
-}
-}
-public function deleteMessage()
-{
-$teacherId = Request::instance()->param('teacher_id');
-dump($teacherId);
-}
+	}
+	public function getName() {
+	    $CourseId = Request::instance()->param('course/d');
+	    $id = session('studentId'); 
+	    $Teacher = Score::where('student_id',$id)->where('course_id',$CourseId)->column('teacher_id');
+	    $Teacherid = array_unique($Teacher);
+	    foreach ($Teacherid as $key => $value)
+	    {
+	         // $value即为term的id  用map这个数组承接
+	        $map['id'] = $value;
+	         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
+	        $teachers[$key] = Teacher::get($map);
+	    } 
+	    return $teachers;
+	}
+	public function sentMessage()
+	{
+	    $id = session('studentId');
+	    $chats = Chat::where('student_id',$id)->select();
+	    $this->assign('id',$id);
+	    $this->assign('chats',$chats);
+	   
+	    $teacherId = Request::instance()->param('teacher_id');
+	    $this->assign('teacherId',$teacherId);
+	    dump($teacherId);
+	 // 取回打包后的数据\
+	    $htmls = $this->fetch();
+	 // 将数据返回给用户
+	    return $htmls;
+	}
+	public function saveMessage()
+	{
+	    $studentId = session('studentId'); 
+	    $teacherId = Request::instance()->param('teacher_id');
+	    dump($teacherId);
+	    $studentChat = Request::instance()->param('student_chat');
+	    $chat = new Chat;
+	    if (!is_null($studentId)&& !is_null($teacherId))
+	    {
+	    $chat->student_id = $studentId;
+	    $chat->teacher_id = $teacherId;
+	    $chat->student_chat = base64_encode($studentChat);
+	    $chat->save();
+	    return $this->success('发送成功',url('sentMessage') . '?teacher_id=' . $teacherId);
+	}
+	}
+	public function deleteMessage()
+	{
+	$teacherId = Request::instance()->param('teacher_id');
+	dump($teacherId);
+	}
 }

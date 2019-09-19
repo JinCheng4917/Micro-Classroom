@@ -13,6 +13,7 @@ use think\Db;
  * 教师管理，继承think\Controller后，就可以利用V层对数据进行打包了。
  */
 class TeacherController extends TeacherIndexController
+
 {
    protected $batchValidate = true;
    //教师端主界面
@@ -44,7 +45,18 @@ class TeacherController extends TeacherIndexController
     //查看签到信息
     public function seeSignin()
     {
-      $htmls = $this->fetch();
+
+        // 实例化
+        $KlassSignIn = new KlassSignIn;
+
+        // 获取全部对象
+        $KlassSignIns = KlassSignIn::all();
+
+        // 向V层传入获取的全部对象
+        $this->assign('KlassSignIns',$KlassSignIns);
+
+        // 提交给V层进行渲染并返回
+        $htmls = $this->fetch();
         return $htmls; 
     }
   
@@ -71,6 +83,7 @@ class TeacherController extends TeacherIndexController
     {
        //获取当前登陆教师的id
         $id = session('teacherId'); 
+
         //获取score表里的全部信息
         $score = Score::all();
         //获取与当前教师id相同的id的教师的全部信息，筛选出course_id字段
@@ -79,9 +92,12 @@ class TeacherController extends TeacherIndexController
         $Termsid = Score::where('teacher_id',$id)->column('term_id');
         //对course_id这个字段进行筛选
         $Courseid = array_unique($Teacherid);
+
         //对term_id这个字段进行筛选
         $TermId = array_unique($Termsid);
+
         //根据course_id这个字段进行逐个循环，根据id获取Course这个对象，以便得到course的name
+        // $key自动从0开始递增  $value就是$Courseid这个数组的值（一次赋值一个）
         foreach ($Courseid as $key => $value)
            {
          // $value即为course的id  用map这个数组承接
@@ -97,7 +113,7 @@ class TeacherController extends TeacherIndexController
          //用键值$key区分term对象  用get()方法获得id，从而获得term对象
                 $term[$key] = Term::get($map);
             } 
-           //将获得的对象数组传到v层             
+        //将获得的对象数组传到v层           
                 $this->assign('temp',$temp);
                 $this->assign('term',$term);
                 $htmls = $this->fetch();
@@ -107,7 +123,7 @@ class TeacherController extends TeacherIndexController
     public function seeStudents()
     {
         //从上一个V层获取用户所选择的课程的id，以便获取该课程的学生的信息
-         $courseid = Request::instance()->post('course');  
+         $courseid = Request::instance()->post('course'); 
          //从上一个V层获取用户所选择的学期的id，以便获取该课程的学生的信息
          $termid = Request::instance()->post('term');   
          //获取当前登陆教师的id

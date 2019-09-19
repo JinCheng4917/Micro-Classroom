@@ -2,6 +2,8 @@
 namespace app\index\controller;
 use think\Controller;
 use app\common\model\Teacher; //引入教师 
+use app\common\model\Student; 
+use app\common\model\User;
 class TeacherIndexController extends Controller
 {
     public function __construct()
@@ -13,7 +15,5 @@ class TeacherIndexController extends Controller
     
    return $this->error('请登录后再进行操作',url('Login/index'));
      }
- 
- }
+ 	}
 }
-
