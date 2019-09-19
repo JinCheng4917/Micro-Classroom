@@ -9,6 +9,7 @@ use app\common\model\Term;
 use think\facade\Request; 
 use app\common\model\Chat;
 use think\Controller;   // 请求
+use app\common\model\User;
 
 class StudentController extends StudentIndexController
 
