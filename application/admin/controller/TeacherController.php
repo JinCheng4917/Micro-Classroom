@@ -106,8 +106,8 @@ class TeacherController extends Controller
         if (!is_null($Teacher)) {
             $result = $this->validate(
       [
-   'name' => Request::instance()->post('name'),
-   'sex' => Request::instance()->post('sex'),
+    'name' => Request::instance()->post('name'),
+    'sex' => Request::instance()->post('sex'),
     'email' => Request::instance()->post('email'),
       ],
       'app\admin\validate\Teacher.edit');
