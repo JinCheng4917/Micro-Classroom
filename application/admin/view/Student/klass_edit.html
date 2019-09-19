@@ -5,10 +5,6 @@
 {block name="content"}
 {php}$action = request()->action() === 'add' ? 'save' : 'update';{/php}
             <form action="{:url($action)}" method="post">
-                <label>学期：</label>
-                <select name="term_id">
-                    {volist name="terms" id="_terms"}
-                    <option value="{$_terms->id}" {eq name="_terms->id" value="$klass->term_id" }selected="selected" {/eq}>{$_terms->name}</option> {/volist} </select>
         <input type="hidden" name="id" value="{$klass->getData('id')}" />
         <label for="name">班级:</label>
         {eq name="klass->name" value=""}
