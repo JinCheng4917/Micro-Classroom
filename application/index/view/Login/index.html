@@ -12,7 +12,6 @@
 
   <!-- 
     //////////////////////////////////////////////////////
-
     FREE HTML5 TEMPLATE 
     DESIGNED & DEVELOPED by FREEHTML5.CO
         
@@ -20,7 +19,6 @@
     Email:          info@freehtml5.co
     Twitter:        http://twitter.com/fh5co
     Facebook:       https://www.facebook.com/fh5co
-
     //////////////////////////////////////////////////////
      -->
 
@@ -31,7 +29,10 @@
     <meta property="og:url" content=""/>
     <meta property="og:site_name" content=""/>
     <meta property="og:description" content=""/>
-  
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
     
@@ -57,7 +58,6 @@
     <!-- Modernizr JS -->
     <script src="js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
-
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
     <![endif]-->
@@ -93,7 +93,7 @@
                         </li>
                         <li><a href="pricing.html">Pricing</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li class="btn-cta"><a href="#"><span>Get started</span></a></li>
+                        <li class="btn-cta"><a href="http://www.microklass.com/micro-classroom/public/Wechat"><span>微信登录</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -101,6 +101,7 @@
         </div>
     </nav>
     
+
     <header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url(images/img_4.jpg)">
         <div class="overlay"></div>
         <div class="gtco-container">
@@ -122,10 +123,11 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-content-inner active" data-content="signup">
-                                            <form action="{:url('Login/teacherLogin')}" method="post">
+                                            <form action="{:url('teacherLogin')}" method="post">
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
-                                                        <label for="username">帐号</label>
+                                                        <label for="username">帐号（教师）</label>
+                                                        <!-- 括号内后期删除 -->
                                                         <input type="text" class="form-control" id="username" name="username">
                                                     </div>
                                                 </div>
@@ -135,8 +137,24 @@
                                                         <input type="password" class="form-control" id="password" name="password">
                                                     </div>
                                                 </div>
-                                                  <div class="row form-group">
+
+                                                <div class="">
+                                                        <a href="{:url('Teacher/forget_password')}">    
+                                                            <button type="button" class="btn btn-default">忘记密码</button>
+                                                        </a>
+                                                        <a href="{:url('teacher/alter_password')}">
+                                                            <button type="button" class="btn btn-default">修改密码</button>
+                                                        </a>    
+                                                        </div>
+                                                        <div>
+                                                        <a href="{:url('Teacher/register')}">
+                                                            <button type="button" class="btn btn-default col-md-12">注册</button>
+                                                        </a>    
+                                                            
+                                                        </div>
+                                                <div class="row form-group">
                                                     <div class="col-md-12">
+                                                                                                               
                                                         <button type="submit" class="btn btn-primary" style="width: 100%">登录</button>
                                                     </div>
                                                 </div>
@@ -144,11 +162,11 @@
                                         </div>
 
                                         <div class="tab-content-inner" data-content="login">
-                                            <form action="{:url('Login/studentLogin')}" method="post">
+                                            <form action="#">
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
-                                                        <label for="num">帐号</label>
-                                                        <input type="text" class="form-control" id="num" name="num">
+                                                        <label for="username">帐号</label>
+                                                        <input type="text" class="form-control" id="username" name="name">
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
@@ -160,7 +178,24 @@
 
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
+                                                        <div class="">
+                                                        <a href="{:url('Student/forget_password')}">
+                                                            <button type="button" class="btn btn-default ">忘记密码</button>
+                                                        </a>
+                                                            
+                                                        <a href="{:url('Student/alter_password')}">
+                                                            <button type="button" class="btn btn-default ">修改密码</button>     
+                                                        </a>
+                                                                                                                  
+                                                        </div>
+                                                        <div>
+                                                        <a href="{:url('Student/register')}">
+                                                            <button type="button" class="btn btn-default col-md-12">注册</button>
+                                                        </a>
+                                                            
+                                                        </div>
                                                         <button type="submit" class="btn btn-primary" style="width: 100%">登录</button>
+
                                                     </div>
                                                 </div>
                                             </form> 
@@ -203,4 +238,3 @@
 
     </body>
 </html>
-
