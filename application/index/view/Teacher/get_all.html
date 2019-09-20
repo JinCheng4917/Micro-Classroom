@@ -6,8 +6,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-
- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
+  <script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
+  
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -16,28 +20,24 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 <head>
-    <title>今日课表</title>
+    <title>显示未签到学生信息</title>
 </head>
 <style type="text/css">
-  /*课表的整体的style*/
-   .form{
-   border-color: white;
-   width: 100%;
-   margin-top: 2%;
-   color: white;
-   }
-/*Micro-Classroom的整体的style*/
-   .sign{
-    color: white;
-    font-size: 30px;
-    margin-top: 5%;
-   } 
+    .font
+    {
+        font-size:16px;
+    }
+    .list
+    {
+        font-size: 13px;
+    }
 </style>
 <body style="background-image: url(img/intro-bg.jpg)">
-    
+    <div class="col-md-12">
                <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+   <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
         <div class="container topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -52,15 +52,15 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                   <li>
+                    <li>
                             <a href="{:url('Teacher/getSigninAll')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
                         </li>
                     <li>
-                        <a href="{:url('Teacher/getAll')}"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+                        <a href="{:url('Teacher/getAll')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
                     </li>
                     <li>
                     <!--两个注销--TeacherLogout--StudentLogout-->
-                        <a href="{:url('Teacher/index')}"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
+                        <a href="{:url('Teacher/index')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
                     </li>
                 </ul>
             </div>
@@ -68,27 +68,82 @@
         </div>
         <!-- /.container -->
     </nav>
-<h1 class="sign" align="center">Micro-Classroom</h1>
-<table border="2px" align="center" class="form">
-<td colspan="8" align="center" style="font-size: 21px; height:10%;">未签到学生信息</td>
-</tr>
-<tr align="center" style="font-size: 18px;">
-<td>姓名</td>
-<td>学号</td>
-<td>性别</td>
-<td>专业</td>
-<td>班级</td>
-<td style="width: 10%;">未签到次数</td>
-<td>备注</td>
-</tr>
+  
+  <table class="table table-hover table-bordered" style="margin-top: 10%; background-color: white;">
+                <tr class="info">
+                   <!--class-font控制的是表头字体大小-->
+                    <th class="font">姓名</th>
+            
+                   
+                    <th class="font">性别</th>
+                    <th class="font">班级</th>
+                    <th class="font">学号</th>
+                    <th class="font">未签到次数</th>
+                </tr>
+                
+                <tr>
+                  <!--class-list控制的是表单字体的大小-->
+                    <td class="list">张三</td>
+                    <td class="list">男</td>
+                    <td class="list">计1819</td>
+                    <td class="list">185790</td>
+
+                    <td class="list">2</td>
+                </tr>
+                <tr>
+                  
+                    <td class="list">张三</td>
+                    <td class="list">男</td>
+                    <td class="list">计1819</td>
+                    <td class="list">185790</td>
+
+                    <td class="list">2</td>
+                </tr>
+                <tr>
+                  
+                    <td class="list">张三</td>
+                    <td class="list">男</td>
+                    <td class="list">计1819</td>
+                    <td class="list">185790</td>
+
+                    <td class="list">2</td>
+                </tr>
+                <tr>
+                  
+                    <td class="list">张三</td>
+                    <td class="list">男</td>
+                    <td class="list">计1819</td>
+                    <td class="list">185790</td>
+
+                    <td class="list">2</td>
+                </tr>
+                <tr>
+                  
+                    <td class="list">张三</td>
+                    <td class="list">男</td>
+                    <td class="list">计1819</td>
+                    <td class="list">185790</td>
+
+                    <td class="list">2</td>
+                </tr>
+                <tr>
+                  
+                    <td class="list">张三</td>
+                    <td class="list">男</td>
+                    <td class="list">计1819</td>
+                    <td class="list">185790</td>
+
+                    <td class="list">2</td>
+                </tr>
+            </table>
 
 
-</table>
-<!-- jQuery -->
+
+
     <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
+</div>
 </body>
 </html>

@@ -6,10 +6,14 @@ use think\Model;    // 使用前进行声明
  */
 class Score extends Model
 {
-   public function Teacher()
-    {
-        return $this->belongsTo('Teacher');
-    }
+public function index()
+{
+	
+}
+
+    /**
+     * 一对多关联
+     */
     public function Student()
     {
         return $this->belongsTo('Student');

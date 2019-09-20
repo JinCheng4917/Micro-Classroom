@@ -75,51 +75,8 @@ class Teacher extends Model
             return false;
         }
     }
-      public function TeacherKlasses()
-    {
-        return $this->hasMany('TeacherKlass');
-    }
-    public function getIsChecked(Klass &$Klass)
-    {
-        // 取课程ID
-        $teacherId = (int)$this->id;
-        $klassId = (int)$Klass->id;
-
-        // 定制查询条件
-        $map = array();
-        $map['klass_id'] = $klassId;
-        $map['teacher_id'] = $teacherId;
-
-        // 从关联表中取信息
-        $TeacherKlass = TeacherKlass::get($map);
-        if (is_null($TeacherKlass)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-     public function Courses()
-    {
-        return $this->belongsToMany('Course', 'teacher_course');
-    }
-    public function Klasses()
-    {
-        return $this->belongsToMany('Klass', 'teacher_klass');
-    }
     public function Klass()
     {
-        return $this->belongsTo('Klass');
-    }
-     public function Course()
-    {
-        return $this->hasMany('Course');
-    }
-     public function Student()
-    {
-        return $this->belongsTo('Student');
-    }
-     public function Term()
-    {
-        return $this->belongsTo('Term');
+        return $this->belongsTo('klass');
     }
 }
