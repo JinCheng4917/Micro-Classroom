@@ -9,10 +9,8 @@ use app\common\model\Term;
 use think\facade\Request; 
 use app\common\model\Chat;
 use think\Controller;   // 请求
-use app\common\model\User;
 
 class StudentController extends StudentIndexController
-
 {
 	protected $batchValidate = true;
 
@@ -31,9 +29,10 @@ class StudentController extends StudentIndexController
 
  		
  	}
+
 	public function index()
 	{
-		// 取回打包后的数据
+		 // 取回打包后的数据
         $htmls = $this->fetch();
 
         // 将数据返回给用户
@@ -165,7 +164,9 @@ class StudentController extends StudentIndexController
         // 将数据返回给用户
        return $htmls;
    }
-	//留言
+/*
+**留言选择教师
+ */
    public function putMessage()
    {
         //获取当前登陆学生的id
@@ -195,55 +196,74 @@ class StudentController extends StudentIndexController
 
         // 将数据返回给用户
     return $htmls;
-	}
-	public function getName() {
-	    $CourseId = Request::instance()->param('course/d');
-	    $id = session('studentId'); 
-	    $Teacher = Score::where('student_id',$id)->where('course_id',$CourseId)->column('teacher_id');
-	    $Teacherid = array_unique($Teacher);
-	    foreach ($Teacherid as $key => $value)
-	    {
-	         // $value即为term的id  用map这个数组承接
-	        $map['id'] = $value;
-	         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
-	        $teachers[$key] = Teacher::get($map);
-	    } 
-	    return $teachers;
-	}
-	public function sentMessage()
-	{
-	    $id = session('studentId');
-	    $chats = Chat::where('student_id',$id)->select();
-	    $this->assign('id',$id);
-	    $this->assign('chats',$chats);
-	   
-	    $teacherId = Request::instance()->param('teacher_id');
-	    $this->assign('teacherId',$teacherId);
-	    dump($teacherId);
-	 // 取回打包后的数据\
-	    $htmls = $this->fetch();
-	 // 将数据返回给用户
-	    return $htmls;
-	}
-	public function saveMessage()
-	{
-	    $studentId = session('studentId'); 
-	    $teacherId = Request::instance()->param('teacher_id');
-	    dump($teacherId);
-	    $studentChat = Request::instance()->param('student_chat');
-	    $chat = new Chat;
-	    if (!is_null($studentId)&& !is_null($teacherId))
-	    {
-	    $chat->student_id = $studentId;
-	    $chat->teacher_id = $teacherId;
-	    $chat->student_chat = base64_encode($studentChat);
-	    $chat->save();
-	    return $this->success('发送成功',url('sentMessage') . '?teacher_id=' . $teacherId);
-	}
-	}
-	public function deleteMessage()
-	{
-	$teacherId = Request::instance()->param('teacher_id');
-	dump($teacherId);
-	}
+}
+public function getName() {
+    $CourseId = Request::instance()->param('course/d');
+    $id = session('studentId'); 
+    $Teacher = Score::where('student_id',$id)->where('course_id',$CourseId)->column('teacher_id');
+    $Teacherid = array_unique($Teacher);
+    foreach ($Teacherid as $key => $value)
+    {
+         // $value即为term的id  用map这个数组承接
+        $map['id'] = $value;
+         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
+        $teachers[$key] = Teacher::get($map);
+    } 
+    return $teachers;
+}
+/*
+**  在线留言界面 
+ */
+public function sentMessage()
+{
+    $id = session('studentId');
+    
+    $this->assign('id',$id);
+    
+   
+    $teacherId = Request::instance()->param('teacher_id');
+    $chats = Chat::where('student_id',$id)->where('teacher_id',$teacherId)->select();
+    $this->assign('teacherId',$teacherId);
+    $this->assign('chats',$chats);
+ // 取回打包后的数据\
+    $htmls = $this->fetch();
+ // 将数据返回给用户
+    return $htmls;
+}
+/*
+**保存留言
+ */
+public function saveMessage()
+{
+    //获取当前登陆的学生id
+    $studentId = session('studentId'); 
+    //获取教师的id
+    $teacherId = Request::instance()->param('teacher_id');
+    //获取学生的留言
+    $studentChat = Request::instance()->param('student_chat');
+    //如果非空则赋值并保存
+    $chat = new Chat;
+    if (!is_null($studentId)&& !is_null($teacherId))
+    {
+    $chat->student_id = $studentId;
+    $chat->teacher_id = $teacherId;
+    $chat->student_chat = base64_encode($studentChat);
+    $chat->save();
+    return $this->success('发送成功',url('sentMessage') . '?teacher_id=' . $teacherId);
+}
+}
+/*
+**删除留言
+ */
+public function deleteMessage()
+{
+$teacherId = Request::instance()->param('teacher_id');
+$studentId = session('studentId'); 
+$chats = Chat::where('teacher_id',$teacherId)->where('student_id',$studentId);
+if(! $chats->delete())
+{
+return $this->error('清空失败:' . $Student->getError());
+}
+return $this->success('清空成功' , url('sentMessage') . '?teacher_id=' . $teacherId);
+}
 }

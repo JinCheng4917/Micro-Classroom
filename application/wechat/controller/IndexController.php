@@ -1,6 +1,4 @@
 <?php
-/**
- */
 namespace app\wechat\controller;
 use app\service\Wechat;//引入我们刚才新建在service下的wechat类
 use think\Controller;

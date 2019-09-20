@@ -2,7 +2,6 @@
 namespace app\index\controller;
 use think\Controller;
 use app\common\model\Student; 
-use app\common\model\User;
 class StudentIndexController extends Controller
 {
     public function __construct()
