@@ -1,184 +1,171 @@
 <!DOCTYPE html>
 <html>
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
-  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
-  <script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
-  
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/landing-page.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap-theme.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
+<script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="css/landing-page.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 <head>
     <title>成绩查询</title>
 </head>
 <style type="text/css">
- .auto_arrange{ table-layout:fixed }
- .auto_arrange td{text-overflow:ellipsis;overflow:hidden;white-space: nowrap;padding:2px}
- .bs-docs-home
-{ 
-background-color: #1B31B1; 
-background-image: url(line.png); 
-} 
+.auto_arrange {
+    table-layout: fixed
+}
+
+.auto_arrange td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 2px
+}
+
+.bs-docs-home {
+    background-color: #1B31B1;
+    background-image: url(line.png);
+}
 </style>
-<body style="background-image: url(img/intro-bg.jpg)">
-	<div class="col-md-12">
-	           <!-- Navigation -->
-   <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
-        <div class="container topnav">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">微课堂</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand topnav" href="#">微课堂</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
+
+<body style="background-image: url(img/intro-bg.jpg)" onload="load()">
+    <div class="col-md-12">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+            <div class="container topnav">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">微课堂</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand topnav" href="#">微课堂</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
                             <a href="{:url('Student/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
                         </li>
-                    <li>
-                        <a href="{:url('Student/getScore')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
-                    </li>
-                    <li>
-                    <!--两个注销--TeacherLogout--StudentLogout-->
-                        <a href="{:url('Student/index')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
-                    </li>
-                </ul>
+                        <li>
+                            <a href="{:url('Student/getScore')}" style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+                        </li>
+                        <li>
+                            <!--两个注销--TeacherLogout--StudentLogout-->
+                            <a href="{:url('Student/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.navbar-collapse -->
+            <!-- /.container -->
+        </nav>
+        <div class="small-text-center">
+            <h1 style="color: white; margin-top: 5%;">微课堂成绩查询系统</h1>
         </div>
-        <!-- /.container -->
-    </nav>
-      <div class="small-text-center">
-  <h1 style="color: white; margin-top: 5%;">微课堂成绩查询系统</h1>
-  </div>
 
-<body class="bs-docs-home" align="center" valign="middle">
-<div class="container theme-showcase" style="width: 100%;">
-<h1 style=" line-height:2em;"> </h1><br />
-<div class="row">
-<div class="col-sm-3"></div>
-<div class="col-sm-6" style="width: 100%; margin-left: 69%;">
-<div class="panel panel-primary">
-<div class="panel-heading">
-<h3 class="panel-title"><strong>期末成绩查询</strong></h3>
-</div>
-<div class="panel-body">
-<div class="alert alert-danger alert-dismissable">
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-<strong>注意!</strong> 本站查询的分数来源于教师端，详情请到官网咨询</div>
-<form role="form" name="form1">
-
-<div class="form-group">
-<label for="" style="font-size: 18px;">请选择学期</label>
-  <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
-
-<input name="subject" id="subject" type="hidden" data-label="," value="">
-              <select name="city" id="s2" lay-search style="height: 1%;">
-                  <option value="">2019年春季学期</option>
-                  <option value="2019年秋季学期">2019年秋季学期</option>
-                  <option value="2020年春季学期">2020年春季学期</option>
-                  <option value="2020年秋季学期">2020年秋季学期</option>    
-              </select>
-
-<script>
-    var seleVal='';
-    $("#add_subject").on("click",function(){
-        seleVal+=$("#s2>option:selected").val()+',';
-        $("#subject").val(seleVal);
-    }) 
-</script>
-
-<div class="form-group">
-<label for="course" style="font-size: 18px;">请选择科目</label>
-<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
-
-<input name="subject" id="subject" type="hidden" data-label="," value="">
-              <select name="city" id="s2" lay-search style="height: 1%;">
-                  <option value="">C语言</option>
-                  <option value="高等数学">高等数学</option>
-                  <option value="大学英语">大学英语</option>
-                  <option value="大学物理">大学物理</option>    
-              </select>
-
-<script>
-    var seleVal='';
-    $("#add_subject").on("click",function(){
-        seleVal+=$("#s2>option:selected").val()+',';
-        $("#subject").val(seleVal);
-    }) 
-</script>
-
-</form>
-
-<button class="btn btn-danger" type="button" onClick="form1.submit();" style="width: 100%;">查询</button>
-<div class="alert alert-danger alert-dismissable">
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-<strong>注意!</strong> 没有查到成绩，请检查科目和学期后，再次查询 
-</div> 
-<div class="table-responsive">
-<table border="0" cellspacing="0" cellpadding="0" class="table">
-<tr class=" label-primary">
-<th scope="col" width="50%" ><span style="color:white;font-size:18px;" >科目</span></th>
-<th scope="col"><span style="color:white;font-size:18px;">成绩</span></th>
-</tr>
-<tr class="active">
-<td width="50%" style="font-size: 13px;">C语言</td>
-<td style="font-size: 13px;">69</td>
-</tr>
-<tr class="success">
-<td style="font-size: 13px;">高等数学</td>
-<td style="font-size: 13px;">61</td>
-</tr>
-<tr class="active">
-<td style="font-size: 13px;">大学英语</td>
-<td style="font-size: 13px;">95</td>
-</tr>
-<tr class="success">
-<td style="font-size: 13px;">大学物理</td>
-<td style="font-size: 13px;">78</td>
-</tr> 
-</table>
-</div> 
-</div>
-</div>
-</div>
-<div class="col-sm-3"></div>
-</div>
-</div> 
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
-</body>
-
-
+        <body class="bs-docs-home" align="center" valign="middle">
+            <div class="container theme-showcase" style="width: 100%;">
+                <h1 style=" line-height:2em;"> </h1><br />
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6" style="width: 100%; margin-left: 69%;">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><strong>期末成绩查询</strong></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    <strong>注意!</strong> 本站查询的分数来源于教师端，详情请到官网咨询</div>
+            <form action="{:url('Student/scoreDisplay')}" method="post">
+                     <div class="form-group">
+                         <label for="" style="font-size: 18px;">请选择学期</label>
+            <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+                         <input name="subject" id="subject" type="hidden" data-label="," value="">
+                <select name="term" id="term" lay-search style="height: 4%;" onchange="getCourse()">
+                  {volist name="$term" id="Term"}
+                  <option value="{$Term->id}" {eq name="Term->id" value="$Term->id" }selected="selected" {/eq}>{$Term->name} </option> {/volist} 
+                </select> 
+              <div class="form-group">
+                          <label for="course" style="font-size: 18px;">请选择科目</label>
+            <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+                          <input name="subject" id="subject" type="hidden" data-label="," value="">
+                <select id="course" name="course" style="height: 4%;">
+                </select>
+              </div>
+                    <button class="btn btn-danger" type="submit" style="width: 100%;">查询</button>
+                                </form>
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="submit" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    <strong>注意!</strong> 如果没有查到成绩，请检查科目和学期后，再次查询
+                                </div>
+                                <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+                                <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
+        </body>
+        <!-- jQuery -->
     <script src="js/jquery.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-</div>
+    <script type="text/javascript">
+       function load() {
+            getCourse();
+        }
+
+        function getCourse() {
+              function clear(node) {
+            node.length = 0;
+          }
+            let termNode = document.getElementById('term');
+            let courseNode = document.getElementById('course');
+            let index = termNode.selectedIndex;
+            let value = termNode[index].value;
+            let url = "getCourse?term=" + value;
+            ajaxGet(url, function (response) {
+                clear(courseNode);
+              createOption(courseNode, response);
+         });
+         
+        }
+        function createOption(node,inners,values){
+            for(let i = 0; i<inners.length; i++){
+                let option = document.createElement('option');
+                option.value = inners[i].id;
+                option.name = node;
+                option.innerHTML = inners[i].name;
+                node.appendChild(option);
+            }
+        }
+       
+
+       function ajaxGet(url, callback) {
+          $.ajax({
+            url: url,
+            type: "get",
+            success: function (response) {
+                callback(response);
+            },
+            error: function (xhr) {
+                console.log('server error');
+                console.log(xhr);
+            }
+        });
+
+        
+    }
+    </script>
+    </div>
 </body>
+
 </html>

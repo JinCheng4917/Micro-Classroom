@@ -5,6 +5,10 @@
 {block name="content"}
 {php}$action = request()->action() === 'add' ? 'save' : 'update';{/php}
 <form action="{:url('Teacher/' . $action)}" method="post">
+     <label>学期:</label>
+      <select name="term_id">
+        {volist name="terms" id="_terms"}
+        <option value="{$_terms->id}" {eq name="_terms->id" value="$Teacher->term_id" }selected="selected" {/eq}>{$_terms->name}</option> {/volist} </select>
     <label>姓名:</label>
     <input type="hidden" name="id" value="{$Teacher->id}" />
     <input type="text" name="name" value="{$Teacher->name}" />
@@ -17,13 +21,12 @@
         <option value="1" {eq name="Teacher->sex" value="1" }selected="selected" {/eq}>女</option>
     </select>
     <label>邮箱:</label>
-    <input type="email" name="email" value="{$Teacher->email}" />
-
-    <label>任教班级：</label>
-    <input type="text" name="klass" value="">
-   
-    <label>任教课程：</label>
-    <input type="text" name="course" value="">
+    <input type="email" name="email" value="{$Teacher->email}"/>
+      <label>所教班级:</label> 
+          {volist name="klass" id="Klass"}
+            <input type="checkbox" name="Klass_id[]" id="Klass_id_{$Klass->id}" value="{$Klass->id}" {eq name="Teacher->getIsChecked($Klass)" value="true"}checked="checked"{/eq}/>
+            <label for="Klass_id_{$Klass->id}">{$Klass->name}</label>
+        {/volist}
     <button type="submit">保存</button>
 </form>
 {/block}

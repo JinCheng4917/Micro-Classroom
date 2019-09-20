@@ -17,7 +17,7 @@
 <!-- Custom Fonts -->
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+<!-- <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"> -->
 
 <head>
     <title>成绩录入</title>
@@ -27,12 +27,17 @@
     font-size: 16px;
 }
 
+.option {
+    font-size: 18px;
+    color: white;
+}
+
 .list {
     font-size: 13px;
 }
 </style>
 
-<body style="background-image: url(img/intro-bg.jpg)">
+<body style="background-image: url(img/intro-bg.jpg)" onload="obtainWeight(event);">
     <div class="col-md-12">
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
@@ -51,7 +56,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+                            <a href="{:url('Teacher/selectCourse')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
                         </li>
                         <li>
                             <a href="{:url('Teacher/putScore')}" style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
@@ -69,7 +74,26 @@
         <div class="small-text-center">
             <h1 style="color: white; margin-top: 5%;">微课堂成绩录入系统</h1>
         </div>
-        <table class="table table-hover table-bordered" style="margin-top: 3%; background-color: white;">
+        <button type="button" class="btn btn-danger" style="margin-left:80%; width: 18%;">开放成绩查询</button>
+        <div class="col-md-5" style="margin-left: 5%;">
+            <label for="" class="option">请选择平时成绩所占权重</label>
+            <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+            <select name="usual" id="usual" lay-search style="height: 4%;" onchange="reload();">
+                <option value="0.3">30%</option>
+                <option value="0.1">10%</option>
+                <option value="0.2">20%</option>
+                <option value="0.4">40%</option>
+                <option value="0.5">50%</option>
+                <option value="0.6">60%</option>
+            </select>
+        </div>
+        <div class="col-md-5">
+            <label for="" class="option">考试成绩所占权重</label>
+            <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+            <select name="exam" id="exam" lay-search style="height: 4%;">
+            </select>
+        </div>
+        <table class="table table-hover table-bordered" style="margin-top: 6%; background-color: white;">
             <tr class="info">
                 <th class="font">学期</th>
                 <th class="font">科目</th>
@@ -82,46 +106,149 @@
                 <th class="font" style="width: 10%;">未签到次数</th>
                 <th class="font" style="width: 12%;">平时成绩</th>
                 <th class="font" style="width: 12%;">考试成绩</th>
+                <th class="font">总成绩</th>
             </tr>
             {volist name="$Courseids" id="Courseid"}
             <tr>
-
-                 <td class="list">{$Courseid->Term->name}</td>
+                <td class="list">{$Courseid->Term->name}</td>
                 <td class="list">{$Courseid->Course->name}</td>
                 <td class="list">{$Courseid->Student->name}</td>
                 <td class="list">{eq name="Courseid->Student->sex" value='0'}男{else /}女{/eq}</td>
-                <td class="list">{$Courseid->Student->college}</td>
+                <td class="list">{$Courseid->Student->College->name}</td>
                 <td class="list">{$Courseid->Student->major}</td>
                 <td class="list">{$Courseid->Student->Klass->name}</td>
                 <td class="list">{$Courseid->Student->num}</td>
                 <td class="list">{$Courseid->Student->unsign_count}</td>
-                <td class="list" contenteditable="true" onblur="autoSave(event)" id="{$Courseid-> id}">{$Courseid->usual_score}</td>
-                <td class="list" contenteditable="true" onblur="finalSave(event)" id="{$Courseid-> id}">{$Courseid->exam_score}</td>
-
-
+                <td class="list usual" contenteditable="true" onblur="autoSave(event);" id="{$Courseid-> id}">{$Courseid->usual_score}</td>
+                <td class="list exam" contenteditable="true" onblur="finalSave(event);" id="{$Courseid-> id}">{$Courseid->exam_score}</td>
+                <td class="list total" id="{$Courseid-> id}"></td>
             </tr>
             {/volist}
-            <button type="button" class="btn btn-danger" style="margin-left:80%; width: 18%;">开放成绩查询</button>
             <script type="text/javascript">
             </script>
-            <script src="js/jquery.js"></script>
+            <script src="js/jquery.js">
+            </script>
             <!-- Bootstrap Core JavaScript -->
             <script src="js/bootstrap.min.js"></script>
             <script type="text/javascript">
+            $(document).ready(function() {
+                 $('.total').on('change', function() {
+                    alter("call");
+                })
+                setTimeout(function() { init(); }, 200); //5秒后将会调用执行remind()函数
+
+               
+            })
+
+
+
+            function reload() {
+                obtainWeight();
+                init();
+            }
+
+            function init() {
+                let usual = document.getElementsByClassName('usual');
+                for (var i = 0; i < usual.length; i++) {
+                    console.log(usual[i]);
+
+                    totalAchievements(usual[i].id);
+
+
+                }
+            }
+
             function autoSave(event) {
-              
                 const id = event.target.id;
-                const value = event.target.textContent;
-                $.post("usualScore", { id: id, value: value}, function(result) {
-                    console.log('success');
+                const usualValue = event.target.textContent;
+                $.post("usualScore", { id: id, usualvalue: usualValue }, function(result) {
+                    totalAchievements(id);
+                });
+
+            }
+
+            function finalSave(event) {
+                const id = event.target.id;
+                const examValue = event.target.textContent;
+                $.post("examScore", { id: id, examvalue: examValue }, function(result) {
+                    totalAchievements(id);
                 });
             }
-             function finalSave(event) {
-                
-                const id = event.target.id;
-                const value = event.target.textContent;
-                $.post("examScore", { id: id, value: value}, function(result) {
-                    console.log('success');
+
+            function totalSave(id, totalValue) {
+               
+                console.log(totalValue);
+                $.post("totalScore", { id: id, totalValue: totalValue }, function(result) {
+
+                });
+            }
+
+            function obtainWeight(event) {
+                let usual = document.getElementsByClassName('usual');
+
+                let weightNode = document.getElementById("usual");
+                let examNode = document.getElementById('exam');
+                let index = weightNode.selectedIndex;
+                let value = weightNode.options[index].value;
+                //利用url跳转将term节点的值传到后台
+                let url = "getWeight?usualScore=" + value;
+
+                ajaxGet(url, function(response) {
+                    console.log(response);
+                    clear(examNode);
+                    createOption(examNode, response);
+                    totalAchievements();
+                });
+                //调用creatOption方法
+            }
+
+            function createOption(node, inners, values) {
+                let examScore = document.createElement('option');
+                examScore.name = node;
+                examScore.innerHTML = inners;
+                node.appendChild(examScore);
+            }
+
+            function clear(node) {
+                node.length = 0;
+            }
+
+            function totalAchievements(id) {
+                let index;
+                let usual = document.getElementsByClassName('usual');
+                let exam = document.getElementsByClassName('exam');
+                let total = document.getElementsByClassName('total');
+                let usualWeight = document.getElementById("usual").value;
+
+                for (var i = 0; i < usual.length; i++) {
+                    if (usual[i].id === id) {
+                        index = i;
+                        break;
+                    }
+                }
+                usualScore = usual[index];
+                examScore = exam[index];
+                totalScore = total[index];
+                if (usualScore && examScore && totalScore) {
+                    let response = usualWeight * usualScore.innerText + (1 - usualWeight) * examScore.innerText;
+                    totalScore.innerText = response;
+                    totalSave(id, response);
+                }
+            }
+
+            function ajaxGet(url, callback) {
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    //成功后调用success后面的语句
+                    success: function(response) {
+                        callback(response);
+                    },
+                    //失败后调用error后面的语句
+                    error: function(xhr) {
+                        console.log('server error');
+                        console.log(xhr);
+                    }
                 });
             }
             </script>
