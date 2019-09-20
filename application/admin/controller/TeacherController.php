@@ -116,7 +116,6 @@ public function update()
         // 接收数据，取要更新的关键字信息
     $id = Request::instance()->post('id/d');
         // 获取当前对象
-
     $Teacher = Teacher::get($id);
     if (!is_null($Teacher)) {
         $result = $this->validate(
@@ -128,7 +127,6 @@ public function update()
          'app\admin\validate\Teacher.edit');
         if ( true !== $result) 
         {
-
             dump($result);
         } 
         

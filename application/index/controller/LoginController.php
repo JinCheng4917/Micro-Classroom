@@ -4,7 +4,6 @@ use think\facade\Request;              // 请求
 use think\Controller;
 use app\common\model\Teacher;   // 教师模型
 use app\common\model\Student;
-use app\service\Wechat;
 
 class LoginController extends Controller
 {
@@ -19,6 +18,7 @@ class LoginController extends Controller
     {
         // 接收post信息
         $postData = Request::instance()->post();
+
         // 直接调用M层方法，进行登录。
         if (Teacher::login($postData['username'], $postData['password'])) {
             return $this->success('login success', url('Teacher/index'));
@@ -41,6 +41,7 @@ class LoginController extends Controller
     {
         // 接收post信息
         $postData = Request::instance()->post();
+
         // 直接调用M层方法，进行登录。
         if (Student::login($postData['num'], $postData['password'])) {
             return $this->success('login success', url('Student/index'));
@@ -56,4 +57,5 @@ class LoginController extends Controller
             return $this->error('logout error', url('Login/index'));
         }
     }
+
 }

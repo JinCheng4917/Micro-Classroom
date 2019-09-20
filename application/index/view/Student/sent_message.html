@@ -137,11 +137,13 @@
                     <div class="teacher"><span id="teacher">有事请留言</span></div>
                     {for start="0" end="count($chats)"}
                     {volist name="chats" id="_chats"}
-                    {if !empty($_chats->student_chat)}
+                    {if empty($_chats->student_chat)}
                     {if !empty($_chats->teacher_chat)}
-                    <div class="student"><span id="student">{:base64_decode($_chats->student_chat)}</span></div>
                     <div class="teacher"><span id="teacher">{:base64_decode($_chats->teacher_chat)}</span></div>
-                    {else}
+                    {/if}
+                    {/if}
+                    {if empty($_chats->teacher_chat)}
+                    {if !empty($_chats->student_chat)}
                     <div class="student"><span id="student">{:base64_decode($_chats->student_chat)}</span></div>
                     {/if}
                     {/if}
@@ -154,7 +156,6 @@
                 </div>
             </div>
     </form>
-    {:dump($teacherId)}
     <div style="text-align:center;">
         <a class="btn btn-sm btn-danger" href="{:url('deleteMessage?teacher_id=' . $teacherId)}"><i class="glyphicon glyphicon-trash"></i>&nbsp;清空记录</a>
     </div>

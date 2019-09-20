@@ -6,6 +6,7 @@ use app\common\model\Klass;
 use app\common\model\Score;
 use app\common\model\Course;
 use app\common\model\Term;
+use app\common\model\Chat;
 use think\facade\Request;   
 use think\Controller;   // 请求
 use think\Db;
@@ -13,7 +14,6 @@ use think\Db;
  * 教师管理，继承think\Controller后，就可以利用V层对数据进行打包了。
  */
 class TeacherController extends TeacherIndexController
-
 {
    protected $batchValidate = true;
    //教师端主界面
@@ -45,18 +45,7 @@ class TeacherController extends TeacherIndexController
     //查看签到信息
     public function seeSignin()
     {
-
-        // 实例化
-        $KlassSignIn = new KlassSignIn;
-
-        // 获取全部对象
-        $KlassSignIns = KlassSignIn::all();
-
-        // 向V层传入获取的全部对象
-        $this->assign('KlassSignIns',$KlassSignIns);
-
-        // 提交给V层进行渲染并返回
-        $htmls = $this->fetch();
+      $htmls = $this->fetch();
         return $htmls; 
     }
   
@@ -83,7 +72,6 @@ class TeacherController extends TeacherIndexController
     {
        //获取当前登陆教师的id
         $id = session('teacherId'); 
-
         //获取score表里的全部信息
         $score = Score::all();
         //获取与当前教师id相同的id的教师的全部信息，筛选出course_id字段
@@ -92,12 +80,9 @@ class TeacherController extends TeacherIndexController
         $Termsid = Score::where('teacher_id',$id)->column('term_id');
         //对course_id这个字段进行筛选
         $Courseid = array_unique($Teacherid);
-
         //对term_id这个字段进行筛选
         $TermId = array_unique($Termsid);
-
         //根据course_id这个字段进行逐个循环，根据id获取Course这个对象，以便得到course的name
-        // $key自动从0开始递增  $value就是$Courseid这个数组的值（一次赋值一个）
         foreach ($Courseid as $key => $value)
            {
          // $value即为course的id  用map这个数组承接
@@ -113,7 +98,7 @@ class TeacherController extends TeacherIndexController
          //用键值$key区分term对象  用get()方法获得id，从而获得term对象
                 $term[$key] = Term::get($map);
             } 
-        //将获得的对象数组传到v层           
+           //将获得的对象数组传到v层             
                 $this->assign('temp',$temp);
                 $this->assign('term',$term);
                 $htmls = $this->fetch();
@@ -123,7 +108,7 @@ class TeacherController extends TeacherIndexController
     public function seeStudents()
     {
         //从上一个V层获取用户所选择的课程的id，以便获取该课程的学生的信息
-         $courseid = Request::instance()->post('course'); 
+         $courseid = Request::instance()->post('course');  
          //从上一个V层获取用户所选择的学期的id，以便获取该课程的学生的信息
          $termid = Request::instance()->post('term');   
          //获取当前登陆教师的id
@@ -239,14 +224,76 @@ class TeacherController extends TeacherIndexController
          $htmls = $this->fetch();
          return $htmls;  
     }
-    //查看留言
+    //查看留言者
     public function message()
     {
+    $id = session('teacherId'); 
+    $studentIds = Chat::where('teacher_id',$id)->column('student_id');
+    $studentId = array_unique($studentIds);
+    if(isset($studentId))
+    {
+         foreach ($studentId as $key => $value)
+           {
+         // $value即为term的id  用map这个数组承接
+                $map['id'] = $value;
+         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
+                $student[$key] = Student::get($map);
+            } 
+          $this->assign('student',$student);
+    }
+
     $htmls = $this->fetch();
         return $htmls;    
     }
-
-
+  /*
+  **查看留言
+   */
+public function getMessage()
+{
+    $teacherId = session('teacherId');
+    $studentId = Request::instance()->param('student_id');
+    $chats = Chat::where('teacher_id',$teacherId)->where('student_id',$studentId)->select();
+    $this->assign('studentId',$studentId);
+    $this->assign('teacherId',$teacherId);
+    $this->assign('chats',$chats);
+    return $this->fetch();
+}
+/*
+**保存留言
+ */
+public function saveMessage()
+{
+   //获取当前登陆的学生id
+    $teacherId = session('teacherId');
+    //获取教师的id
+    $studentId = Request::instance()->param('student_id');
+    //获取学生的留言
+    $teacherChat = Request::instance()->param('teacher_chat');
+    //如果非空则赋值并保存
+    $chat = new Chat;
+    if (!is_null($studentId)&& !is_null($teacherId))
+    {
+    $chat->student_id = $studentId;
+    $chat->teacher_id = $teacherId;
+    $chat->teacher_chat = base64_encode($teacherChat);
+    $chat->save();
+    return $this->success('发送成功',url('getMessage') . '?student_id=' . $studentId);
+}
+}
+/*
+** 清空消息
+ */
+public function deleteMessage()
+{
+$teacherId = session('teacherId');
+$studentId = Request::instance()->param('student_id'); 
+$chats = Chat::where('teacher_id',$teacherId)->where('student_id',$studentId);
+if(! $chats->delete())
+{
+return $this->error('清空失败:' . $Student->getError());
+}
+return $this->success('清空成功' , url('sentMessage') . '?student_id=' . $studentId);
+}
     // change password
     public function alter_password()
     {
