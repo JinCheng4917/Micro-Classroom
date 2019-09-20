@@ -22,9 +22,9 @@ class StudentController extends StudentIndexController
 	   	parent::__construct();
 	   	//验证用户是否登录
 
-	   	if (!User::isLogin()){
+	   	if (!Student::isLogin()){
 	    
-	   		return $this->error('请登录后再进行操作',url('Login/index'));
+	   		return $this->error('请登录后再进行操作',url('http://www.microklass.com/micro-classroom/public/wechat/index/wechatAccredit'));
      	} 
 
 
@@ -39,11 +39,12 @@ class StudentController extends StudentIndexController
         // 将数据返回给用户
         return $htmls;
     }
+
 	//查看当天的课表
     public function courseList()
     {
         //获取当前登陆学生的id
-        $id = session('studentId'); 
+        $id = session('id'); 
         //获取课表的所有信息
         $list = CourseList::all();
         //开学时间
@@ -67,7 +68,9 @@ class StudentController extends StudentIndexController
         //获取与当前登录学生相关的信息，并筛选出班级的id
         $klassId = Student::where('id',$id)->column('klass_id');
         //根据班级的id和年月日信息找到当天的课程信息
+
         $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->select();
+
         if(!($courseList->count() === 0))
         {
             foreach ($courseList as $key => $value)
