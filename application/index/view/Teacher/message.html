@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="css/landing-page.css" rel="stylesheet">
+<!-- Custom Fonts -->
 
-
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/landing-page.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 <head>
     <title>查看留言</title>
 </head>
 <style type="text/css">
-   .images
-   {
+.images {
     margin-top: 10%;
     margin-left: 37%;
-   } 
-    
+}
 </style>
+
 <body style="background-image: url(img/intro-bg.jpg)">
-    
-               <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
         <div class="container topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -46,14 +38,13 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                   <li>
-                            <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
-                        </li>
+                    <li>
+                        <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+                    </li>
                     <li>
                         <a href="{:url('Teacher/message')}"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
                     </li>
                     <li>
-                    <!--两个注销--TeacherLogout--StudentLogout-->
                         <a href="{:url('Teacher/index')}"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
                     </li>
                 </ul>
@@ -62,14 +53,23 @@
         </div>
         <!-- /.container -->
     </nav>
-     <div class="images" >
-     <img src="img/message.jpg">
- </div>
-<!-- jQuery -->
+     <div style="margin-top: 10%">
+            {volist name = "student" id = "_student"}
+  
+    <form action="{:url('Teacher/getMessage')}" method="post" name="test">
+       
+            <input type="hidden" name="student_id" id="student_id_{$_student->id}" value="{$_student->id}" >
+            <a><button type="submit" class="btn btn-primary btn-lg btn-block" onclick="function_name('{$_student->id}')">{$_student->Klass->name}&nbsp;&nbsp;{$_student->name}</button></a>
+            </br>
+       
+    </form>
+    
+    {/volist}
+     </div>
+    <!-- jQuery -->
     <script src="js/jquery.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
 </body>
+
 </html>
