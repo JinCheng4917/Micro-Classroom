@@ -6,74 +6,63 @@ use think\Model;    // 使用前进行声明
  */
 class Student extends Model
 {
-	protected $auto = ['name', 'num', 'ip', 'email'];
+	public static $sessionUserIdKey = 'studentId';
+    protected $auto = ['name', 'num', 'ip', 'email','username','email','id','phone'];
     
+
+     // 创建静态方法findByOpenId，若用户openid存在user表中，则返回非空，不存在则为空
+   
+    public static function findByOpenId($openid)
+    {
+        return self::where('openid', $openid)->find();
+    }
+
     /**
      * 用户登录
     **/
-    static public function login($num, $password)
-    {
-        // 验证用户是否存在
-        $stu = array('num' => $num);
-        $Student = self::get($stu);
-        
-        if (!is_null($Student)) {
-            // 验证密码是否正确
-            if ($Student->checkPassword($password)) {
-                // 登录
-                session('studentId', $Student->getData('id'));
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * 验证密码是否正确
-     * @param  string $password 密码
-     * @return bool           
-     */
-    public function checkPassword($password)
-    {
-        if ($this->getData('password') === $this::encryptPassword($password))
-        {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    
-    static public function encryptPassword($password)
-    {   
-        if (!is_string($password)) {
-            throw new \Exception("传入变量类型非字符串，错误码2", 2);
-        }
-
-        
-        return sha1(md5($password) . 'mengyunzhi');
-    }
-
-    //注销
-    static public function logOut()
-    {
-        // 销毁session中数据
-        session('studentId', null);
-        return true;
-    }
-
-  //判断用户是否已经登录
     static public function isLogin()
     {
         $studentId = session('studentId');
-
+        
         // isset()和is_null()是一对反义词
         if (isset($studentId)) {
             return true;
         } else {
             return false;
         }
+    }  
+
+
+
+   /*
+    利用session中储存的userid获取user对象
+    */
+    public static function getSessionStudent() {
+        $id = session(self::$sessionUserIdKey);
+        if (is_null($id)) {
+            return null;
+        }  else {
+            // 返回用id获取的user对象
+            return self::get($id);
+        }    
+    }
+
+        /*
+    将用户id储存
+    */
+    public static function sessionUserId($studentId) {
+        session(self::$sessionUserIdKey, $studentId);
+    }
+    
+
+    
+   
+    //注销
+    static public function logOut()
+    {
+        // 销毁session中数据
+        session('studentId', null);
+        return true;
     }
 
     protected $dateFormat = 'Y年m月d日';    // 日期格式

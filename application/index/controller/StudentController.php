@@ -156,7 +156,6 @@ class StudentController extends StudentIndexController
 
         //获取与当前学生id相同的id的学生的全部信息，筛选出course_id字段
     $Courseid = Score::where('student_id',$id)->column('course_id');
-    
         //对course_id这个字段进行筛选
     $CourseId = array_unique($Courseid);
 
