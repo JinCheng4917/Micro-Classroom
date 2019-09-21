@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+ <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/landing-page.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<head>
+    <title>今日课表</title>
+</head>
+<style type="text/css">
+  /*课表的整体的style*/
+   .form{
+   border-color: white;
+   width: 100%;
+   margin-top: 2%;
+   color: white;
+   }
+/*Micro-Classroom的整体的style*/
+   .sign{
+    color: white;
+    font-size: 30px;
+    margin-top: 5%;
+   } 
+</style>
+<body style="background-image: url(img/intro-bg.jpg)">
+	<div class="col-md-12">
+	           <!-- Navigation -->
+   <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">微课堂</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="#">微课堂</a>
+            </div>
+            <!-- Collect tde nav links, forms, and otder content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                            <a href="{:url('Teacher/studentSelect')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+                        </li>
+                    <li>
+                        <a href="{:url('Teacher/seeStudents')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+                    </li>
+                    <li>
+                    <!--两个注销--TeacherLogout--StudentLogout-->
+                        <a href="{:url('Teacher/index')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+  
+      </nav>
+<h1 class="sign" align="center">Micro-Classroom</h1>
+<table border="2px" align="center" class="form">
+<td colspan="10" align="center" style="font-size: 21px; height:10%;">学生信息</td>
+</tr>
+<tr align="center" style="font-size: 18px;">
+                    <td>学期</td>
+                    <td>科目</td>
+                    <td>姓名</td>
+                    <td>性别</td>
+                    <td>学院</td>
+                    <td>专业</td>
+                    <td>班级</td>
+                    <td>学号</td>
+                    <td>邮箱</td>
+                    <td>电话号码</td>
+                </tr>
+               {volist name="$Courseids" id="Courseid"}
+            <tr align="center">
+                <td>{$Courseid->Term->name}</td>
+                <td>{$Courseid->Course->name}</td>
+                <td>{$Courseid->Student->name}</td>
+                <td>{eq name="$Courseid->Student->sex" value='0'}男{else /}女{/eq}</td>
+                <td>{$Courseid->Student->College->name}</td>
+                <td>{$Courseid->Student->major}</td>
+                <td>{$Courseid->Student->Klass->name}</td>
+                <td>{$Courseid->Student->num}</td>
+                <td>{$Courseid->Student->email}</td>
+                <td>{$Courseid->Student->phone}</td>
+               </tr>
+               {/volist}
+           </table>
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{extend name="index"/}
+{block name="title"}
+课程管理
+{/block}
+{block name="menu"}
+<ul class="nav navbar-nav">
+    <li><a href="{:url('Teacher/index')}">教师管理</a></li>
+    <li><a href="{:url('Student/index')}">学生管理</a></li>
+    <li><a href="{:url('Klass/index')}">班级管理</a></li>
+    <li><a href="{:url('Course/index')}">课程管理</a></li>
+      <li class="active"><a href="{:url('Term/index')}">学期管理</a></li>
+</ul>
+{/block}
+{block name="content"}
+<table class="table table-hover table-bordered">
+    <tr class="info">
+        <th>序号</th>
+        <th>名称</th>
+        <th>操作</th>
+    </tr>
+    {volist name="term" id="term" key="key"}
+    <tr>
+        <td>{$key}</td>
+        <td>{$term->name}&nbsp;&nbsp;</td>
+        <td>
+            <a class="btn btn-danger btn-sm" href="{:url('delete?id=' . $term->getData('id'))}"><i class="glyphicon glyphicon-trash"></i>&nbsp;删除</a>&nbsp;
+    </tr>
+    {/volist}
+</table>
+{/block}
+{block name="page"}
+{/block}

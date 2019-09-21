@@ -1,0 +1,180 @@
+  <!DOCTYPE html>
+  <html>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
+  <script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
+  <!-- Bootstrap Core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/landing-page.css" rel="stylesheet">
+  <!-- Custom Fonts -->
+  <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap-theme.min.css">
+
+  <head>
+    <title>选择科目</title>
+</head>
+<style type="text/css">
+    .auto_arrange {
+        table-layout: fixed
+    }
+
+    .auto_arrange td {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 2px
+    }
+
+    .bs-docs-home {
+        background-color: #1B31B1;
+        background-image: url(line.png);
+    }
+
+    .container {
+        width: 900px;
+        margin: 0 auto;
+    }
+
+    select {
+        font-size: 1em;
+    }
+
+    .scroll-parent {
+        margin-left: 32%;
+        margin-top: 10%;
+        height: 300px;
+        width: 50%;
+    }
+
+    .option {
+        font-size: 18px;
+        color: white;
+    }
+</style>
+
+<body style="background-image: url(img/intro-bg.jpg)" onload="load()">
+    <div class="col-md-12">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+            <div class="container topnav">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">微课堂</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand topnav" href="#">微课堂</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+                        </li>
+                        <li>
+                            <a href="{:url('Teacher/selectCourse')}" style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+                        </li>
+                        <li>
+                            <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+        <form action="{:url('Teacher/putScore')}" method="post" class="col-md-8">
+            <div class="form-group" style="margin-top:15%; margin-left: 39%;">
+                <label for="term" class="option">请选择学期</label>
+                <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+                <select name="term" id="term" lay-search style="height: 4%;" onchange="getCourse()">
+                    {volist name="$term" id="Term"}
+                    <option value="{$Term->id}" {eq name="Term->id" value="$Term->id" }selected="selected" {/eq}>{$Term->name} </option>
+                    {/volist} 
+                </select>
+                <div class="form-group">
+                    <label for="course" class="option">请选择科目</label>
+                    <select id="course" name="course" style="height: 4%;">
+                    </select>
+                    
+                </div> 
+                <button class="btn btn-danger" type="submit" style="width: 100%;">提交</button>
+            </form>
+            <div style="text-align:center;clear:both">
+            </div>
+            <!-- <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script> -->
+            <!-- jQuery -->
+            <script src="js/jquery.js"></script>
+            <!-- Bootstrap Core JavaScript -->
+            <script src="js/bootstrap.min.js"></script>
+            <script type="text/javascript">
+                function load() {
+                    getCourse();
+                }
+
+                function getCourse() {
+            // 通过getId 方法获取到两个节点
+            let termNode = document.getElementById('term');
+            let courseNode = document.getElementById('course');
+            // select 是选择顺序
+            let index = termNode.selectedIndex;
+            //获得term节点的值
+            let value = termNode[index].value;
+            //利用url跳转将term节点的值传到后台
+            let url = "getCourse?term=" + value;
+
+            ajaxGet(url, function(response) {
+                //调用clear方法清除上一次获取的值
+                clear(courseNode);
+                //调用creatOption方法
+                createOption(courseNode, response);
+            });
+
+        }
+
+        function createOption(node, inners, values) {
+            //利用for循环对创建的option赋值
+            for (let i = 0; i < inners.length; i++) {
+                let option = document.createElement('option');
+                option.value = inners[i].id;
+                option.name = node;
+                option.innerHTML = inners[i].name;
+                node.appendChild(option);
+            }
+        }
+
+        //创建clear方法清除上一次获取的值 
+        function clear(node) {
+            node.length = 0;
+        }
+
+        function ajaxGet(url, callback) {
+
+            $.ajax({
+                url: url,
+                type: "get",
+                //成功后调用success后面的语句
+                success: function(response) {
+                    callback(response);
+                },
+                //失败后调用error后面的语句
+                error: function(xhr) {
+                    console.log('server error');
+                    console.log(xhr);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

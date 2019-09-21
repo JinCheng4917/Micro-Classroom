@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <title>录入课表</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body class="container">
+    <!-- 菜单导航 -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">微课堂</a>
+                    </div>
+                    <div class="collaspe navbar-collaspe" id="bs-example-navbar-collaspe-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="{:url('Teacher/index')}">教师管理</a></li>
+                            <li><a href="{:url('Student/index')}">学生管理</a></li>
+                            <li class="active"><a href="{:url('Klass/index')}">班级管理</a></li>
+                            <li><a href="{:url('Course/index')}">课程管理</a></li>
+                            <li><a href="{:url('Term/index')}">学期管理</a></li>
+                        </ul>
+                    </div>
+                </div>
+                </nav>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-8">
+            </div>
+            <div class="col-md-4 text-right">
+                <a href="{:url('index')}" class="btn btn-danger"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+            </div>
+        </div>
+        <div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-responsive-lg table-bordered">
+                        <tr class="primary">
+                            <th>星期\节次</th>
+                            <th>第一节</th>
+                            <th>第二节</th>
+                            <th>第三节</th>
+                            <th>第四节</th>
+                            <th>第五节</th>
+                            <th>第六节</th>
+                            <th>第七节</th>
+                            <th>第八节</th>
+                            <th>第九节</th>
+                            <th>第十节</th>
+                            <th>第十一节</th>
+                        </tr>
+                        <tr>
+                            <th>星期一</th>
+                            {for start="1" end="12"}
+                            <td>
+                                <a href="{:url('Klass/addCourse?date_id=1&time_id='. $i .'&klass_id='.$id)}" class="btn btn-primary" class="week">添加课程</a>
+                                </br>
+                                {if $oneCourse[$i] !=NULL}
+                                <label>{$oneCourse[$i]->name}</label>
+                                </br>
+                                <label>教师:{$oneCourse[$i]->Teachers[0]->name}</label>
+                                </br>
+                                <label>教室:{$oneCourse[$i]->room}</label>
+                                </br>
+                                <label> 周次:</br>
+                                    {volist name="oneCourseListWeek[$i]" id ="week" key="k"}{$week}&nbsp;{if $k%5==0}<br>{/if}{/volist}</label>
+                                {/if}
+                                </br>
+                            </td>
+                            {/for}
+                        </tr>
+                        <tr>
+                            <th>星期二</th>
+                            {for start="1" end="12"}
+                            <td>
+                                <a href="{:url('Klass/addCourse?date_id=2&time_id='. $i.'&klass_id='.$id)}" class="btn btn-info">添加课程</a>
+                                </br>
+                                {if $twoCourse[$i] !=NULL}
+                                <label>{$twoCourse[$i]->name}</label>
+                                </br>
+                                <label>教师:{$twoCourse[$i]->Teachers[0]->name}</label>
+                                </br>
+                                <label>教室:{$twoCourse[$i]->room}</label>
+                                </br>
+                                <label> 周次:</br>
+                                    {volist name="twoCourseListWeek[$i]" id ="week" key="k"}{$week}&nbsp;{if $k%5==0}<br>{/if}{/volist}</label>
+                                {/if}
+                                </br>
+                            </td>
+                            {/for}
+                        </tr>
+                        <tr>
+                            <th>星期三</th>
+                            {for start="1" end="12"}
+                            <td>
+                                <a href="{:url('Klass/addCourse?date_id=3&time_id='. $i.'&klass_id='.$id)}" class="btn btn-primary">添加课程</a>
+                                </br>
+                                {if $threeCourse[$i] !=NULL}
+                                <label>{$threeCourse[$i]->name}</label>
+                                </br>
+                                <label>教师:{$threeCourse[$i]->Teachers[0]->name}</label>
+                                </br>
+                                <label>教室:{$threeCourse[$i]->room}</label>
+                                </br>
+                                <label> 周次:</br>
+                                    {volist name="threeCourseListWeek[$i]" id ="week" key="k"}{$week}&nbsp;{if $k%5==0}<br>{/if}{/volist}</label>
+                                {/if}
+                                </br>
+                            </td>
+                            {/for}
+                        </tr>
+                        <tr>
+                            <th>星期四</th>
+                            {for start="1" end="12"}
+                            <td>
+                                <a href="{:url('Klass/addCourse?date_id=4&time_id='. $i.'&klass_id='.$id)}" class="btn btn-info">添加课程</a>
+                                </br>
+                                {if $fourCourse[$i] !=NULL}
+                                <label>{$fourCourse[$i]->name}</label>
+                                </br>
+                                <label>教师:{$fourCourse[$i]->Teachers[0]->name}</label>
+                                </br>
+                                <label>教室:{$fourCourse[$i]->room}</label>
+                                </br>
+                                <label> 周次:</br>
+                                    {volist name="fourCourseListWeek[$i]" id ="week" key="k"}{$week}&nbsp;{if $k%5==0}<br>{/if}{/volist}</label>
+                                {/if}
+                                </br>
+                            </td>
+                            {/for}
+                        </tr>
+                        <tr>
+                            <th>星期五</th>
+                            {for start="1" end="12"}
+                            <td>
+                                <a href="{:url('Klass/addCourse?date_id=5&time_id='. $i.'&klass_id='.$id)}" class="btn btn-primary">添加课程</a>
+                                </br>
+                                {if $fiveCourse[$i] !=NULL}
+                                <label>{$fiveCourse[$i]->name}</label>
+                                </br>
+                                <label>教师:{$fiveCourse[$i]->Teachers[0]->name}</label>
+                                </br>
+                                <label>教室:{$fiveCourse[$i]->room}</label>
+                                </br>
+                                <label> 周次:</br>
+                                    {volist name="fiveCourseListWeek[$i]" id ="week" key="k"}{$week}&nbsp;{if $k%5==0}<br>{/if}{/volist}</label>
+                                {/if}
+                                </br>
+                            </td>
+                            {/for}
+                        </tr>
+                        <tr>
+                            <th>星期六</th>
+                            {for start="1" end="12"}
+                            <td>
+                                <a href="{:url('Klass/addCourse?date_id=6&time_id='. $i.'&klass_id='.$id)}" class="btn btn-info">添加课程</a>
+                                </br>
+                                {if $sixCourse[$i] !=NULL}
+                                <label>{$sixCourse[$i]->name}</label>
+                                </br>
+                                <label>教师:{$sixCourse[$i]->Teachers[0]->name}</label>
+                                </br>
+                                <label>教室:{$sixCourse[$i]->room}</label>
+                                </br>
+                                <label> 周次: </br>
+                                    {volist name="sixCourseListWeek[$i]" id ="week" key="k"}{$week}&nbsp;{if $k%5==0}<br>{/if}{/volist}</label>
+                                {/if}
+                                </br>
+                            </td>
+                            {/for}
+                        </tr>
+                        <tr>
+                            <th>星期日</th>
+                            {for start="1" end="12"}
+                            <td>
+                                </br>
+                                <a href="{:url('Klass/addCourse?date_id=7&time_id='. $i.'&klass_id='.$id)}" class="btn btn-primary">添加课程</a>
+                                {if $sevenCourse[$i] !=NULL}
+                                <label>{$sevenCourse[$i]->name}</label>
+                                </br>
+                                <label>教师:{$sevenCourse[$i]->Teachers[0]->name}</label>
+                                </br>
+                                <label>教室:{$sevenCourse[$i]->room}</label>
+                                </br>
+                                <label> 周次:</br>
+                                    {volist name="sevenCourseListWeek[$i]" id ="week" key="k"}{$week}&nbsp;{if $k%5==0}<br>{/if}{/volist}</label>
+                                {/if}
+                                </br>
+                            </td>
+                            {/for}
+                        </tr>
+                    </table>
+                </div>
+            </div>
+</body>
+
+</html>
