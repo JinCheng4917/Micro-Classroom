@@ -72,14 +72,14 @@ class StudentController extends StudentIndexController
         // 将数据返回给用户
         return $htmls;
     }
-	//扫码登录
     public function signin()
     {
-		 // 取回打包后的数据
+        $openid = session('openid');
+      // 取回打包后的数据
         $htmls = $this->fetch();
 
         // 将数据返回给用户
-        return $htmls;
+        return $htmls;  
     }
 	//查询分数
     public function getScore()

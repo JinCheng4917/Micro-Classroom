@@ -1,57 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/landing-page.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 <head>
-	<title>开放签到</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
+  <script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
+  
+  <!-- Bootstrap Core CSS -->
+  <link href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/css/landing-page.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <script type="text/javascript" src="//cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//static.runoob.com/assets/qrcode/qrcode.min.js"></script>
 </head>
-<style type="text/css">
-	
-	.img
-	{
-		position: absolute;
-    left: 0;
-    top: 50%;
-    width: 34%;
-    text-align: center;
-    font-size: 18px;
-    margin-top:-14%;
-    margin-left: 33%;
-	}
-</style>
-<body style="background-image: url(img/intro-bg.jpg)">
-	
-	           <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
-        <div class="container topnav">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">微课堂</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand topnav" href="#">微课堂</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
+<body style="background-image: url(/Micro-Classroom/public/static/bootstrap-3.3.5-dist/img/intro-bg.jpg)">
+    <div class="col-md-12">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+            <div class="container topnav">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">微课堂</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand topnav" href="#">微课堂</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                     <ul class="nav navbar-nav navbar-right">
                      <li>
                         <a href="{:url('Teacher/getQR')}"><i class="glyphicon glyphicon-resize-small"></i>&nbsp;还原</a>
                     </li>
@@ -68,14 +59,40 @@
         </div>
         <!-- /.container -->
     </nav>
-      	<div id="QR">
-  <img class="img" src="img/QR.jpg">
-</div>
-<!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <div class="head" class="col-md-6">
+  </div>
+  <input id="text"  value="$url" type="hidden" style="width:80%" /><br />
+<div id="qrcode" style="width:600px; height:600px; margin-top:150px; margin-left: 650px;"></div>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+var qrcode = new QRCode(document.getElementById("qrcode"), {
+  width : 600,
+  height : 600
+});
 
+function makeCode () {    
+  var elText = document.getElementById("text");
+  
+  if (!elText.value) {
+    alert("Input a text");
+    elText.focus();
+    return;
+  }
+  
+  qrcode.makeCode(elText.value);
+}
+
+makeCode();
+
+$("#text").
+  on("blur", function () {
+    makeCode();
+  }).
+  on("keydown", function (e) {
+    if (e.keyCode == 13) {
+      makeCode();
+    }
+  });
+</script>
 </body>
 </html>
