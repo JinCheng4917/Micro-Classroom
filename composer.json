@@ -17,7 +17,9 @@
     ],
     "require": {
         "php": ">=5.6.0",
-        "topthink/framework": "5.1.*"
+        "topthink/framework": "5.1.*",
+        "overtrue/wechat": "~4.0",
+        "naixiaoxin/think-wechat": "^1.6"
     },
     "autoload": {
         "psr-4": {
@@ -29,5 +31,11 @@
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     }
 }

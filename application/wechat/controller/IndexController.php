@@ -6,6 +6,7 @@ use think\facade\Request;
 use think\Db;
 use app\common\model\Student;
 use app\wechat\validate;
+use EasyWeChat\Factory;  //使用easywechat类
 
 class IndexController extends Controller
 {
@@ -23,8 +24,9 @@ class IndexController extends Controller
     public function weChatAccredit()
     {
         $url = 'http://'.$_SERVER['HTTP_HOST'].'/Micro-Classroom/public/wechat/index/getWeChatInfo';
+
         $we_chat = new Wechat(); //实例化类
-        $we_chat->accredit($url); //调用方法              
+        $we_chat->accredit($url); //调用方法 
     }
     /**
      * 获取微信用户信息
@@ -34,25 +36,29 @@ class IndexController extends Controller
     {
         $we_chat = new Wechat();//实例化微信类
         $code = Request::instance()->get('code');  //获取跳转后的code
-   
-        $access_token = $we_chat->getAccessToken($code); //根据code获取特殊token
-        // 需要注意的是，这里的access_token返回的是一个数组，里面有OpenID和access_token等项
+        if (is_null($code)) {
 
-        //根据access_token和openid获取到用户信息
-        $weChatStudentInfo = $we_chat->getWeChatUserInfo($access_token['access_token'],$access_token['openid']);
+            $this->error('code为空，请重新点击按钮','http://'.$_SERVER['HTTP_HOST'].'/Micro-Classroom/public/wechat/index/weChatAccredit');
+        } else {
+            $access_token = $we_chat->getAccessToken($code); //根据code获取特殊token
+            // 需要注意的是，这里的access_token返回的是一个数组，里面有openid和access_token等项
 
+            //根据access_token和openid获取到用户信息
+            // $weChatStudentInfo = $we_chat->getWeChatUserInfo($access_token['access_token'],$access_token['openid']);
 
-        // $openid = $weChatStudentInfo['openid'];
-        $openid = $access_token['openid'];
-        session('openid', $openid);
-        $this->searchStudent($openid);
-             
-        // 其实并不用把openid传过去，只要把这里获取的openid和表单传值获取的openid传回来
+            // $openid = $weChatStudentInfo['openid'];
+            $openid = $access_token['openid'];
+            session('openid', $openid);
+            $this->searchStudent($openid);
+                 
+            // 其实并不用把openid传过去，只要把这里获取的openid和表单传值获取的openid传回来
+        }
+        
 
     }
 
     /**
-     *  判断用户OpenId是否存在Student表中
+     *  判断用户openid是否存在Student表中
      */   
     public function searchStudent($openid)
     {
@@ -60,27 +66,25 @@ class IndexController extends Controller
 
             // 若不存在，返回true则跳转至绑定界面，让用户输入信息，提交后绑定至Student表中
             // 代码重构后，这里直接先把不存在的openid存入Student表，其余信息使用update方法
-        if (is_null(Student::findByOpenId($openid))) {
+        if (is_null(Student::findByopenid($openid))) {
             $Student = $this->insert($openid);
-          
-        } else {
+
+        }
             // 若存在，则让用户直接登录（需要先绑定个人信息）
-            $Student = Student::findByOpenId($openid);
+            $Student = Student::findByopenid($openid);
             
             // 直接获取用户id，存session，登录
             session('studentId',$Student->id);
 
             $Student = Student::getSessionStudent();
-            if (is_null($Student['num'])) {
+            if (is_null($Student['num'])|is_null($Student->name)) {
 
-                return $this->success('微信登录成功,请绑定个人信息', url('http://'.$_SERVER['HTTP_HOST'].'/Micro-Classroom/public/wechat/index/edit'));
+                return $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/Micro-Classroom/public/wechat/index/edit');
+
             }
             else {
                 return $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/Micro-Classroom/public/index/student/index');
             }
-
-
-        }   
     }
 
     /**
@@ -100,25 +104,14 @@ class IndexController extends Controller
         // 创建空值
         $Student->id = 0;
         $Student->name = '';
-        $Student->Studentname ='';
         $Student->phone = '';
         $Student->email = '';
-        $Student->phone = '';
+        $Student->num = Null;
 
-                $result = $this->validate(
-            [
-                'openid'  =>  $Student->openid,
-            ],
-            '');
 
-        if (true !== $result) {
-            // 验证失败 输出错误信息
-            return $this->error($result);
-        } else {
             $Student->save();
             session('studentId', $Student->id);
-        }
-   
+ 
     }
 
     /*
@@ -143,15 +136,28 @@ class IndexController extends Controller
 
         // 写入要更新的数据
         $Student->name = Request::instance()->post('name');
-        $Student->username = Request::instance()->post('username');
+        // $Student->username = Request::instance()->post('username');
         $Student->num = Request::instance()->post('num');
         $Student->email = Request::instance()->post('email');
         $Student->phone = Request::instance()->post('phone');
+                
 
-        // 保存对象（注意，这是必须的）
-        $Student->save();
-        // 重定向
-        $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/Micro-Classroom/public/index/student/index');
+                $result = $this->validate(
+            [
+                'name'    =>  $Student->name,
+                'num'     =>  $Student->num,
+            ],
+            'app\wechat\validate\User');
+        if (true !== $result) {
+            // 验证失败 输出错误信息
+            return $this->error($result);
+        } else {
+            // 保存对象（注意，这是必须的）
+            $Student->save();
+            // 重定向
+             $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/Micro-Classroom/public/index/student/index');
+        }
+        
 
     }
 

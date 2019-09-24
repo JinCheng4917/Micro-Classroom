@@ -9,6 +9,8 @@ use app\common\model\Term;
 use think\facade\Request; 
 use app\common\model\Chat;
 use think\Controller;   // 请求
+use EasyWeChat\Factory;  //使用easywechat类
+
 
 class StudentController extends StudentIndexController
 {

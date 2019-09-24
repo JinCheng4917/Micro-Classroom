@@ -16,6 +16,7 @@ class User extends Validate
     protected $scene = [
       'insert' => ['name','username','num','email'],
       'add' => ['name','username','num','email'],
+      'update' =>['name','num','email'],
     ];
 
 
