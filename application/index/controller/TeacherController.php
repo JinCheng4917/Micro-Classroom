@@ -25,6 +25,10 @@ class TeacherController extends TeacherIndexController
     //上课签到
     public function getQR()
     {
+       // $url = 'http://'.$_SERVER['HTTP_HOST'].'/index/student/StudentSignIn';
+       $url = 'http://localhost/micro-classroom/public/index/student/signin';
+       $this->assign('url',$url);
+       dump($url);
         $htmls = $this->fetch();
         return $htmls;
     }
@@ -241,7 +245,6 @@ class TeacherController extends TeacherIndexController
             } 
           $this->assign('student',$student);
     }
-
     $htmls = $this->fetch();
         return $htmls;    
     }

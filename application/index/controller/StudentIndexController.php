@@ -11,7 +11,7 @@ class StudentIndexController extends Controller
    //验证用户是否登录
    if (!Student::isLogin()){
     
-   return $this->error('请登录后再进行操作',url('Login/index'));
+   return $this->error('请登录后再进行操作',url('wechat/index/weChatAccredit'));
      }
  
  }
