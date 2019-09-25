@@ -25,7 +25,7 @@ class KlassController extends Controller
         $Klass = new Klass; 
         trace($Klass, 'debug');
         // 按条件查询数据并调用分页
-        $klasses = Klass::where('name', 'like', '%' . $name . '%')->paginate(5); 
+        $klasses = Klass::where('name', 'like', '%' . $name . '%')->paginate(50); 
         $this->assign('klasses', $klasses);
         return $this->fetch();
     }
