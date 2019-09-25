@@ -22,7 +22,7 @@ class CourseController extends Controller
         $Course = new Course; 
         trace($Course, 'debug');
         // 按条件查询数据并调用分页
-        $courses = Course::where('name', 'like', '%' . $name . '%')->paginate(5);
+        $courses = Course::where('name', 'like', '%' . $name . '%')->paginate(50);
         $this->assign('courses', $courses);
         $klasses = Klass::all();
         $this->assign('klasses',$klasses);
@@ -100,6 +100,8 @@ if (!is_null($Course))
        $Course = new Course();
        $Course->name = Request::instance()->post('name');
        $Course->room = Request::instance()->post('room');
+       $termId = Request::instance()->post('term_id');
+       $Course->term_id = $termId;
 
         // -------------------------- 新增班级课程信息 -------------------------- 
         // 接收klass_id这个数组
@@ -109,7 +111,7 @@ if (!is_null($Course))
 
        $teacherId = Request::instance()->post('teacher_id');
 
-       $termId = Request::instance()->post('term_id');
+
       //使用循环得到klass的id的数组
        for ($i=0; $i < count($klasses); $i++) { 
         $klassIds[$i] =  $klasses[$i]; 
@@ -251,8 +253,10 @@ public function delete()
   if (!$Course->delete()) {
     return $this->error('删除失败:' . $Course->getError());
 }
-   $Score = Score::where("course_id",$id);
+  $Score = Score::where("course_id",$id);
+  $KlassCourse = KlassCourse::where('course_id',$id);
   $Score->delete();
+  $KlassCourse->delete();
         // 进行跳转 
 return $this->success('删除成功', url('index')); 
 }

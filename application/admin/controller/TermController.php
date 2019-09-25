@@ -13,7 +13,7 @@ class TermController extends Controller
         $Term = new Term; 
         trace($Term, 'debug');
         // 按条件查询数据并调用分页
-        $term = Term::where('name', 'like', '%' . $name . '%')->paginate(5);
+        $term = Term::where('name', 'like', '%' . $name . '%')->paginate(50);
         $this->assign('term', $term);
         return $this->fetch();
     }

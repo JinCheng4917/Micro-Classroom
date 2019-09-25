@@ -36,14 +36,7 @@ class RemindController extends Controller
 
   public function index() {
     
-    $config = session('config');
-    $app = Factory::officialAccount($config);
-
-    $template = $app->template_message->getPrivateTemplates();
-    $openIdList = $app->user->list($nextOpenId = null); 
-    dump($openIdList['data']['openid'][1]);
-    dump($openIdList['data']['openid'][2]);
-    dump($openIdList['data']['openid'][0]);
+    
 
 
     //当前日期
@@ -90,21 +83,35 @@ class RemindController extends Controller
             
             $course = 0;
         }
-        // dump($course);
-       // dump($course['0']['course_id']);
-        // dump($course);
-      $course1 = Course::where('id','4')->select();
-      dump($course1[0]['name']);
 
-      $course_name = $course1[0]['name'];
-      $course_room = $course1[0]['room'];
+        // dump($klassId[0]);
+        dump($courseList);
 
-      // 获取1970年距今的s数
-      $times =time();
+    $config = session('config');
+    $app = Factory::officialAccount($config);
 
-      //将s数转换成时分秒格式
-      $time = date('H:i:s', $times);
+    // 获取所有模板列表
+    $template = $app->template_message->getPrivateTemplates();
 
+    // 获取所有关注公众号用户的openid
+    $openIdList = $app->user->list($nextOpenId = null); 
+    dump($openIdList['data']['openid'][1]);
+    dump($openIdList['data']['openid'][2]);
+    dump($openIdList['data']['openid'][0]);
+
+    dump($course);
+    dump($course['0']['course_id']);
+    $course1 = Course::where('id','4')->select();
+    dump($course1[0]['name']);
+    dump($course1);
+
+    $course_name = $course1[0]['name'];
+    $course_room = $course1[0]['room'];
+
+
+      //将当前时间转换成时分秒格式
+      $time = date('H:i:s');
+      dump($time);
       
 
 
@@ -130,6 +137,7 @@ class RemindController extends Controller
     
     return 'success';
   }
+
 
 
   

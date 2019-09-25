@@ -28,7 +28,7 @@
     {volist name="courses" id="_course" key="key"}
     <tr>
         <td>{$key}</td>
-        <td>{$_course->Term->name}</td>
+        <td>{$_course->term->name}</td>
         <td>{$_course->getData('name')}</td>
         <td>{volist name="$_course->klasses" id="klass" key="key"}{$klass->name}&nbsp;&nbsp;{/volist}</td>
         <td>{volist name="$_course->Teachers" id="teacher" key="key"}{$teacher->name}&nbsp;&nbsp;{/volist}</td>

@@ -21,7 +21,7 @@ class TeacherController extends Controller
     $Teacher = new Teacher; 
     trace($Teacher, 'debug');
         // 按条件查询数据并调用分页
-    $teachers = Teacher::where('name', 'like', '%' . $name . '%')->paginate(5); 
+    $teachers = Teacher::where('name', 'like', '%' . $name . '%')->paginate(50); 
         // 向V层传数据
     $this->assign('teachers', $teachers);
         // 取回打包后的数据
