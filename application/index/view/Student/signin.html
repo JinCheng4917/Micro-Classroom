@@ -1,78 +1,21 @@
-<!DOCTYPE html>
-<html>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<!-- Bootstrap Core CSS -->
-<link href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Custom CSS -->
-<link href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/css/landing-page.css" rel="stylesheet">
-<!-- Custom Fonts -->
-<link href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<script src="js/jquery.js"></script>
+<script>
+const flag = confirm('是否进行签到');
+if (flag) {
+	console.log({$courseid});
+    $.ajax({
+        url: "saveSign?courseid=" + "{$courseid}",
+        type: "get",
+        success: function(response) {
+           alert('签到成功'){
+        	}
+               window.location.href = "index.html";
 
-<head>
-    <title>上课签到</title>
-</head>
-<style type="text/css">
-.img-box {
-    background: linear-gradient(#ae0000, #ae0000) left top, linear-gradient(#ae0000, #ae0000) left top, linear-gradient(#ae0000, #ae0000) right top, linear-gradient(#ae0000, #ae0000) right top, linear-gradient(#ae0000, #ae0000) right bottom, linear-gradient(#ae0000, #ae0000) right bottom, linear-gradient(#ae0000, #ae0000) left bottom, linear-gradient(#ae0000, #ae0000) left bottom;
-    background-repeat: no-repeat;
-    background-size: 2px 20px, 20px 2px;
-    height: 20%;
-    
-    margin-top: 15%;
-    margin-left:40%; 
+        },
+        error: function(xhr) {
+            console.log('server error');
+            console.log(xhr);
+        }
+    });
 }
-
-.code {
-    height: 100%;
-    
-    margin-top: 2px;
-    margin-left: 2px;
-    border: 1px solid #ae0000;
-}
-</style>
-
-<body style="background-image: url(/Micro-Classroom/public/static/bootstrap-3.3.5-dist/img/intro-bg.jpg)">
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
-        <div class="container topnav">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">微课堂</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand topnav" href="#">微课堂</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="{:url('Student/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
-                    </li>
-                    <li>
-                        <a href="{:url('Student/signin')}"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
-                    </li>
-                    <li>
-                        <!--两个注销--TeacherLogout--StudentLogout-->
-                        <a href="{:url('Student/index')}"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-   <a href="http://sao315.com/w/api/saoyisao?redirect_uri=需要接收结果的网址">扫一扫</a>
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-</body>
-
-</html>
+</script>
