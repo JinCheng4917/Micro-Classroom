@@ -58,7 +58,10 @@
                 <div class="form-group">
                     <label for="exampleInputName2">课 程：</label>
                     <select name="course_id">
+
                         {volist name="course" id="course"}
+                            
+                        {:dump($course)}
                         <option value="{$course->Course->id}"  {eq name="$course->Course->id" value="$CourseId[0]" }  selected="selected" {/eq}>{$course->Course->name}&nbsp;&nbsp;{$course->Course->room}</option>
                         {/volist}
                     </select>

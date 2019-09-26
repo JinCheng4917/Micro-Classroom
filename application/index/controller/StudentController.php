@@ -26,8 +26,6 @@ class StudentController extends StudentIndexController
     {
          //获取当前登陆教师的id
         $id = session('studentId');
-        $openid = session('openid');
-        dump($id);
         //获取课表的所有信息
         $list = CourseList::all();
         //开学时间

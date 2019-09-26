@@ -259,6 +259,7 @@ public function addCourse()
     $klass = Klass::get($id);
     //从中间表中获取到相关班级的所有课程
     $courseId = KlassCourse::where('klass_id',$id)->select();
+    
     $weekId = CourseList::where('klass_id',$id)->where('date_id',$date)->where('time_id',$time)->column('week_id');
     $CourseId = CourseList::where('klass_id',$id)->where('date_id',$date)->where('time_id',$time)->column('course_id');
     if(isset($CourseId))
