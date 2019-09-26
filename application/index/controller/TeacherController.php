@@ -55,7 +55,7 @@ class TeacherController extends TeacherIndexController
         //获取某个日期的时间戳
        $time = strtotime(date("H:i:s"));
        //根据时间筛选课程
-         if($time >=  strtotime(date("08:30:00")) && $time <= strtotime(date("09:15:00")))
+         if($time >=  strtotime(date("07:30:00")) && $time <= strtotime(date("09:15:00")))
         {
         $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',1)->find();
        }
@@ -94,7 +94,7 @@ class TeacherController extends TeacherIndexController
         {
         $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',10)->find();
        }
-       if($time >=  strtotime(date("20:20:00")) && $time <= strtotime(date("23:50:00")))
+       if($time >=  strtotime(date("20:20:00")) && $time <= strtotime(date("21:05:00")))
         {
         $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',11)->find();
        }

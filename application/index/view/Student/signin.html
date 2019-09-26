@@ -2,14 +2,35 @@
 <script>
 const flag = confirm('是否进行签到');
 if (flag) {
-	console.log({$courseid});
     $.ajax({
         url: "saveSign?courseid=" + "{$courseid}",
         type: "get",
         success: function(response) {
-           alert('签到成功.'){
-        	}
+        console.log(response);
+        	if(response == 1){
+           alert('签到成功');
                window.location.href = "index.html";
+                   }
+                   if(response == 0){
+           alert('您已签到，请勿重复签到');
+               window.location.href = "index.html";
+                   }
+
+        },
+        error: function(xhr) {
+            console.log('server error');
+            console.log(xhr);
+        }
+    });
+}
+else
+{
+	$.ajax({
+        url: "direct",
+        type: "get",
+        success: function(response) {
+           alert('取消签到');
+               window.location.href = "getQR.html";
 
         },
         error: function(xhr) {
