@@ -26,10 +26,9 @@ class StudentController extends StudentIndexController
     }
     public function getQR()
     {
-         //获取当前登陆教师的id
+         //获取当前登陆学生的id
         $id = session('studentId');
         $openid = session('openid');
-        dump($id);
         //获取课表的所有信息
         $list = CourseList::all();
         //开学时间
@@ -51,7 +50,7 @@ class StudentController extends StudentIndexController
         //当前周次  
         $week = (strtotime($current_week) - strtotime($kx_week))/(3600*24*7) + 1;
         //获取与当前登录学生相关的信息，并筛选出班级的id
-        $klassId = CourseList::where('id',$id)->column('klass_id');
+        $klassId = Student::where('id',$id)->column('klass_id');
         //获取某个日期的时间戳
         $time = strtotime(date("H:i:s"));
        //根据时间筛选课程
@@ -94,7 +93,7 @@ class StudentController extends StudentIndexController
         {
             $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',10)->find();
         }
-        if($time >=  strtotime(date("20:20:00")) && $time <= strtotime(date("23:50:00")))
+        if($time >=  strtotime(date("20:20:00")) && $time <= strtotime(date("23:05:00")))
         {
             $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',11)->find();
         }
@@ -105,7 +104,7 @@ class StudentController extends StudentIndexController
           $this->assign('url',$url);
       }
       else{
-         return $this->error('课程未开放，请确认好上课时间后再开放',url('index'));
+         return $this->error('课程未开放，请确认好上课时间后再签到',url('index'));
      }
 
 
@@ -170,7 +169,7 @@ public function courseList()
       $openid = session('openid');
 
       $courseid = Request::instance()->param('courseid');
-      if(!empty($courseid))
+      if(count($courseid)  !== 0)
       {
         $this->assign('courseid',$courseid); 
         return $this->fetch();
@@ -187,7 +186,8 @@ public function saveSign()
     $signIn->course_id = $courseId;
     $signIn->open_id = $openid;
     $courseid = SignIn::where('open_id',$openid)->where('course_id',$courseId)->select();
-    if(!empty($courseid))
+
+    if(count($courseid) !== 0)
     {
         return 0;
     }

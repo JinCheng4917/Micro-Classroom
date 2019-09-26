@@ -8,6 +8,7 @@ use app\common\model\Course;
 use app\common\model\Term;
 use app\common\model\Chat;
 use app\common\model\CourseList;
+use app\common\model\SignIn;
 use app\common\model\TeacherKlass;
 use think\facade\Request;   
 use think\Controller;   // 请求
@@ -29,7 +30,6 @@ class TeacherController extends TeacherIndexController
     {
          //获取当前登陆教师的id
         $id = session('teacherId');
-        dump($id);
         //获取课表的所有信息
         $list = CourseList::all();
         //开学时间
@@ -50,58 +50,56 @@ class TeacherController extends TeacherIndexController
         $current_week = date('Y-m-d',strtotime("$date -".($day ? $day - 1 : 6).' days'));
         //当前周次  
         $week = (strtotime($current_week) - strtotime($kx_week))/(3600*24*7) + 1;
-        //获取与当前登录学生相关的信息，并筛选出班级的id
-        $klassId = TeacherKlass::where('teacher_id',$id)->column('klass_id');
         //获取某个日期的时间戳
        $time = strtotime(date("H:i:s"));
        //根据时间筛选课程
-         if($time >=  strtotime(date("07:30:00")) && $time <= strtotime(date("09:15:00")))
+         if($time >=  strtotime(date("08:30:00")) && $time <= strtotime(date("09:15:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',1)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',1)->select();
        }
        if($time >=  strtotime(date("09:20:00")) && $time <= strtotime(date("10:05:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',2)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',2)->select();
        }
        if($time >=  strtotime(date("10:25:00")) && $time <= strtotime(date("11:10:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',3)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',3)->select();
        }
         if($time >=  strtotime(date("11:15:00")) && $time <= strtotime(date("12:00:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',4)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',4)->select();
        }
        if($time >=  strtotime(date("14:00:00")) && $time <= strtotime(date("14:45:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',5)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',5)->select();
        }
        if($time >=  strtotime(date("14:50:00")) && $time <= strtotime(date("15:35:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',6)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',6)->select();
        }if($time >=  strtotime(date("15:55:00")) && $time <= strtotime(date("16:40:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',7)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',7)->select();
        }
        if($time >=  strtotime(date("16:45:00")) && $time <= strtotime(date("17:30:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',8)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',8)->select();
        }
        if($time >=  strtotime(date("18:40:00")) && $time <= strtotime(date("19:25:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',9)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',9)->select();
        }
        if($time >=  strtotime(date("19:30:00")) && $time <= strtotime(date("20:15:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',10)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',10)->select();
        }
        if($time >=  strtotime(date("20:20:00")) && $time <= strtotime(date("21:05:00")))
         {
-        $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',11)->find();
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',11)->select();
        }
-        if(!empty($courseList))
+      if(count($courseList) !== 0)
         {
          // $url = 'http://'.$_SERVER['HTTP_HOST'].'/index/student/StudentSignIn';
-          $url = 'http://www.microklass.com/micro-classroom/public/index/student/signin?courseid='.$courseList->id;
+          $url = 'http://www.microklass.com/micro-classroom/public/index/student/signin?courseid='.$courseList[0]->id;
           $this->assign('url',$url);
         }
         else{
@@ -115,41 +113,95 @@ class TeacherController extends TeacherIndexController
     //放大二维码
     public function largeQR()
     {
-       $htmls = $this->fetch();
+       
+         //获取当前登陆教师的id
+        $id = session('teacherId');
+        //获取课表的所有信息
+        $list = CourseList::all();
+        //开学时间
+        $date = '2019-08-26';
+        //开学当天是周几 
+        $w    = date('w',strtotime($date));//0代表周日  0-6 日-六
+        
+        //开学周的周一的日期
+        $kx_week = date('Y-m-d',strtotime("$date -".($w ? $w - 1 : 6).' days'));//第一周周1日期
+        
+        //当前日期
+        $date = date('Y-m-d'); 
+        
+        //当前是周几
+        $day    = date('w',strtotime($date));
+        
+        //当前周次的周一的日期
+        $current_week = date('Y-m-d',strtotime("$date -".($day ? $day - 1 : 6).' days'));
+        //当前周次  
+        $week = (strtotime($current_week) - strtotime($kx_week))/(3600*24*7) + 1;
+        //获取某个日期的时间戳
+       $time = strtotime(date("H:i:s"));
+       //根据时间筛选课程
+         if($time >=  strtotime(date("08:30:00")) && $time <= strtotime(date("09:15:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',1)->select();
+       }
+       if($time >=  strtotime(date("09:20:00")) && $time <= strtotime(date("10:05:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',2)->select();
+       }
+       if($time >=  strtotime(date("10:25:00")) && $time <= strtotime(date("11:10:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',3)->select();
+       }
+        if($time >=  strtotime(date("11:15:00")) && $time <= strtotime(date("12:00:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',4)->select();
+       }
+       if($time >=  strtotime(date("14:00:00")) && $time <= strtotime(date("14:45:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',5)->select();
+       }
+       if($time >=  strtotime(date("14:50:00")) && $time <= strtotime(date("15:35:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',6)->select();
+       }if($time >=  strtotime(date("15:55:00")) && $time <= strtotime(date("16:40:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',7)->select();
+       }
+       if($time >=  strtotime(date("16:45:00")) && $time <= strtotime(date("17:30:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',8)->select();
+       }
+       if($time >=  strtotime(date("18:40:00")) && $time <= strtotime(date("19:25:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',9)->select();
+       }
+       if($time >=  strtotime(date("19:30:00")) && $time <= strtotime(date("20:15:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',10)->select();
+       }
+       if($time >=  strtotime(date("20:20:00")) && $time <= strtotime(date("21:05:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',11)->select();
+       }
+      if(count($courseList) !== 0)
+        {
+         // $url = 'http://'.$_SERVER['HTTP_HOST'].'/index/student/StudentSignIn';
+          $url = 'http://www.microklass.com/micro-classroom/public/index/student/signin?courseid='.$courseList[0]->id;
+          $this->assign('url',$url);
+        }
+        else{
+           return $this->error('系统繁忙',url('index'));
+        }
+      
+      
+        $htmls = $this->fetch();
         return $htmls;
     }
+
     //随机提问
     public function randomQuestions()
     {
       $htmls = $this->fetch();
         return $htmls;
-    }
-
-
-    //查看签到信息
-    public function seeSignin()
-    {
-      $htmls = $this->fetch();
-        return $htmls; 
-    }
-  
-    //查看学期末签到情况
-     public function getSigninAll()
-    {
-      $htmls = $this->fetch();
-        return $htmls; 
-    }
-    //查看当堂未签到学生信息
-    public function getThis()
-    {
-      $htmls = $this->fetch();
-        return $htmls; 
-    }
-    //查看期末未签到学生信息
-    public function getAll()
-    {
-   $htmls = $this->fetch();
-        return $htmls; 
     }
     //选择要查看学生信息的课程
     public function studentSelect()
@@ -269,6 +321,9 @@ class TeacherController extends TeacherIndexController
        $Score->save();
        
     }
+    /*
+    **用js方法获取学期的课程
+     */
     public function getCourse() {
         $termId = Request::instance()->param('term/d');
         $id = session('teacherId'); 
@@ -290,7 +345,100 @@ class TeacherController extends TeacherIndexController
     $examScore = 100-($usualScore*100).'%';    
     return $examScore;
     }
-    
+    /*
+    查看签到情况
+     */
+    public function getSignIn()
+    {
+        //获取当前登陆教师的id
+        $id = session('teacherId');
+        //获取课表的所有信息
+        $list = CourseList::all();
+        //开学时间
+        $date = '2019-08-26';
+        //开学当天是周几 
+        $w    = date('w',strtotime($date));//0代表周日  0-6 日-六
+        
+        //开学周的周一的日期
+        $kx_week = date('Y-m-d',strtotime("$date -".($w ? $w - 1 : 6).' days'));//第一周周1日期
+        
+        //当前日期
+        $date = date('Y-m-d'); 
+        
+        //当前是周几
+        $day    = date('w',strtotime($date));
+        
+        //当前周次的周一的日期
+        $current_week = date('Y-m-d',strtotime("$date -".($day ? $day - 1 : 6).' days'));
+        //当前周次  
+        $week = (strtotime($current_week) - strtotime($kx_week))/(3600*24*7) + 1;
+        //获取某个日期的时间戳
+       $time = strtotime(date("H:i:s"));
+       //根据时间筛选课程
+         if($time >=  strtotime(date("08:30:00")) && $time <= strtotime(date("09:15:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',1)->select();
+       }
+       if($time >=  strtotime(date("09:20:00")) && $time <= strtotime(date("10:05:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',2)->select();
+       }
+       if($time >=  strtotime(date("10:25:00")) && $time <= strtotime(date("11:10:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',3)->select();
+       }
+        if($time >=  strtotime(date("11:15:00")) && $time <= strtotime(date("12:00:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',4)->select();
+       }
+       if($time >=  strtotime(date("14:00:00")) && $time <= strtotime(date("14:45:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',5)->select();
+       }
+       if($time >=  strtotime(date("14:50:00")) && $time <= strtotime(date("15:35:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',6)->select();
+       }if($time >=  strtotime(date("15:55:00")) && $time <= strtotime(date("16:40:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',7)->select();
+       }
+       if($time >=  strtotime(date("16:45:00")) && $time <= strtotime(date("17:30:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',8)->select();
+       }
+       if($time >=  strtotime(date("18:40:00")) && $time <= strtotime(date("19:25:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',9)->select();
+       }
+       if($time >=  strtotime(date("19:30:00")) && $time <= strtotime(date("20:15:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',10)->select();
+       }
+       if($time >=  strtotime(date("20:20:00")) && $time <= strtotime(date("23:05:00")))
+        {
+        $courseList = CourseList::where('teacher_id',$id)->where('week_id',$week)->where('date_id',$day)->where('time_id',11)->select();
+       }
+      if(count($courseList) !== 0)
+        {
+           $number = 0;
+           for ($i=0; $i <count($courseList) ; $i++) { 
+               $student[$i] = Student::where('klass_id',$courseList[$i]->klass_id)->select();
+           }
+           for ($i=0; $i <count($courseList); $i++) 
+           {
+             $number  +=  count($student[$i]);
+           }
+           $this->assign('number',$number);
+            $finalNumber = 0;
+            $signIn = SignIn::where('course_id',$courseList[0]->id)->select();
+             $finalNumber  = count($signIn);
+           $this->assign('finalNumber',$finalNumber);
+        }
+      $unSignNumber = $number - $finalNumber;
+      $this->assign('unSignNumber', $unSignNumber);
+      $htmls = $this->fetch();
+         return $htmls;  
+    }
     public function putScore()
    {  
          //从上一个V层获取用户所选择的课程的id，以便获取该课程的学生的信息
