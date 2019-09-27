@@ -10,6 +10,7 @@ use app\common\model\Date;
 use app\common\model\Time;
 use app\common\model\Term;
 use app\common\model\Week;
+use app\common\model\TeacherCourse;
 use app\common\model\Score;
 use think\Controller;    
 class KlassController extends Controller
@@ -293,6 +294,7 @@ public function courseSave()
     $weeks = $Request->post('week');
     $courseList->date_id = $date_id = $Request->post('date_id');
     $courseList->time_id = $time_id = $Request->post('time_id');
+    $teacher = TeacherCourse::where('course_id',$course_id)->find();
         // 添加数据
     if (!is_null($courseList)){
         $result = $this->validate(
@@ -324,6 +326,7 @@ public function courseSave()
                 $CourseList->date_id = $date_id;
                 $CourseList->time_id = $time_id;
                 $CourseList->week_id = $weeks[$i];
+                 $CourseList->teacher_id = $teacher->teacher_id;
                 if(!$CourseList->save()){
                    return $this->error('操作失败',url('addCourse'));
                } 
