@@ -127,7 +127,7 @@ class KlassController extends Controller
                 $Klass->name = $Klass->name;
                 $Klass->teacher_id = $postData['teacher_id'];
                 $Klass->save();
-                return $this->success('操作成功');
+                return $this->success('操作成功',url('index'));
             }
         }
     }

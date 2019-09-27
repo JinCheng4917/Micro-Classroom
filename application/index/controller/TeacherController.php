@@ -26,7 +26,9 @@ class TeacherController extends TeacherIndexController
        return $htmls;
     }
   
-
+/*
+获取当前时间的课程
+ */
     public function test () {
        $courseList = [];
         //获取当前登陆教师的id

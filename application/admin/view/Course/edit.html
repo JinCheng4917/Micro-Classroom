@@ -20,7 +20,7 @@
     <br>
     <label for="teacher">教师：</label>
     {volist name="teachers" id="teacher"}
-    <input type="checkbox" name="teacher_id[]" id="teacher_id_{$teacher->id}" value="{$teacher->id}" {eq name="course->teacherIsChecked($teacher)" value="true" } checked="checked" {/eq}/> <label for="teacher_id_{$teacher->id}">{$teacher->name}</label>
+    <input type="radio" name="teacher_id" value="{$teacher->id}" {eq name="course->teacherIsChecked($teacher)" value="true" } checked="checked" {/eq}/> <label for="{$teacher->id}">{$teacher->name}</label>
     {/volist}
     <br>
     <label for="room">教室:</label>

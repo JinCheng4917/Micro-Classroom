@@ -115,7 +115,10 @@ class Student extends Model
     {
         return $this->belongsTo('Term');
     }
-
+    public function Unsign()
+    {
+        return $this->belongsTo('Unsign');
+    }
     // public static function returnKlass($id) {
     //     //获取课表的所有信息
     //     $list = CourseList::all();
