@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>人柱力上课提醒</title> 
+<script>
+var c=0;
+var t;
+var timer_is_on=0;
+function timedCount(){
+	document.getElementById('txt').value=c;
+	c=c+1;
+	t=setTimeout("timedCount()",1000);
+}
+function doTimer(){
+	if (!timer_is_on)
+	{
+		timer_is_on=1;
+		timedCount();
+	}
+}
+// function myrefresh()
+// {
+//        window.location.reload();
+// }
+// setTimeout('myrefresh()',2000); //指定1秒刷新一次
+</script> 
+</head>
+
+<body>
+<form>
+<!-- <input type="button" value="开始计数!222" onClick="doTimer()"> -->
+<input type="text" id="txt">
+</form>
+<p>刷新页面即可向用户发送上课提醒</p>
+</body>
+</html>

@@ -27,6 +27,7 @@ class StudentController extends StudentIndexController
     {
          //获取当前登陆学生的id
         $id = session('studentId');
+
         $openid = session('openid');
         $courseList = Request::instance()->param('courseid');
         if(!empty($courseList))
