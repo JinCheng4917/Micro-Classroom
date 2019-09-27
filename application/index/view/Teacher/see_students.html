@@ -53,7 +53,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                            <a href="{:url('Teacher/studentSelect')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+                            <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
                         </li>
                     <li>
                         <a href="{:url('Teacher/seeStudents')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
@@ -86,20 +86,22 @@
                     <td>邮箱</td>
                     <td>电话号码</td>
                 </tr>
-               {volist name="$Courseids" id="Courseid"}
+        {for start="0" end="count($klass)" name="m"}
+               {volist name="$klass[$m]->Student" id="_student" key="k"}
             <tr align="center">
-                <td>{$Courseid->Term->name}</td>
-                <td>{$Courseid->Course->name}</td>
-                <td>{$Courseid->Student->name}</td>
-                <td>{eq name="$Courseid->Student->sex" value='0'}男{else /}女{/eq}</td>
-                <td>{$Courseid->Student->College->name}</td>
-                <td>{$Courseid->Student->major}</td>
-                <td>{$Courseid->Student->Klass->name}</td>
-                <td>{$Courseid->Student->num}</td>
-                <td>{$Courseid->Student->email}</td>
-                <td>{$Courseid->Student->phone}</td>
+                <td>{$term->name}</td>
+                <td>{$courses->name}</td>
+                <td>{$_student->name}</td>
+                <td>{$_student->sex}</td>
+                <td>{$_student->College->name}</td>
+                <td>{$_student->major}</td>
+                <td>{$_student->Klass->name}</td>
+                <td>{$_student->num}</td>
+                <td>{$_student->email}</td>
+                <td>{$_student->phone}</td>
                </tr>
                {/volist}
+               {/for}
            </table>
     <script src="js/jquery.js"></script>
 
