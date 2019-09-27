@@ -172,6 +172,7 @@ public function save()
     if ( true !== $result) 
     {
         dump($result);
+        return $this->error('保存教师错误');
     } 
     else {
              // 接收传入数据
