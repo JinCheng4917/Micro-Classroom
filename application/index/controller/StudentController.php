@@ -7,6 +7,7 @@ use app\common\model\Course;
 use app\common\model\CourseList;
 use app\common\model\Term;
 use app\common\model\SignIn;
+use app\common\model\Unsign;
 use think\facade\Request; 
 use app\common\model\Chat;
 use think\Controller;   // 请求
@@ -24,84 +25,19 @@ class StudentController extends StudentIndexController
     }
     public function getQR()
     {
-         //获取当前登陆教师的id
+         //获取当前登陆学生的id
         $id = session('studentId');
-        //获取课表的所有信息
-        $list = CourseList::all();
-        //开学时间
-        $date = '2019-08-26';
-        //开学当天是周几 
-        $w    = date('w',strtotime($date));//0代表周日  0-6 日-六
-        
-        //开学周的周一的日期
-        $kx_week = date('Y-m-d',strtotime("$date -".($w ? $w - 1 : 6).' days'));//第一周周1日期
-        
-        //当前日期
-        $date = date('Y-m-d'); 
-        
-        //当前是周几
-        $day    = date('w',strtotime($date));
-        
-        //当前周次的周一的日期
-        $current_week = date('Y-m-d',strtotime("$date -".($day ? $day - 1 : 6).' days'));
-        //当前周次  
-        $week = (strtotime($current_week) - strtotime($kx_week))/(3600*24*7) + 1;
-        //获取与当前登录学生相关的信息，并筛选出班级的id
-        $klassId = CourseList::where('id',$id)->column('klass_id');
-        //获取某个日期的时间戳
-        $time = strtotime(date("H:i:s"));
-       //根据时间筛选课程
-        if($time >=  strtotime(date("08:30:00")) && $time <= strtotime(date("09:15:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',1)->find();
-        }
-        if($time >=  strtotime(date("09:20:00")) && $time <= strtotime(date("10:05:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',2)->find();
-        }
-        if($time >=  strtotime(date("10:25:00")) && $time <= strtotime(date("11:10:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',3)->find();
-        }
-        if($time >=  strtotime(date("11:15:00")) && $time <= strtotime(date("12:00:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',4)->find();
-        }
-        if($time >=  strtotime(date("14:00:00")) && $time <= strtotime(date("14:45:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',5)->find();
-        }
-        if($time >=  strtotime(date("14:50:00")) && $time <= strtotime(date("15:35:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',6)->find();
-        }if($time >=  strtotime(date("15:55:00")) && $time <= strtotime(date("16:40:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',7)->find();
-        }
-        if($time >=  strtotime(date("16:45:00")) && $time <= strtotime(date("17:30:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',8)->find();
-        }
-        if($time >=  strtotime(date("18:40:00")) && $time <= strtotime(date("19:25:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',9)->find();
-        }
-        if($time >=  strtotime(date("19:30:00")) && $time <= strtotime(date("20:15:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',10)->find();
-        }
-        if($time >=  strtotime(date("20:20:00")) && $time <= strtotime(date("23:50:00")))
-        {
-            $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->where('time_id',11)->find();
-        }
+
+        $openid = session('openid');
+        $courseList = Request::instance()->param('courseid');
         if(!empty($courseList))
         {
          // $url = 'http://'.$_SERVER['HTTP_HOST'].'/index/student/StudentSignIn';
-          $url = 'http://www.microklass.com/micro-classroom/public/index/student/signin?courseid='.$courseList->id;
+          $url = 'http://www.microklass.com/micro-classroom/public/index/student/signin?courseid='.$courseList;
           $this->assign('url',$url);
       }
       else{
-         return $this->error('课程未开放，请确认好上课时间后再开放',url('index'));
+         return $this->error('课程未开放，请确认好上课时间后再签到',url('index'));
      }
 
 
@@ -166,7 +102,8 @@ public function courseList()
       $openid = session('openid');
 
       $courseid = Request::instance()->param('courseid');
-      if(!empty($courseid))
+      dump($courseid);
+      if(count($courseid)  !== 0)
       {
         $this->assign('courseid',$courseid); 
         return $this->fetch();
@@ -177,22 +114,90 @@ public function courseList()
 }
 public function saveSign()
 {
-    $openid = session('openid');
-    $courseId = Request::instance()->param('courseid');
-    $signIn = new SignIn;
-    $signIn->course_id = $courseId;
-    $signIn->open_id = $openid;
-    $courseid = SignIn::where('open_id',$openid)->where('course_id',$courseId)->select();
-    if(!empty($courseid))
-    {
-        return 0;
-    }
-    else{
-        if($signIn->save())
+        //开学时间
+    $date = '2019-08-26';
+        //开学当天是周几 
+        $w    = date('w',strtotime($date));//0代表周日  0-6 日-六
+        
+        //开学周的周一的日期
+        $kx_week = date('Y-m-d',strtotime("$date -".($w ? $w - 1 : 6).' days'));//第一周周1日期
+        
+        //当前日期
+        $date = date('Y-m-d'); 
+        
+        //当前是周几
+        $day    = date('w',strtotime($date));
+        
+        //当前周次的周一的日期
+        $current_week = date('Y-m-d',strtotime("$date -".($day ? $day - 1 : 6).' days'));
+        //当前周次  
+        $week = (strtotime($current_week) - strtotime($kx_week))/(3600*24*7) + 1;
+        //获取某个日期的时间戳
+        $time = strtotime(date("Y-m-d"));
+        $id =  session('studentId');
+        //获取openid
+        $openid = session('openid');
+        //接收从前台传过来的courseid（实际上是courseList表单的id）
+        $courseListId = Request::instance()->param('courseid');
+        //根据openid从学生表单里得到班级的id
+        $klass_id = Student::where('openid',$openid)->find()->klass_id;
+        //获取id与$courseListId 相等的courselist的信息
+        $courseList  = CourseList::where('id',$courseListId)->find();
+        //在signin表里查询，以确定是否签到
+        $signList = SignIn::where('open_id',$openid)->where('courselist_id',$courseListId)->select();
+        //在signin表里查询，以计算签到次数
+        $signIn = SignIn::where('open_id',$openid)->where('course_id',$courseList->course_id)->select();
+        //计算到目前为止需要签到的次数
+        if($time >=  strtotime(date("2019-08-26")))
         {
-           return 1;
+            $courseNumber = CourseList::where('klass_id',$klass_id)->where('course_id', $courseList->course_id)->select();
+        }
+        if(count($courseNumber) !==0)
+        {
+            $needSignIn = count($courseNumber);
+        } 
+        if(count($signIn) !==0)
+        {
+            $finalSignIn = count($signIn);
+        } 
+        if(count($courseNumber) !==0 && count($signIn) !==0)
+        {
+           $unSign = $needSignIn - $finalSignIn;
        }
+       else
+       {
+        $unSign = 0;  
+    }
+    $signIn = new SignIn;
+    $signIn->course_id = $courseList->course_id;
+    $signIn->open_id = $openid;
+    $signIn->courselist_id = $courseListId;
+    $unsign = Unsign::where('student_id',$id)->find();
+    if(count($unsign) !== 0)
+    {
+       $unsign->student_id = $id;
+       $unsign->course_id =  $courseList->course_id;
+       $unsign->courselist_id = $courseListId;
+       $unsign->unsign_number = $unSign;    
    }
+   else{
+       $unsign = new Unsign;
+       $unsign->student_id = $id;
+       $unsign->course_id =  $courseList->course_id;
+       $unsign->courselist_id = $courseListId;
+       $unsign->unsign_number = $unSign;
+   }
+
+   if(count( $signList) !== 0)
+   {
+    return 0;
+}
+else{
+    if($signIn->save() && $unsign->save())
+    {
+       return 1;
+   }
+}
 
 
 }

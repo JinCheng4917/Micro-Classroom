@@ -74,7 +74,6 @@
         <div class="small-text-center">
             <h1 style="color: white; margin-top: 5%;">微课堂成绩录入系统</h1>
         </div>
-        <button type="button" class="btn btn-danger" style="margin-left:80%; width: 18%;">开放成绩查询</button>
         <div class="col-md-5" style="margin-left: 5%;">
             <label for="" class="option">请选择平时成绩所占权重</label>
             <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
@@ -118,7 +117,7 @@
                 <td class="list">{$Courseid->Student->major}</td>
                 <td class="list">{$Courseid->Student->Klass->name}</td>
                 <td class="list">{$Courseid->Student->num}</td>
-                <td class="list">{$Courseid->Student->unsign_count}</td>
+                <td class="list"> </td>
                 <td class="list usual" contenteditable="true" onblur="autoSave(event);" id="{$Courseid-> id}">{$Courseid->usual_score}</td>
                 <td class="list exam" contenteditable="true" onblur="finalSave(event);" id="{$Courseid-> id}">{$Courseid->exam_score}</td>
                 <td class="list total" id="{$Courseid-> id}"></td>

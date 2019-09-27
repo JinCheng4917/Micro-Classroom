@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  
+  <!-- Bootstrap Core CSS -->
+  <link href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/css/landing-page.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link rel="stylesheet" href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/css/reset.css">
+
+</head>
+<style type="text/css">
+  /*课表的整体的style*/
+  .form {
+    border-color: white;
+    height: 50%;
+    margin-top: 20%;
+    color: white;
+  }
+  .sign {
+    color: white;
+    font-size: 80px;
+    margin-top: 15%;
+}
+}
+</style>
+<body style="background-image: url(/Micro-Classroom/public/static/bootstrap-3.3.5-dist/img/intro-bg.jpg)">
+	<div class="col-md-12">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+      <div class="container topnav">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">微课堂</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand topnav" href="#">微课堂</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+           <li>
+             <a href="{:url('Teacher/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
+           </li>
+           <li>
+            <a href="{:url('Teacher/getSignIn')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+          </li>
+          <li>
+            <!--两个注销--TeacherLogout--StudentLogout-->
+            <a href="{:url('Teacher/index')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
+          </li>
+        </ul>
+
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+     <h1 class="sign" align="center">Micro-Classroom</h1>
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div  class="form">
+       <table class="table table-bordered" align="center" >
+        <td> 应签到人数：&nbsp;&nbsp;&nbsp;&nbsp;{$number}</td>
+         <td> 实际签到人数：&nbsp;&nbsp;&nbsp;{$finalNumber}</td>
+          <td> 未签到人数：&nbsp;&nbsp;&nbsp;&nbsp;{$unSignNumber}</td>
+      </div>
+    </div>
+     <div class="col-md-3"></div>
+  </table>
+</body>
+</html>

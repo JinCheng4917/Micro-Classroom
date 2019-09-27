@@ -44,14 +44,14 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                        <li>
-                        <a href="{:url('Teacher/largeQR')}" style="font-size: 14px;"><i class="glyphicon glyphicon-resize-full"></i>&nbsp;放大</a>
+                        <a href="{:url('Student/index')}" style="font-size: 14px;"><i class="glyphicon glyphicon-resize-full"></i>&nbsp;返回</a>
                     </li>
                     <li>
-                        <a href="{:url('Teacher/getQR')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+                        <a href="{:url('Student/getQR')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
                     </li>
                     <li>
                         <!--两个注销--TeacherLogout--StudentLogout-->
-                        <a href="{:url('Teacher/index')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
+                        <a href="{:url('Student/index')}"  style="font-size: 14px;"><i class="glyphicon glyphicon-off"></i>&nbsp;退出</a>
                     </li>
                 </ul>
             </div>
@@ -59,43 +59,8 @@
         </div>
         <!-- /.container -->
     </nav>
-    <div class="head" class="col-md-6">
-    	<div class="small-text-center" >
-          <h1 style="color: white;margin-top:15%;">欢迎使用微课堂签到功能</h1>
-      </div>
-  </div>
-  <input id="text"  value="{$url}" type="hidden" style="width:80%" /><br />
-<div id="qrcode" style="width:300px; height:300px; margin-top:15px; margin-left: 780px;"></div>
+    <div style="margin-top: 20%;">
 <a href="{$url}">跳转</a>
-<script type="text/javascript">
-var qrcode = new QRCode(document.getElementById("qrcode"), {
-  width : 300,
-  height : 300
-});
-
-function makeCode () {    
-  var elText = document.getElementById("text");
-  
-  if (!elText.value) {
-    alert("Input a text");
-    elText.focus();
-    return;
-  }
-  
-  qrcode.makeCode(elText.value);
-}
-
-makeCode();
-
-$("#text").
-  on("blur", function () {
-    makeCode();
-  }).
-  on("keydown", function (e) {
-    if (e.keyCode == 13) {
-      makeCode();
-    }
-  });
-</script>
+ </div>
 </body>
 </html>
