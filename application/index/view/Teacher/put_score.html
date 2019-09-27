@@ -108,6 +108,23 @@
                 <th class="font">总成绩</th>
             </tr>
             {volist name="$Courseids" id="Courseid"}
+            {if !empty($Courseid->Student->Unsign)}
+              <tr>
+                <td class="list">{$Courseid->Term->name}</td>
+                <td class="list">{$Courseid->Course->name}</td>
+                <td class="list">{$Courseid->Student->name}</td>
+                <td class="list">{eq name="Courseid->Student->sex" value='0'}男{else /}女{/eq}</td>
+                <td class="list">{$Courseid->Student->College->name}</td>
+                <td class="list">{$Courseid->Student->major}</td>
+                <td class="list">{$Courseid->Student->Klass->name}</td>
+                <td class="list">{$Courseid->Student->num}</td>
+                <td class="list">{$Courseid->Student->Unsign->unsign_number}</td>
+                <td class="list usual" contenteditable="true" onblur="autoSave(event);" id="{$Courseid-> id}">{$Courseid->usual_score}</td>
+                <td class="list exam" contenteditable="true" onblur="finalSave(event);" id="{$Courseid-> id}">{$Courseid->exam_score}</td>
+                <td class="list total" id="{$Courseid-> id}"></td>
+            </tr> 
+            {/if}
+            {if empty($Courseid->Student->Unsign)}
             <tr>
                 <td class="list">{$Courseid->Term->name}</td>
                 <td class="list">{$Courseid->Course->name}</td>
@@ -117,11 +134,12 @@
                 <td class="list">{$Courseid->Student->major}</td>
                 <td class="list">{$Courseid->Student->Klass->name}</td>
                 <td class="list">{$Courseid->Student->num}</td>
-                <td class="list"> </td>
+                <td class="list">0</td>
                 <td class="list usual" contenteditable="true" onblur="autoSave(event);" id="{$Courseid-> id}">{$Courseid->usual_score}</td>
                 <td class="list exam" contenteditable="true" onblur="finalSave(event);" id="{$Courseid-> id}">{$Courseid->exam_score}</td>
                 <td class="list total" id="{$Courseid-> id}"></td>
             </tr>
+           {/if}
             {/volist}
             <script type="text/javascript">
             </script>

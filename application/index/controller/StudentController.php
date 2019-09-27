@@ -195,12 +195,17 @@ public function saveSign()
 else{
     if($signIn->save() && $unsign->save())
     {
+      $student = Student::where('openid',$openid)->find();
+      $unsignid = $unsign->id;
+      $student->unsign_id = $unsignid;
+      if($student->save())
+      {
        return 1;
+      }
    }
+ }
 }
 
-
-}
 	//查询分数
 public function getScore()
 {

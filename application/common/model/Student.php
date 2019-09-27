@@ -116,6 +116,19 @@ class Student extends Model
         return $this->belongsTo('Term');
     }
 
+    public function Unsign()
+    {
+        return $this->belongsTo('Unsign');
+    }
+    // public static function returnKlass($id) {
+    //     //获取课表的所有信息
+    //     $list = CourseList::all();
+    //     //开学时间
+    //     $date = '2019-08-26';
+    //     //开学当天是周几 
+    //     $w    = date('w',strtotime($date));//0代表周日  0-6 日-六
+
+
     public static function returnKlassInfo($id) {
         //获取课表的所有信息
         $list = CourseList::all();
@@ -123,6 +136,7 @@ class Student extends Model
         $date = '2019-08-26';
         //开学当天是周几 
         $w    = date('w',strtotime($date));//0代表周日  0-6 日-六
+
           
         //开学周的周一的日期
         $kx_week = date('Y-m-d',strtotime("$date -".($w ? $w - 1 : 6).' days'));//第一周周1日期
