@@ -135,6 +135,7 @@ if (!is_null($teacherId)) {
   $TeacherCourse = new TeacherCourse;
   $TeacherCourse->teacher_id =  $teacherId;
   $TeacherCourse->course_id =  $Course->id; 
+  $TeacherCourse->term_id = $termId;
   $TeacherCourse->save();
 }
 }
@@ -249,6 +250,7 @@ if (!is_null($teacherId)) {
   {
     $TeacherCourse->teacher_id =  $teacherId;
     $TeacherCourse->course_id =  $Course->id; 
+    $TeacherCourse->term_id = $termId;
     $TeacherCourse->save();
   }
 } 
@@ -273,10 +275,12 @@ public function delete()
     return $this->error('删除失败:' . $Course->getError());
   }
   $Score = Score::where("course_id",$id);
+   $CourseList = CourseList::where("course_id",$id);
   $KlassCourse = KlassCourse::where('course_id',$id);
   $TeacherCourse = TeacherCourse::where('course_id',$id);
   $Score->delete();
   $KlassCourse->delete();
+  $CourseList->delete();
   $TeacherCourse->delete();
         // 进行跳转 
   return $this->success('删除成功', url('index')); 
