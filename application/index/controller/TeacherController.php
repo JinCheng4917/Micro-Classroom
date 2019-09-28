@@ -200,7 +200,7 @@ class TeacherController extends TeacherIndexController
          $id = session('teacherId');  
          //获取score表里的全部信息 
          $score = Score::all();
-         //获取与当前课程id相同的id的课程的全部信息
+         //从KlassCourse表单获取与当前课程id相同的id的课程的全部信息
          $klass_ids = KlassCourse::where('course_id',$courseid)->column('klass_id');
           $klassId =  array_values(array_unique($klass_ids));
           for ($i=0; $i < count($klassId); $i++) { 
