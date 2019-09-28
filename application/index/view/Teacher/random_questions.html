@@ -86,7 +86,7 @@
          <form action="{:url('show')}" method="post" >
                 <select style="height: 5%;width: 25%" id="_id" name="id">
                     {volist name="$klasses" id="klasses"}
-                    <option value="{$klasses->id}" {eq name="$klasses->id" value="$klasses->id" }selected="selected" {/eq}>{$klasses->name} </option>
+                    <option value="{$klasses->id}" {eq name="$klasses->id" value="$klasses->id" }selected="selected" {/eq}>{$klasses->name } </option>
                     {/volist} 
                 </select> 
                 <button class="btn btn-danger" type="submit">提交 </button>
