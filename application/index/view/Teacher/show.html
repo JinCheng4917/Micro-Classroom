@@ -46,7 +46,7 @@
                             <a href="{:url('Teacher/randomQuestions')}" style="font-size: 14px;"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;返回</a>
                         </li>
                         <li>
-                            <a href="{:url('Teacher/show')}" style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+                            <a  onClick="document.location.reload()" style="font-size: 14px;"><i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
                         </li>
                         <li>
                             <!--两个注销--TeacherLogout--StudentLogout-->
@@ -61,8 +61,16 @@
 
     <form class="form-inline" style="margin-top: 20%;margin-left: 40%;">
         <div class="row">
+            
             <div class="form-group">
-           
+                <label for="exampleInputName2" style="color: white; font-size:6rem;">班级:&nbsp;</label>
+                <label for="exampleInputName2" style="color: white; font-size:6rem;">{$KlassName}&nbsp;</label>
+            </div>   
+        </div>
+
+         <div class="row">
+            
+            <div class="form-group">
                 <label for="exampleInputName2" style="color: white; font-size:6rem;">姓名:&nbsp;</label>
                 <label for="exampleInputName2" style="color: white; font-size:6rem;">{$LuckyName}&nbsp;</label>
             </div>   
@@ -85,7 +93,7 @@
  
  
             <div class="small-text-center">
-            <a href="{:url('Teacher/show')}"><button type="button" class="btn btn-danger" style="margin-top:4%;width: 16%;">NEXT</button></a>
+            <a href="#"><button onClick="document.location.reload()" class="btn btn-danger" style="margin-top:4%;width: 16%;">NEXT</button></a>
             </div>
         </div>
         <script src="js/jquery.js"></script>

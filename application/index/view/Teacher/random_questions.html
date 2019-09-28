@@ -10,6 +10,7 @@
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
   <script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
   
     <!-- Bootstrap Core CSS -->
     <link href="/Micro-Classroom/public/static/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -80,9 +81,20 @@
     </nav>
     <div class="small-text-center" >
   <h1 style="color: white; margin-top:100px;">欢迎使用微课堂随机提问功能</h1>
-  <h2 style="color: white;">点击图标开始点名</h2>
- </div>
- <a href="{:url('Teacher/show')}"><img class="question" src="img/question.jpg"></a>
+  <h2 style="color: white;">选择班级后点击图标开始点名</h2>
+
+         <form action="{:url('show')}" method="post" >
+                <select style="height: 5%;width: 25%" id="_id" name="id">
+                    {volist name="$klasses" id="klasses"}
+                    <option value="{$klasses->id}" {eq name="$klasses->id" value="$klasses->id" }selected="selected" {/eq}>{$klasses->name} </option>
+                    {/volist} 
+                </select> 
+                <button class="btn btn-danger" type="submit">提交 </button>
+                
+            </form>
+
+ <!-- </div> -->
+ <!-- <a href="{:url('Teacher/show')}"><img class="question" src="img/question.jpg"></a> -->
  
  <!-- jQuery -->
     <script src="js/jquery.js"></script>
