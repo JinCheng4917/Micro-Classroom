@@ -3,6 +3,8 @@ namespace app\admin\controller;
 use app\common\model\Teacher;  // 教师模型
 use app\common\model\TeacherCourse;
 use app\common\model\CourseList;
+use app\common\model\TeacherKlass;
+use app\common\model\Chat;
 use app\common\model\Klass;
 use app\common\model\Term;
 use think\facade\Request;   
@@ -76,6 +78,14 @@ public function delete()
     } catch (\Exception $e) {
         return $e->getMessage();
     } 
+    $chat = Chat::where('teacher_id',$id);
+    $teacherCourse = TeacherCourse::where('teacher_id',$id);
+    $TeacherKlass = TeacherKlass::where('teacher_id',$id);
+    $courseList = CourseList::where('teacher_id',$id);
+    $chat->delete();
+    $teacherCourse->delete();
+    $TeacherKlass->delete();
+    $courseList ->delete();
         // 进行跳转
     return $this->success('删除成功', $Request->header('referer')); 
 }

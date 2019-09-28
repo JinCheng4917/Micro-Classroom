@@ -148,59 +148,20 @@ public function courseList()
         $signList = SignIn::where('open_id',$openid)->where('courselist_id',$courseListId)->select();
         //在signin表里查询，以计算签到次数
         $signIn = SignIn::where('open_id',$openid)->where('course_id',$courseList->course_id)->select();
-        //计算到目前为止需要签到的次数
-        if($time >=  strtotime(date("2019-08-26")))
-        {
-          $courseNumber = CourseList::where('klass_id',$klass_id)->where('course_id', $courseList->course_id)->select();
-        }
-        if(count($courseNumber) !==0)
-        {
-          $needSignIn = count($courseNumber);
-          $finalSignIn = count($signIn)+1; 
-          $unSign = $needSignIn - $finalSignIn;
-        } 
-        else
-        {
-          $unSign = 0;  
-        }
         $signIn = new SignIn;
         $signIn->course_id = $courseList->course_id;
         $signIn->open_id = $openid;
         $signIn->courselist_id = $courseListId;
-      
-        $unsign = Unsign::where('student_id',$id)->find();
-        if(count($unsign) !== 0)
-        { 
-
-         $unsign->student_id = $id;
-         $unsign->course_id =  $courseList->course_id;
-         $unsign->courselist_id = $courseListId;
-         $unsign->unsign_number = $unSign; 
-         $course->need_sign = $needSignIn;  
-       }
-       else{
-         $unsign = new Unsign;
-         $unsign->student_id = $id;
-         $unsign->course_id =  $courseList->course_id;
-         $unsign->courselist_id = $courseListId;
-         $unsign->unsign_number = $unSign;
-         $course->need_sign = $needSignIn;  
-       }
 
        if(count( $signList) !== 0)
        {
         return 0;
       }
       else{
-        if($signIn->save() && $unsign->save() && $course->save())
+        if($signIn->save())
         {
-          $student = Student::where('openid',$openid)->find();
-          $unsignid = $unsign->id;
-          $student->unsign_id = $unsignid;
-          if($student->save())
-          {
+         
            return 1;
-         }
        }
      }
    }
