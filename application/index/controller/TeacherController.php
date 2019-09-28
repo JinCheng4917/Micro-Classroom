@@ -144,12 +144,7 @@ class TeacherController extends TeacherIndexController
         return $htmls;
     }
 
-    //随机提问
-    public function randomQuestions()
-    {
-      $htmls = $this->fetch();
-        return $htmls;
-    }
+   
     //选择要查看学生信息的课程
     public function studentSelect()
     {
@@ -297,7 +292,7 @@ class TeacherController extends TeacherIndexController
             } 
         return $courses;
     }
-      //获取前台传入的平时成绩的权重值，计算出考试成绩的权重值后返回给前台
+  //获取前台传入的平时成绩的权重值，计算出考试成绩的权重值后返回给前台
     public function getWeight()
     {
     $usualScore = Request::instance()->param('usualScore');
@@ -436,6 +431,29 @@ return $this->success('清空成功' , url('sentMessage') . '?student_id=' . $st
         $htmls = $this->fetch();
         return $htmls;
     }
+    //随机提问
+    public function randomQuestions()
+    {
+      // 获取老师id
+      $teacherId = session('teacherId');
+      // 用老师的id获取老师所的班
+      $klassIds = TeacherKlass::where('teacher_id','=',$teacherId)->column('klass_id');
+      
+      // 根据klass_id获取klass对象
+      $klasses = [];
+      for ($i=0; $i < count($klassIds); $i++) { 
+        # code...
+        $map['id'] = $klassIds[$i];
+        $klasses[$i] = Klass::get($map);
+
+      }
+      $this->assign('klasses',$klasses);
+
+      $htmls = $this->fetch();
+      return $htmls;
+    }
+
+
 
     // 随机签到-显示随机提问时的学生信息
     public function show()
@@ -443,17 +461,19 @@ return $this->success('清空成功' , url('sentMessage') . '?student_id=' . $st
         // 连接2个数据库
         Db::connect('yunzhi_teacher')->table('yunzhi_student')->find();
 
-        // 从数据库获取全体学生姓名，学号，放入array
-        $Student = new Student;
 
-        $Students = $Student->select();
 
-        // 获取所有的id，并且放进一个数组$studentIds
-        $studentIds = Db::table('yunzhi_student')->where('id','>',0)->column('id');
- 
-        // 计算yunzhi_teacher表中用户总数，$number为一个整数
-        // $number = Db::table('yunzhi_student')->count();
-        
+        // 从v层获取klassId
+        $klassId = $klassId = Request::instance()->param();
+        // dump($klassId['id']);
+        $klassName = Klass::where('id',$klassId['id'])->value('name');
+
+        // 获取所有的学生id，并且放进一个数组$studentIds
+        $studentIds = Student::where('klass_id',$klassId['id'])->column('id');
+
+        // 计算该班级学生总数，$number为一个整数
+        $number = count($studentIds);
+
         // 打乱这个id数组的顺序
         shuffle($studentIds);
 
@@ -467,6 +487,7 @@ return $this->success('清空成功' , url('sentMessage') . '?student_id=' . $st
         $LuckyNumber = Db::table('yunzhi_student')->where('id',$LuckyNumber)->value('num');
         $this->assign('LuckyName',$LuckyName);
         $this->assign('LuckyNumber',$LuckyNumber);
+        $this->assign('KlassName',$klassName);
         
         return $this->fetch('show');
         
