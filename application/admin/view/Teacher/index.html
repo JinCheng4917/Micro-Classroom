@@ -16,6 +16,7 @@
                     <th>操作</th>
                 </tr>
                 {volist name="teachers" id="_teacher" key="key"}
+                {if !empty($_teacher)&&!empty($_teacher->Term)&&!empty($_teacher->Klasses)&&!empty($_teacher->Courses)}
                 <tr>
                     <td>{$key}</td>
                       <td>{$_teacher->Term->name}</td>
@@ -30,6 +31,7 @@
                         <a class="btn btn-sm btn-danger" href="{:url('delete?id=' . $_teacher->getData('id'))}"><i class="glyphicon glyphicon-trash">删除</i></a>
                     </td>
                 </tr>
+                {/if}
                 {/volist}
             </table>
 {/block}
