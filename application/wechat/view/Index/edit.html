@@ -141,9 +141,14 @@
                                                         <label for="num">学号</label>
                                                         <input type="integration" class="form-control" id="num" name="num">
                                                     </div>
-
                                                 </div>
 
+                                                 <div class="row form-group">
+                                                    <div class="col-md-12">
+                                                        <label for="major">专业</label>
+                                                        <input type="integration" class="form-control" id="major" name="major">
+                                                    </div>
+                                                </div>
 
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
@@ -157,7 +162,47 @@
                                                         <label for="phone">手机</label>
                                                         <input type="phone" class="form-control" id="phone" name="phone">
                                                     </div>
-                                                </div>                                                                                                
+                                                </div>
+
+
+                                                 <!--选班级 -->
+                                                <div class="row form-group">
+                                                    <div class="col-md-12">
+                                                     
+                                                            <select style="height: 5%;width: 25%" id="_id" name="klass_id">
+                                                                {volist name="$klasses" id="klasses"}
+                                                                <option value="{$klasses->id}" {eq name="$klasses->id" value="$klasses->id" }selected="selected" {/eq}>{$klasses->name} </option>
+                                                                {/volist} 
+                                                            </select> 
+                                                            
+                                               
+                                                    </div>
+                                                </div>
+
+                                                <!-- 选学期 -->
+                                                  <div class="row form-group">
+                                                    <div class="col-md-12">
+                                                            <select style="height: 5%;width: 25%" id="_id" name="term_id">
+                                                                {volist name="$terms" id="terms"}
+                                                                <option value="{$terms->id}" {eq name="$terms->id" value="$terms->id" }selected="selected" {/eq}>{$terms->name} </option>
+                                                                {/volist} 
+                                                            </select> 
+                                                    </div>
+                                                </div>
+
+                                                <!-- 选择专业 -->
+                                                <div class="row form-group">
+                                                    <div class="col-md-12">
+                                                            <select style="height: 5%;width: 25%" id="_id" name="college_id">
+                                                                {volist name="$colleges" id="_colleges"}
+                                                                <option value="{$_colleges->id}" {eq name="$_colleges->id" value="$_colleges->id" }selected="selected" {/eq}>{$_colleges->name} </option>
+                                                                {/volist} 
+                                                            </select> 
+                                                    </div>
+                                                </div>
+
+
+
                                                         
                                                 <div class="row form-group">
                                                     <div class="col-md-12">

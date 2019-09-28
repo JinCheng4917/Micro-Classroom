@@ -5,7 +5,7 @@ use app\common\model\Student;//学生模型
 use app\common\model\Klass;
 use app\common\model\Score;
 use app\common\model\Course;
-use app\common\model\Term;
+use app\common\model\College;
 use app\common\model\Chat;
 use app\common\model\CourseList;
 use app\common\model\SignIn;
@@ -154,12 +154,12 @@ class TeacherController extends TeacherIndexController
         $score = Score::all();
         //获取与当前教师id相同的id的教师的全部信息，筛选出course_id字段
         $Teacherid = Score::where('teacher_id',$id)->column('course_id');
-        //获取与当前教师id相同的id的教师的全部信息，筛选出term_id字段
-        $Termsid = Score::where('teacher_id',$id)->column('term_id');
+        //获取与当前教师id相同的id的教师的全部信息，筛选出College_id字段
+        $collegesid = Score::where('teacher_id',$id)->column('College_id');
         //对course_id这个字段进行筛选
         $Courseid = array_unique($Teacherid);
-        //对term_id这个字段进行筛选
-        $TermId = array_unique($Termsid);
+        //对College_id这个字段进行筛选
+        $CollegeId = array_unique($collegesid);
         //根据course_id这个字段进行逐个循环，根据id获取Course这个对象，以便得到course的name
         foreach ($Courseid as $key => $value)
            {
@@ -168,17 +168,17 @@ class TeacherController extends TeacherIndexController
          //用键值$key区分course对象  用get()方法获得id，从而获得course对象
                 $temp[$key] = Course::get($map);
             }
-         //根据term_id这个字段进行逐个循环，根据id获取Term这个对象，以便得到term的name
-        foreach ($TermId as $key => $value)
+         //根据College_id这个字段进行逐个循环，根据id获取College这个对象，以便得到College的name
+        foreach ($CollegeId as $key => $value)
            {
-         // $value即为term的id  用map这个数组承接
+         // $value即为College的id  用map这个数组承接
                 $map['id'] = $value;
-         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
-                $term[$key] = Term::get($map);
+         //用键值$key区分College对象  用get()方法获得id，从而获得College对象
+                $College[$key] = College::get($map);
             } 
            //将获得的对象数组传到v层             
                 $this->assign('temp',$temp);
-                $this->assign('term',$term);
+                $this->assign('College',$College);
                 $htmls = $this->fetch();
                  return $htmls; 
     }
@@ -189,8 +189,8 @@ class TeacherController extends TeacherIndexController
          $courseid = Request::instance()->post('course');  
          $courses = Course::get($courseid);
          //从上一个V层获取用户所选择的学期的id，以便获取该课程的学生的信息
-         $termid = Request::instance()->post('term');  
-         $term = Term::get($termid); 
+         $Collegeid = Request::instance()->post('College');  
+         $College = College::get($Collegeid); 
          //获取当前登陆教师的id
          $id = session('teacherId');  
          //获取score表里的全部信息 
@@ -200,15 +200,15 @@ class TeacherController extends TeacherIndexController
           $klassId =  array_values(array_unique($klass_ids));
           for ($i=0; $i < count($klassId); $i++) { 
               # code...
-              #  // $value即为term的id  用map这个数组承接
+              #  // $value即为College的id  用map这个数组承接
                 $map['id'] = $klassId[$i];
-         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
+         //用键值$key区分College对象  用get()方法获得id，从而获得College对象
                 $klass[$i] = Klass::get($map);
           }
          //把课程的id传到V层，从而获取相关的学生信息
          $this->assign('courses',$courses);
          $this->assign('klass',$klass);
-         $this->assign('term',$term);
+         $this->assign('College',$College);
          $htmls = $this->fetch();
          return $htmls;  
     }
@@ -220,23 +220,23 @@ class TeacherController extends TeacherIndexController
         //获取score表里的全部信息
         $score = Score::all();
    
-        //获取与当前教师id相同的id的教师的全部信息，筛选出term_id字段
-        $Termsid = Score::where('teacher_id',$id)->column('term_id');
+        //获取与当前教师id相同的id的教师的全部信息，筛选出College_id字段
+        $collegesid = Score::where('teacher_id',$id)->column('College_id');
     
-        //对term_id这个字段进行筛选
-        $TermId = array_unique($Termsid);
+        //对College_id这个字段进行筛选
+        $CollegeId = array_unique($collegesid);
       
-         //根据term_id这个字段进行逐个循环，根据id获取Term这个对象，以便得到term的name
-        foreach ($TermId as $key => $value)
+         //根据College_id这个字段进行逐个循环，根据id获取College这个对象，以便得到College的name
+        foreach ($CollegeId as $key => $value)
            {
-         // $value即为term的id  用map这个数组承接
+         // $value即为College的id  用map这个数组承接
                 $map['id'] = $value;
-         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
-                $term[$key] = Term::get($map);
+         //用键值$key区分College对象  用get()方法获得id，从而获得College对象
+                $College[$key] = College::get($map);
             } 
            //将获得的对象数组传到v层             
                 
-                $this->assign('term',$term);
+                $this->assign('College',$College);
                 $htmls = $this->fetch();
                  return $htmls; 
     }
@@ -279,9 +279,9 @@ class TeacherController extends TeacherIndexController
     **用js方法获取学期的课程
      */
     public function getCourse() {
-        $termId = Request::instance()->param('term/d');
+        $CollegeId = Request::instance()->param('College/d');
         $id = session('teacherId'); 
-        $Course = TeacherCourse::where('teacher_id',$id)->where('term_id',$termId)->column('course_id');
+        $Course = TeacherCourse::where('teacher_id',$id)->where('College_id',$CollegeId)->column('course_id');
         $Courseid = array_unique($Course);
          foreach ($Courseid as $key => $value)
            {
@@ -332,13 +332,13 @@ class TeacherController extends TeacherIndexController
          //从上一个V层获取用户所选择的课程的id，以便获取该课程的学生的信息
          $courseid = Request::instance()->post('course');  
          //从上一个V层获取用户所选择的学期的id，以便获取该课程的学生的信息
-         $termid = Request::instance()->post('term');   
+         $Collegeid = Request::instance()->post('College');   
          //获取当前登陆教师的id
          $id = session('teacherId');  
          //获取课表的所有信息
          $score = Score::all();
          //获取与当前课程id相同的id的课程的全部信息
-         $Courseid = Score::where('teacher_id',$id)->where('term_id',$termid)->where('course_id',$courseid)->select();
+         $Courseid = Score::where('teacher_id',$id)->where('College_id',$Collegeid)->where('course_id',$courseid)->select();
          //把课程的id传到V层，从而获取相关的学生信息
          $this->assign('Courseids',$Courseid);
          $htmls = $this->fetch();
@@ -354,9 +354,9 @@ class TeacherController extends TeacherIndexController
     {
          foreach ($studentId as $key => $value)
            {
-         // $value即为term的id  用map这个数组承接
+         // $value即为College的id  用map这个数组承接
                 $map['id'] = $value;
-         //用键值$key区分term对象  用get()方法获得id，从而获得term对象
+         //用键值$key区分College对象  用get()方法获得id，从而获得College对象
                 $student[$key] = Student::get($map);
             } 
           $this->assign('student',$student);
@@ -491,6 +491,36 @@ return $this->success('清空成功' , url('sentMessage') . '?student_id=' . $st
         
         return $this->fetch('show');
         
+    }
+    public function test1 () {
+     
+      // $Klass = Klass::all();
+      //   $klasses = [];
+      //     for ($i=0; $i < count($Klass); $i++) { 
+      //       $map['id'] = $Klass[$i]->id;
+      //       $klasses[$i] = Klass::get($map);
+
+      //     }
+      // dump($klasses);             
+       // $College = College::all();
+       //  $colleges = [];
+       //    for ($i=0; $i < count($College); $i++) { 
+       //      $map['id'] = $College[$i]->id;
+       //      $colleges[$i] = College::get($map);
+
+       //      }  
+
+       //      dump($colleges);     
+         $College = College::all();
+        $colleges = [];
+          for ($i=0; $i < count($College); $i++) { 
+            $map['id'] = $College[$i]->id;
+            $colleges[$i] = College::get($map);
+
+            }  
+
+            dump($colleges);     
+      
     }
 
 }

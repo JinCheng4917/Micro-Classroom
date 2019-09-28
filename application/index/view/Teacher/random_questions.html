@@ -83,15 +83,14 @@
   <h1 style="color: white; margin-top:100px;">欢迎使用微课堂随机提问功能</h1>
   <h2 style="color: white;">选择班级后点击图标开始点名</h2>
 
-         <form action="{:url('show')}" method="post" >
+        <form action="{:url('show')}" method="post" >
                 <select style="height: 5%;width: 25%" id="_id" name="id">
                     {volist name="$klasses" id="klasses"}
                     <option value="{$klasses->id}" {eq name="$klasses->id" value="$klasses->id" }selected="selected" {/eq}>{$klasses->name } </option>
                     {/volist} 
                 </select> 
                 <button class="btn btn-danger" type="submit">提交 </button>
-                
-            </form>
+        </form>
 
  <!-- </div> -->
  <!-- <a href="{:url('Teacher/show')}"><img class="question" src="img/question.jpg"></a> -->
