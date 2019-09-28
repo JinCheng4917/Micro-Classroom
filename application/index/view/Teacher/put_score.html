@@ -134,7 +134,7 @@
                 <td class="list">{$Courseid->Student->major}</td>
                 <td class="list">{$Courseid->Student->Klass->name}</td>
                 <td class="list">{$Courseid->Student->num}</td>
-                <td class="list">0</td>
+                <td class="list">{$Courseid->Course->need_sign}</td>
                 <td class="list usual" contenteditable="true" onblur="autoSave(event);" id="{$Courseid-> id}">{$Courseid->usual_score}</td>
                 <td class="list exam" contenteditable="true" onblur="finalSave(event);" id="{$Courseid-> id}">{$Courseid->exam_score}</td>
                 <td class="list total" id="{$Courseid-> id}"></td>

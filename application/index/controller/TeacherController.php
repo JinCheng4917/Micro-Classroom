@@ -9,7 +9,9 @@ use app\common\model\Term;
 use app\common\model\Chat;
 use app\common\model\CourseList;
 use app\common\model\SignIn;
+use app\common\model\TeacherCourse;
 use app\common\model\TeacherKlass;
+use app\common\model\KlassCourse;
 use think\facade\Request;   
 use think\Controller;   // 请求
 use think\Db;
@@ -198,8 +200,8 @@ class TeacherController extends TeacherIndexController
          $id = session('teacherId');  
          //获取score表里的全部信息 
          $score = Score::all();
-         //获取与当前课程id相同的id的课程的全部信息
-         $klass_ids = CourseList::where('teacher_id',$id)->where('course_id',$courseid)->column('klass_id');
+         //从KlassCourse表单获取与当前课程id相同的id的课程的全部信息
+         $klass_ids = KlassCourse::where('course_id',$courseid)->column('klass_id');
           $klassId =  array_values(array_unique($klass_ids));
           for ($i=0; $i < count($klassId); $i++) { 
               # code...
@@ -284,7 +286,7 @@ class TeacherController extends TeacherIndexController
     public function getCourse() {
         $termId = Request::instance()->param('term/d');
         $id = session('teacherId'); 
-        $Course = Score::where('teacher_id',$id)->where('term_id',$termId)->column('course_id');
+        $Course = TeacherCourse::where('teacher_id',$id)->where('term_id',$termId)->column('course_id');
         $Courseid = array_unique($Course);
          foreach ($Courseid as $key => $value)
            {
@@ -339,7 +341,6 @@ class TeacherController extends TeacherIndexController
          //获取当前登陆教师的id
          $id = session('teacherId');  
          //获取课表的所有信息
-          $list = CourseList::all();
          $score = Score::all();
          //获取与当前课程id相同的id的课程的全部信息
          $Courseid = Score::where('teacher_id',$id)->where('term_id',$termid)->where('course_id',$courseid)->select();

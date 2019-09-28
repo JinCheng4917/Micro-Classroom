@@ -87,7 +87,7 @@
                     <td>电话号码</td>
                 </tr>
         {for start="0" end="count($klass)" name="m"}
-               {volist name="$klass[$m]->Student" id="_student" key="k"}
+               {volist name="$klass[$m]->Student" id="_student"}
             <tr align="center">
                 <td>{$term->name}</td>
                 <td>{$courses->name}</td>
