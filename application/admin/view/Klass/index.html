@@ -20,7 +20,10 @@
         <th>辅导员</th>
         <th>操作</th>
     </tr>
+     {if !empty($klasses)}
+
     {volist name="klasses" id="_klass" key="key"}
+     {if !empty($_klass->Teacher)}
     <tr>
         <td>{$key}</td>
         <td>{$_klass->Term->name}</td>
@@ -33,7 +36,23 @@
              <a class="btn btn-sm btn-primary" href="{:url('courselist?id=' . $_klass->getData('id'))}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;录入课表</a>
          </td>
     </tr>
+    {/if}
+    {if empty($_klass->Teacher)}
+    <tr>
+        <td>{$key}</td>
+        <td>{$_klass->Term->name}</td>
+        <td>{$_klass->getData('name')}</td>
+        <td>
+             
+        </td>
+        <td><a class="btn btn-danger btn-sm" href="{:url('delete?id=' . $_klass->getData('id'))}"><i class="glyphicon glyphicon-trash"></i>&nbsp;删除</a>&nbsp;
+            <a class="btn btn-sm btn-primary" href="{:url('edit?id=' . $_klass->getData('id'))}"><i class="glyphicon glyphicon-edit"></i>&nbsp;编辑</a>&nbsp;
+             <a class="btn btn-sm btn-primary" href="{:url('courselist?id=' . $_klass->getData('id'))}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;录入课表</a>
+         </td>
+    </tr>
+    {/if}
     {/volist}
+    {/if}
 </table>
 {/block}
 {block name="page"}

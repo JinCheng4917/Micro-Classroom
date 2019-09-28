@@ -16,6 +16,7 @@
                     <th>操作</th>
                 </tr>
                 {volist name="teachers" id="_teacher" key="key"}
+                {if !empty($_teacher)&&!empty($_teacher->Term)&&!empty($_teacher->Klasses)&&!empty($_teacher->Courses)}
                 <tr>
                     <td>{$key}</td>
                       <td>{$_teacher->Term->name}</td>

@@ -78,12 +78,12 @@
             <label for="" class="option">请选择平时成绩所占权重</label>
             <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
             <select name="usual" id="usual" lay-search style="height: 4%;" onchange="reload();">
+                
                 <option value="0.3">30%</option>
                 <option value="0.1">10%</option>
                 <option value="0.2">20%</option>
                 <option value="0.4">40%</option>
                 <option value="0.5">50%</option>
-                <option value="0.6">60%</option>
             </select>
         </div>
         <div class="col-md-5">
@@ -102,13 +102,11 @@
                 <th class="font">专业</th>
                 <th class="font">班级</th>
                 <th class="font">学号</th>
-                <th class="font" style="width: 10%;">未签到次数</th>
                 <th class="font" style="width: 12%;">平时成绩</th>
                 <th class="font" style="width: 12%;">考试成绩</th>
                 <th class="font">总成绩</th>
             </tr>
             {volist name="$Courseids" id="Courseid"}
-            {if !empty($Courseid->Student->Unsign)}
               <tr>
                 <td class="list">{$Courseid->Term->name}</td>
                 <td class="list">{$Courseid->Course->name}</td>
@@ -118,28 +116,10 @@
                 <td class="list">{$Courseid->Student->major}</td>
                 <td class="list">{$Courseid->Student->Klass->name}</td>
                 <td class="list">{$Courseid->Student->num}</td>
-                <td class="list">{$Courseid->Student->Unsign->unsign_number}</td>
                 <td class="list usual" contenteditable="true" onblur="autoSave(event);" id="{$Courseid-> id}">{$Courseid->usual_score}</td>
                 <td class="list exam" contenteditable="true" onblur="finalSave(event);" id="{$Courseid-> id}">{$Courseid->exam_score}</td>
                 <td class="list total" id="{$Courseid-> id}"></td>
             </tr> 
-            {/if}
-            {if empty($Courseid->Student->Unsign)}
-            <tr>
-                <td class="list">{$Courseid->Term->name}</td>
-                <td class="list">{$Courseid->Course->name}</td>
-                <td class="list">{$Courseid->Student->name}</td>
-                <td class="list">{eq name="Courseid->Student->sex" value='0'}男{else /}女{/eq}</td>
-                <td class="list">{$Courseid->Student->College->name}</td>
-                <td class="list">{$Courseid->Student->major}</td>
-                <td class="list">{$Courseid->Student->Klass->name}</td>
-                <td class="list">{$Courseid->Student->num}</td>
-                <td class="list">{$Courseid->Course->need_sign}</td>
-                <td class="list usual" contenteditable="true" onblur="autoSave(event);" id="{$Courseid-> id}">{$Courseid->usual_score}</td>
-                <td class="list exam" contenteditable="true" onblur="finalSave(event);" id="{$Courseid-> id}">{$Courseid->exam_score}</td>
-                <td class="list total" id="{$Courseid-> id}"></td>
-            </tr>
-           {/if}
             {/volist}
             <script type="text/javascript">
             </script>
