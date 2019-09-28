@@ -18,45 +18,45 @@ class StudentController extends StudentIndexController
 	public function index()
 	{
 		 // 取回打包后的数据
-        $htmls = $this->fetch();
+    $htmls = $this->fetch();
 
         // 将数据返回给用户
-        return $htmls;
-    }
-    public function getQR()
-    {
+    return $htmls;
+  }
+  public function getQR()
+  {
          //获取当前登陆学生的id
-        $id = session('studentId');
+    $id = session('studentId');
 
-        $openid = session('openid');
-        $courseList = Request::instance()->param('courseid');
-        if(!empty($courseList))
-        {
+    $openid = session('openid');
+    $courseList = Request::instance()->param('courseid');
+    if(!empty($courseList))
+    {
          // $url = 'http://'.$_SERVER['HTTP_HOST'].'/index/student/StudentSignIn';
-          $url = 'http://www.microklass.com/micro-classroom/public/index/student/signin?courseid='.$courseList;
-          $this->assign('url',$url);
-      }
-      else{
-         return $this->error('课程未开放，请确认好上课时间后再签到',url('index'));
-     }
+      $url = 'http://www.microklass.com/micro-classroom/public/index/student/signin?courseid='.$courseList;
+      $this->assign('url',$url);
+    }
+    else{
+     return $this->error('课程未开放，请确认好上课时间后再签到',url('index'));
+   }
 
 
-     $htmls = $this->fetch();
-     return $htmls;
+   $htmls = $this->fetch();
+   return $htmls;
  }
  public function direct()
  {
-    return 1;
+  return 1;
 }
 	//查看当天的课表
 public function courseList()
 {
         //获取当前登陆学生的id
-    $id = session('studentId'); 
+  $id = session('studentId'); 
         //获取课表的所有信息
-    $list = CourseList::all();
+  $list = CourseList::all();
         //开学时间
-    $date = '2019-08-26';
+  $date = '2019-08-26';
         //开学当天是周几 
         $w    = date('w',strtotime($date));//0代表周日  0-6 日-六
         
@@ -79,16 +79,16 @@ public function courseList()
         $courseList = CourseList::where('klass_id',$klassId[0])->where('week_id',$week)->where('date_id',$day)->select();
         if(!($courseList->count() === 0))
         {
-            foreach ($courseList as $key => $value)
-            {
+          foreach ($courseList as $key => $value)
+          {
          // $value即为courseList的id  用map这个数组承接
-                $map['id'] = $value["id"];
+            $map['id'] = $value["id"];
          //用键值$key区分courseList对象  用get()方法获得id，从而获得courseList对象
-                $course[$key] = CourseList::get($map);
-            }
+            $course[$key] = CourseList::get($map);
+          }
         } else {
 
-            $course = 0;
+          $course = 0;
         }
         $this->assign('course',$course);
 		 // 取回打包后的数据
@@ -96,26 +96,26 @@ public function courseList()
 
         // 将数据返回给用户
         return $htmls;
-    }
-    public function signin()
-    {
-      $openid = session('openid');
-
-      $courseid = Request::instance()->param('courseid');
-      dump($courseid);
-      if(count($courseid)  !== 0)
+      }
+      public function signin()
       {
-        $this->assign('courseid',$courseid); 
-        return $this->fetch();
-    }
-    else{
-     return $this->error('课程未开放，请确认好上课时间',url('index'));
- }
-}
-public function saveSign()
-{
+        $openid = session('openid');
+
+        $courseid = Request::instance()->param('courseid');
+        dump($courseid);
+        if(count($courseid)  !== 0)
+        {
+          $this->assign('courseid',$courseid); 
+          return $this->fetch();
+        }
+        else{
+         return $this->error('课程未开放，请确认好上课时间',url('index'));
+       }
+     }
+     public function saveSign()
+     {
         //开学时间
-    $date = '2019-08-26';
+      $date = '2019-08-26';
         //开学当天是周几 
         $w    = date('w',strtotime($date));//0代表周日  0-6 日-六
         
@@ -143,6 +143,7 @@ public function saveSign()
         $klass_id = Student::where('openid',$openid)->find()->klass_id;
         //获取id与$courseListId 相等的courselist的信息
         $courseList  = CourseList::where('id',$courseListId)->find();
+        $course = Course::where('id',$courseList->course_id)->find();
         //在signin表里查询，以确定是否签到
         $signList = SignIn::where('open_id',$openid)->where('courselist_id',$courseListId)->select();
         //在signin表里查询，以计算签到次数
@@ -150,65 +151,63 @@ public function saveSign()
         //计算到目前为止需要签到的次数
         if($time >=  strtotime(date("2019-08-26")))
         {
-            $courseNumber = CourseList::where('klass_id',$klass_id)->where('course_id', $courseList->course_id)->select();
+          $courseNumber = CourseList::where('klass_id',$klass_id)->where('course_id', $courseList->course_id)->select();
         }
         if(count($courseNumber) !==0)
         {
-            $needSignIn = count($courseNumber);
+          $needSignIn = count($courseNumber);
+          $finalSignIn = count($signIn)+1; 
+          $unSign = $needSignIn - $finalSignIn;
         } 
-        if(count($signIn) !==0)
+        else
         {
-            $finalSignIn = count($signIn);
-        } 
-        if(count($courseNumber) !==0 && count($signIn) !==0)
-        {
-           $unSign = $needSignIn - $finalSignIn;
-       }
-       else
-       {
-        $unSign = 0;  
-    }
-    $signIn = new SignIn;
-    $signIn->course_id = $courseList->course_id;
-    $signIn->open_id = $openid;
-    $signIn->courselist_id = $courseListId;
-    $unsign = Unsign::where('student_id',$id)->find();
-    if(count($unsign) !== 0)
-    {
-       $unsign->student_id = $id;
-       $unsign->course_id =  $courseList->course_id;
-       $unsign->courselist_id = $courseListId;
-       $unsign->unsign_number = $unSign;    
-   }
-   else{
-       $unsign = new Unsign;
-       $unsign->student_id = $id;
-       $unsign->course_id =  $courseList->course_id;
-       $unsign->courselist_id = $courseListId;
-       $unsign->unsign_number = $unSign;
-   }
+          $unSign = 0;  
+        }
+        $signIn = new SignIn;
+        $signIn->course_id = $courseList->course_id;
+        $signIn->open_id = $openid;
+        $signIn->courselist_id = $courseListId;
+      
+        $unsign = Unsign::where('student_id',$id)->find();
+        if(count($unsign) !== 0)
+        { 
 
-   if(count( $signList) !== 0)
-   {
-    return 0;
-}
-else{
-    if($signIn->save() && $unsign->save())
-    {
-      $student = Student::where('openid',$openid)->find();
-      $unsignid = $unsign->id;
-      $student->unsign_id = $unsignid;
-      if($student->save())
-      {
-       return 1;
+         $unsign->student_id = $id;
+         $unsign->course_id =  $courseList->course_id;
+         $unsign->courselist_id = $courseListId;
+         $unsign->unsign_number = $unSign; 
+         $course->need_sign = $needSignIn;  
+       }
+       else{
+         $unsign = new Unsign;
+         $unsign->student_id = $id;
+         $unsign->course_id =  $courseList->course_id;
+         $unsign->courselist_id = $courseListId;
+         $unsign->unsign_number = $unSign;
+         $course->need_sign = $needSignIn;  
+       }
+
+       if(count( $signList) !== 0)
+       {
+        return 0;
       }
+      else{
+        if($signIn->save() && $unsign->save() && $course->save())
+        {
+          $student = Student::where('openid',$openid)->find();
+          $unsignid = $unsign->id;
+          $student->unsign_id = $unsignid;
+          if($student->save())
+          {
+           return 1;
+         }
+       }
+     }
    }
- }
-}
 
 	//查询分数
-public function getScore()
-{
+   public function getScore()
+   {
 		//获取当前登陆学生的id
     $id = session('studentId'); 
         //获取score表里的全部信息
@@ -221,9 +220,9 @@ public function getScore()
     foreach ($TermId as $key => $value)
     {
          // $value即为term的id  用map这个数组承接
-        $map['id'] = $value;
+      $map['id'] = $value;
          //用键值$key区分term对象  用get()方法获得id，从而获得term对象
-        $term[$key] = Term::get($map);
+      $term[$key] = Term::get($map);
     } 
            //将获得的对象数组传到v层             
     $this->assign('term',$term);
@@ -232,9 +231,9 @@ public function getScore()
 
         // 将数据返回给用户
     return $htmls;
-}
+  }
 	//从前台获取的term信息，筛选出course_id属性后获取course对象返回给后台
-public function getCourse() {
+  public function getCourse() {
 	 	//从前台获取term数组
     $termId = Request::instance()->param('term/d');
     $id = session('studentId'); 
@@ -243,98 +242,98 @@ public function getCourse() {
     foreach ($Courseid as $key => $value)
     {
          // $value即为term的id  用map这个数组承接
-        $map['id'] = $value;
+      $map['id'] = $value;
          //用键值$key区分term对象  用get()方法获得id，从而获得term对象
-        $courses[$key] = Course::get($map);
+      $courses[$key] = Course::get($map);
     } 
     return $courses;
-}
+  }
 	//显示查询出的成绩的界面
-public function scoreDisplay()
-{
+  public function scoreDisplay()
+  {
 		 //从上一个V层获取用户所选择的课程的id，以便获取该课程的学生的信息
- $courseid = Request::instance()->post('course');  
+   $courseid = Request::instance()->post('course');  
          //从上一个V层获取用户所选择的学期的id，以便获取该课程的学生的信息
- $termid = Request::instance()->post('term');   
+   $termid = Request::instance()->post('term');   
          //获取当前登录学生的id
- $id = session('studentId');  
+   $id = session('studentId');  
          //获取score表里的全部信息 
- $score = Score::all();
+   $score = Score::all();
          //获取与当前课程id相同的id的课程的全部信息
- $Courseid = Score::where('student_id',$id)->where('term_id',$termid)->where('course_id',$courseid)->select();
- $this->assign('Courseids',$Courseid);
- $htmls = $this->fetch();
- return $htmls;  
+   $Courseid = Score::where('student_id',$id)->where('term_id',$termid)->where('course_id',$courseid)->select();
+   $this->assign('Courseids',$Courseid);
+   $htmls = $this->fetch();
+   return $htmls;  
       // 取回打包后的数据
- $htmls = $this->fetch();
+   $htmls = $this->fetch();
 
         // 将数据返回给用户
- return $htmls;
-}
+   return $htmls;
+ }
 /*
 **留言选择教师
  */
 public function putMessage()
 {
         //获取当前登陆学生的id
-    $id = session('studentId'); 
+  $id = session('studentId'); 
         //获取score表里的全部信息
-    $score = Score::all();
+  $score = Score::all();
 
         //获取与当前学生id相同的id的学生的全部信息，筛选出course_id字段
-    $Courseid = Score::where('student_id',$id)->column('course_id');
+  $Courseid = Score::where('student_id',$id)->column('course_id');
         //对course_id这个字段进行筛选
-    $CourseId = array_unique($Courseid);
+  $CourseId = array_unique($Courseid);
 
          //根据course_id这个字段进行逐个循环，根据id获取Course这个对象，以便得到course的name
-    foreach ($CourseId as $key => $value)
-    {
+  foreach ($CourseId as $key => $value)
+  {
          // $value即为course的id  用map这个数组承接
-        $map['id'] = $value;
+    $map['id'] = $value;
          //用键值$key区分term对象  用get()方法获得id，从而获得course对象
-        $course[$key] = Course::get($map);
-    } 
+    $course[$key] = Course::get($map);
+  } 
            //将获得的对象数组传到v层             
 
-    $this->assign('course',$course);
+  $this->assign('course',$course);
          // 取回打包后的数据
-    $htmls = $this->fetch();
+  $htmls = $this->fetch();
 
         // 将数据返回给用户
-    return $htmls;
+  return $htmls;
 }
 public function getName() {
-    $CourseId = Request::instance()->param('course/d');
-    $id = session('studentId'); 
-    $Teacher = Score::where('student_id',$id)->where('course_id',$CourseId)->column('teacher_id');
-    $Teacherid = array_unique($Teacher);
-    foreach ($Teacherid as $key => $value)
-    {
+  $CourseId = Request::instance()->param('course/d');
+  $id = session('studentId'); 
+  $Teacher = Score::where('student_id',$id)->where('course_id',$CourseId)->column('teacher_id');
+  $Teacherid = array_unique($Teacher);
+  foreach ($Teacherid as $key => $value)
+  {
          // $value即为term的id  用map这个数组承接
-        $map['id'] = $value;
+    $map['id'] = $value;
          //用键值$key区分term对象  用get()方法获得id，从而获得term对象
-        $teachers[$key] = Teacher::get($map);
-    } 
-    return $teachers;
+    $teachers[$key] = Teacher::get($map);
+  } 
+  return $teachers;
 }
 /*
 **  在线留言界面 
  */
 public function sentMessage()
 {
-    $id = session('studentId');
-    
-    $this->assign('id',$id);
-    
+  $id = session('studentId');
 
-    $teacherId = Request::instance()->param('teacher_id');
-    $chats = Chat::where('student_id',$id)->where('teacher_id',$teacherId)->select();
-    $this->assign('teacherId',$teacherId);
-    $this->assign('chats',$chats);
+  $this->assign('id',$id);
+
+
+  $teacherId = Request::instance()->param('teacher_id');
+  $chats = Chat::where('student_id',$id)->where('teacher_id',$teacherId)->select();
+  $this->assign('teacherId',$teacherId);
+  $this->assign('chats',$chats);
  // 取回打包后的数据\
-    $htmls = $this->fetch();
+  $htmls = $this->fetch();
  // 将数据返回给用户
-    return $htmls;
+  return $htmls;
 }
 /*
 **保存留言
@@ -342,34 +341,34 @@ public function sentMessage()
 public function saveMessage()
 {
     //获取当前登陆的学生id
-    $studentId = session('studentId'); 
+  $studentId = session('studentId'); 
     //获取教师的id
-    $teacherId = Request::instance()->param('teacher_id');
+  $teacherId = Request::instance()->param('teacher_id');
     //获取学生的留言
-    $studentChat = Request::instance()->param('student_chat');
+  $studentChat = Request::instance()->param('student_chat');
     //如果非空则赋值并保存
-    $chat = new Chat;
-    if (!is_null($studentId)&& !is_null($teacherId))
-    {
-        $chat->student_id = $studentId;
-        $chat->teacher_id = $teacherId;
-        $chat->student_chat = base64_encode($studentChat);
-        $chat->save();
-        return $this->success('发送成功',url('sentMessage') . '?teacher_id=' . $teacherId);
-    }
+  $chat = new Chat;
+  if (!is_null($studentId)&& !is_null($teacherId))
+  {
+    $chat->student_id = $studentId;
+    $chat->teacher_id = $teacherId;
+    $chat->student_chat = base64_encode($studentChat);
+    $chat->save();
+    return $this->success('发送成功',url('sentMessage') . '?teacher_id=' . $teacherId);
+  }
 }
 /*
 **删除留言
  */
 public function deleteMessage()
 {
-    $teacherId = Request::instance()->param('teacher_id');
-    $studentId = session('studentId'); 
-    $chats = Chat::where('teacher_id',$teacherId)->where('student_id',$studentId);
-    if(! $chats->delete())
-    {
-        return $this->error('清空失败:' . $Student->getError());
-    }
-    return $this->success('清空成功' , url('sentMessage') . '?teacher_id=' . $teacherId);
+  $teacherId = Request::instance()->param('teacher_id');
+  $studentId = session('studentId'); 
+  $chats = Chat::where('teacher_id',$teacherId)->where('student_id',$studentId);
+  if(! $chats->delete())
+  {
+    return $this->error('清空失败:' . $Student->getError());
+  }
+  return $this->success('清空成功' , url('sentMessage') . '?teacher_id=' . $teacherId);
 }
 }

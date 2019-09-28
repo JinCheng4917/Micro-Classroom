@@ -46,6 +46,7 @@ class CourseController extends Controller
     $course->name = '';
     $course->room = '';
     $course->term_id = 0;
+     $course->need_sign = 0;
     $this->assign('teachers', $teachers);
     $this->assign('terms', $terms);
     $this->assign('course', $course);
@@ -79,6 +80,7 @@ class CourseController extends Controller
      $Course = new Course();
      $Course->name = Request::instance()->post('name');
      $Course->room = Request::instance()->post('room');
+     $Course->need_sign = 0;
      $termId = Request::instance()->post('term_id');
      $Course->term_id = $termId;
 
