@@ -9,6 +9,9 @@ class User extends Validate
         'username' => '|max:25',
         'num' => 'require|number',
         'email' => 'email',
+        'klass_id'     =>  'require|number',
+        'term_id'     =>  'require|number',
+        'college_id'     =>  'require|number',        
         
 
         
@@ -16,7 +19,7 @@ class User extends Validate
     protected $scene = [
       'insert' => ['name','username','num','email'],
       'add' => ['name','username','num','email'],
-      'update' =>['name','num','email'],
+      'update' =>['name','num','email','klass_id','term_id','college_id'],
     ];
 
 

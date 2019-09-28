@@ -7,6 +7,9 @@ use think\Db;
 use app\common\model\Student;
 use app\wechat\validate;
 use EasyWeChat\Factory;  //使用easywechat类
+use app\common\model\Klass;
+use app\common\model\Term;
+use app\common\model\College;
 
 class IndexController extends Controller
 {
@@ -121,7 +124,36 @@ class IndexController extends Controller
     {
         $Student = Student::getSessionStudent();
 
+        $Klass = Klass::all();
+        $klasses = [];
+          for ($i=0; $i < count($Klass); $i++) { 
+            $map['id'] = $Klass[$i]->id;
+            $klasses[$i] = Klass::get($map);
+
+            }         
+
+        $Term = Term::all();
+        $terms = [];
+          for ($i=0; $i < count($Term); $i++) { 
+                $map['id'] = $Term[$i]->id;
+                $terms[$i] = Term::get($map);
+
+            }         
+
+        $College = College::all();
+        $colleges = [];
+          for ($i=0; $i < count($College); $i++) { 
+            $map['id'] = $College[$i]->id;
+            $colleges[$i] = College::get($map);
+
+            }  
         $this->assign('Student',$Student);
+        $this->assign('klasses',$klasses);
+        $this->assign('terms',$terms);
+        $this->assign('colleges',$colleges);
+
+
+
 
         return $this->fetch();
     }
@@ -131,6 +163,7 @@ class IndexController extends Controller
     */
     public function update()
     {
+        
         // 利用静态方法获取Student对象
         $Student = Student::getSessionStudent();
 
@@ -140,12 +173,21 @@ class IndexController extends Controller
         $Student->num = Request::instance()->post('num');
         $Student->email = Request::instance()->post('email');
         $Student->phone = Request::instance()->post('phone');
+        $Student->major = Request::instance()->post('major');
+        $Student->klass_id = Request::instance()->post('klass_id');
+        $Student->term_id = Request::instance()->post('term_id');
+        $Student->college_id = Request::instance()->post('college_id');
+
+  
                 
 
                 $result = $this->validate(
             [
                 'name'    =>  $Student->name,
                 'num'     =>  $Student->num,
+                'klass_id'     =>  $Student->klass_id,
+                'term_id'     =>  $Student->term_id,
+                'college_id'     =>  $Student->college_id,
             ],
             'app\wechat\validate\User');
         if (true !== $result) {

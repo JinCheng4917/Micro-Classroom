@@ -142,27 +142,7 @@
                                                         <input type="integration" class="form-control" id="num" name="num">
                                                     </div>
                                                 </div>
-
-
-                                                <div class="row form-group">
-                                                    <div class="col-md-12">
-                                                        <form action="{:url('show')}" method="post" >
-                                                            <select style="height: 5%;width: 25%" id="_id" name="id">
-                                                                {volist name="$klasses" id="klasses"}
-                                                                <option value="{$klasses->id}" {eq name="$klasses->id" value="$klasses->id" }selected="selected" {/eq}>{$klasses->name} </option>
-                                                                {/volist} 
-                                                            </select> 
-                                                            <button class="btn btn-danger" type="submit">提交 </button>
-                                                            
-                                                        </form>
-                                                    </div>
-                                                </div>
-
-
-         
-
-
-
+                                           
                                                 <div class="row form-group">
                                                     <div class="col-md-12">
                                                         <label for="email">邮箱</label>
